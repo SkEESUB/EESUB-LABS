@@ -1104,4 +1104,219 @@ a:hover > .card-arrow { transform: translateX(3px) rotate(-6deg); }
   }
 }
 
+/* =========================================================
+   CERTIFICATE CARDS
+   ========================================================= */
 
+.cert-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+
+  padding: 14px 10px 20px;
+
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+
+  scrollbar-width: none;
+
+  touch-action: pan-x;
+}
+
+.cert-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.cert-scroll-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 14px;
+
+  padding-right: 20px;
+}
+
+
+/* ===============================
+   PILL
+   =============================== */
+
+.cert-pill-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  flex: 0 0 auto;
+
+  width: 236px;
+  height: 58px;
+
+  padding: 0 12px;
+
+  border-radius: 9999px;
+
+  cursor: pointer;
+
+  scroll-snap-align: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.75),
+      rgba(255,255,255,0.42)
+    );
+
+  border: 1px solid rgba(255,255,255,0.9);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.95),
+    inset 0 -1px 0 rgba(255,255,255,0.25),
+    0 18px 38px -24px rgba(0,0,0,0.35),
+    0 0 30px -16px var(--cert-accent);
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* LIGHT REFLECTION */
+
+.cert-pill-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 1px;
+
+  border-radius: 9999px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,0.55),
+      transparent 40%,
+      rgba(255,255,255,0.18)
+    );
+}
+
+
+/* LOGO */
+
+.cert-pill-logo {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  flex: 0 0 36px;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.45);
+
+  border: 1px solid
+    color-mix(in srgb, var(--cert-accent) 30%, white);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 8px 18px -12px var(--cert-accent);
+}
+
+
+/* NAME */
+
+.cert-pill-name {
+  position: relative;
+  z-index: 2;
+
+  min-width: 0;
+  flex: 1;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  text-align: left;
+
+  font-size: 13.5px;
+  font-weight: 650;
+
+  color: rgba(0,0,0,0.82);
+}
+
+
+/* COUNT */
+
+.cert-pill-count {
+  position: relative;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 34px;
+  height: 26px;
+
+  padding: 0 9px;
+
+  border-radius: 9999px;
+
+  flex-shrink: 0;
+
+  font-size: 11px;
+  font-weight: 750;
+
+  color: var(--cert-accent);
+
+  background: rgba(255,255,255,0.48);
+
+  border: 1px solid
+    color-mix(in srgb, var(--cert-accent) 25%, white);
+}
+
+
+/* ===============================
+   MOBILE
+   =============================== */
+
+@media (max-width: 640px) {
+
+  .cert-scroll-container {
+    padding-left: 14px;
+    padding-right: 14px;
+
+    scroll-padding-left: 14px;
+    scroll-padding-right: 14px;
+  }
+
+  .cert-scroll-track {
+    gap: 12px;
+  }
+
+  .cert-pill-card {
+    width: 230px;
+    height: 56px;
+  }
+
+  .cert-pill-logo {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .cert-pill-name {
+    font-size: 13px;
+  }
+}

@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
+import { createPortal } from "react-dom";
 
 import {
   motion,
+  MotionConfig,
   useMotionValue,
   useSpring,
   useTransform,
@@ -176,6 +178,7 @@ const NAV = [
 function Portfolio() {
   const mouse = useMousePos();
   return (
+  <MotionConfig reducedMotion="never">
     <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       <a
         href="#home"
@@ -196,8 +199,9 @@ function Portfolio() {
         <Resume />
         <Certifications />
       </main>
-      <Footer />
+            <Footer />
     </div>
+  </MotionConfig>
   );
 }
 
@@ -2824,72 +2828,291 @@ function MiniResumePage({ scale = 1 }: { scale?: number }) {
 const RESUME_EMBED = `https://drive.google.com/file/d/${RESUME.driveId}/preview`;
 
 /* ---------- Fullscreen PDF Modal (shared) ---------- */
-function ResumeFullscreen({ open, onClose }: { open: boolean; onClose: () => void }) {
+function ResumeFullscreen({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
   }, [open]);
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [open, onClose]);
 
-  return (
+  // Prevent SSR/document errors
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  if (!open) {
+    return null;
+  }
+
+  const resumeViewer = (
     <AnimatePresence>
       {open && (
         <>
+          {/* =========================================================
+              FULL SCREEN BACKDROP
+              This sits above the navbar and entire portfolio.
+          ========================================================= */}
           <motion.div
-            key="rfb"
+            key="resume-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             onClick={onClose}
-            className="fixed inset-0 z-[80] bg-black/70 backdrop-blur-md"
+            className="fixed inset-0 z-[9998] bg-black/65"
+            style={{
+              backdropFilter: "blur(18px) saturate(120%)",
+              WebkitBackdropFilter: "blur(18px) saturate(120%)",
+            }}
+            aria-hidden="true"
           />
+
+          {/* =========================================================
+              RESUME MODAL
+              Portal + z-[9999] guarantees it appears above navbar.
+          ========================================================= */}
           <motion.div
-            key="rfm"
-            initial={{ opacity: 0, scale: 0.94, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 16 }}
-            transition={{ type: "spring", stiffness: 240, damping: 26 }}
-            className="fixed inset-x-3 top-[3%] z-[90] flex h-[94%] flex-col overflow-hidden rounded-[24px] bg-white shadow-2xl sm:inset-x-8 sm:top-[4%] sm:h-[92%] sm:rounded-[28px]"
+            key="resume-modal"
+            initial={{
+              opacity: 0,
+              scale: 0.94,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0.96,
+              y: 12,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 28,
+              mass: 0.8,
+            }}
+            className="
+              fixed
+              left-1/2
+              top-1/2
+              z-[9999]
+              flex
+              h-[92vh]
+              w-[calc(100vw-24px)]
+              max-w-[1180px]
+              -translate-x-1/2
+              -translate-y-1/2
+              flex-col
+              overflow-hidden
+              rounded-[24px]
+              border
+              border-white/60
+              bg-white
+              shadow-[0_40px_120px_-30px_rgba(0,0,0,0.65)]
+              sm:h-[90vh]
+              sm:w-[calc(100vw-48px)]
+              sm:rounded-[28px]
+            "
+            role="dialog"
+            aria-modal="true"
+            aria-label="Resume preview"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-black/10 px-4 py-3 sm:px-5">
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  {["#FF5F57","#FEBC2E","#28C840"].map((c) => (
-                    <span key={c} className="block h-3 w-3 rounded-full" style={{ background: c }} />
-                  ))}
+            {/* =======================================================
+                HEADER
+            ======================================================= */}
+            <div
+              className="
+                flex
+                h-[58px]
+                shrink-0
+                items-center
+                justify-between
+                border-b
+                border-black/[0.08]
+                bg-white/95
+                px-3
+                sm:h-[64px]
+                sm:px-5
+              "
+            >
+              {/* Left side */}
+              <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+                {/* macOS-style dots */}
+                <div className="hidden shrink-0 items-center gap-1.5 sm:flex">
+                  <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
+                  <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
+                  <span className="h-3 w-3 rounded-full bg-[#28C840]" />
                 </div>
-                <div className="ml-3 font-display text-[13px] sm:text-[14px] leading-tight text-black/80">Shaik Eesub Vali – Resume.pdf</div>
+
+                <div
+                  className="
+                    flex
+                    h-8
+                    w-8
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-xl
+                    bg-black/[0.05]
+                    sm:hidden
+                  "
+                >
+                  <FileText className="h-4 w-4 text-black/65" />
+                </div>
+
+                <div className="min-w-0">
+                  <div className="truncate font-display text-[12px] font-semibold text-black/80 sm:text-[14px]">
+                    Shaik Eesub Vali
+                  </div>
+
+                  <div className="hidden text-[10px] text-black/40 sm:block">
+                    Resume · {RESUME_META.role}
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
+
+              {/* Right side */}
+              <div className="flex shrink-0 items-center gap-2">
+                {/* Download — desktop */}
                 <a
                   href={RESUME.download}
                   download={RESUME.filename}
-                  className="glass-pill hidden h-9 items-center gap-2 px-3.5 text-xs font-semibold sm:inline-flex"
+                  className="
+                    hidden
+                    h-9
+                    items-center
+                    gap-2
+                    rounded-full
+                    border
+                    border-black/[0.08]
+                    bg-white/75
+                    px-4
+                    text-[11px]
+                    font-semibold
+                    text-black/75
+                    shadow-sm
+                    backdrop-blur-xl
+                    transition
+                    hover:bg-white
+                    sm:inline-flex
+                  "
                 >
-                  <Download className="h-3.5 w-3.5" /> Download
+                  <Download className="h-3.5 w-3.5" />
+                  Download
                 </a>
+
+                {/* Close */}
                 <button
                   type="button"
                   onClick={onClose}
-                  aria-label="Close preview"
-                  className="glass-pill flex h-9 w-9 items-center justify-center"
+                  aria-label="Close resume preview"
+                  className="
+                    flex
+                    h-9
+                    w-9
+                    items-center
+                    justify-center
+                    rounded-full
+                    border
+                    border-black/[0.08]
+                    bg-black/[0.04]
+                    text-black/70
+                    transition
+                    hover:bg-black/[0.08]
+                    active:scale-95
+                  "
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
             </div>
-            <iframe src={RESUME_EMBED} title="Resume fullscreen" className="flex-1 w-full border-0" />
+
+            {/* =======================================================
+                RESUME VIEWER
+            ======================================================= */}
+            <div className="relative min-h-0 flex-1 bg-[#e9e9e9]">
+              <iframe
+                src={RESUME_EMBED}
+                title="Shaik Eesub Vali Resume"
+                className="
+                  absolute
+                  inset-0
+                  h-full
+                  w-full
+                  border-0
+                  bg-white
+                "
+                allow="fullscreen"
+              />
+
+              {/* Mobile floating download button */}
+              <a
+                href={RESUME.download}
+                download={RESUME.filename}
+                className="
+                  absolute
+                  bottom-4
+                  right-4
+                  z-10
+                  flex
+                  h-11
+                  items-center
+                  gap-2
+                  rounded-full
+                  border
+                  border-white/70
+                  bg-white/85
+                  px-4
+                  text-[11px]
+                  font-semibold
+                  text-black/75
+                  shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)]
+                  backdrop-blur-xl
+                  sm:hidden
+                "
+              >
+                <Download className="h-3.5 w-3.5" />
+                Download
+              </a>
+            </div>
           </motion.div>
         </>
       )}
     </AnimatePresence>
   );
+
+  return createPortal(resumeViewer, document.body);
 }
 
 /* ---------- Info Sidebar (shared between desktop + mobile) ---------- */
@@ -3580,89 +3803,317 @@ function useIsMobileMQ() {
   return m;
 }
 
+function ResumeModal({
+  open,
+  onClose,
+  resumeUrl,
+}: {
+  open: boolean;
+  onClose: () => void;
+  resumeUrl: string;
+}) {
+  useEffect(() => {
+    if (!open) return;
+
+    const oldOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = oldOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open, onClose]);
+
+  if (!open || typeof document === "undefined") {
+    return null;
+  }
+
+  return createPortal(
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        style={{
+          background: "rgba(5,7,10,0.78)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+        }}
+        onClick={onClose}
+      >
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            scale: 0.94,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            y: 0,
+          }}
+          exit={{
+            opacity: 0,
+            scale: 0.96,
+            y: 10,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 260,
+            damping: 26,
+          }}
+          className="
+            relative
+            flex
+            h-[94vh]
+            w-full
+            max-w-5xl
+            flex-col
+            overflow-hidden
+            rounded-[28px]
+            bg-[#202020]
+            shadow-2xl
+            sm:h-[92vh]
+          "
+          onClick={(event) => event.stopPropagation()}
+        >
+
+          {/* HEADER */}
+
+          <div
+            className="
+              flex
+              h-14
+              shrink-0
+              items-center
+              justify-between
+              border-b
+              border-white/10
+              bg-white/[0.04]
+              px-4
+              sm:px-5
+            "
+          >
+
+            <div>
+              <div className="text-sm font-semibold text-white/90">
+                Resume
+              </div>
+
+              <div className="text-[10px] uppercase tracking-[0.16em] text-white/40">
+                Eesub Labs
+              </div>
+            </div>
+
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="
+                flex
+                h-9
+                w-9
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-white/10
+                bg-white/10
+                text-white
+                transition
+                hover:bg-white/20
+                active:scale-95
+              "
+              aria-label="Close resume"
+            >
+              <X className="h-4 w-4" />
+            </button>
+
+          </div>
+
+
+          {/* RESUME */}
+
+          <div className="min-h-0 flex-1 bg-[#202020]">
+
+            <iframe
+              src={`${resumeUrl}#toolbar=1&navpanes=0&view=FitH`}
+              title="Eesub Labs Resume"
+              className="h-full w-full border-0"
+            />
+
+          </div>
+
+
+          {/* FOOTER */}
+
+          <div
+            className="
+              flex
+              h-10
+              shrink-0
+              items-center
+              justify-center
+              border-t
+              border-white/10
+              bg-white/[0.03]
+              text-[10px]
+              text-white/40
+            "
+          >
+            Press ESC or tap × to close
+          </div>
+
+        </motion.div>
+
+      </motion.div>
+    </AnimatePresence>,
+    document.body
+  );
+}
+
 function Certifications() {
   const [activeKey, setActiveKey] = useState<string | null>(null);
-  const active = CERTIFICATIONS.find((c) => c.key === activeKey) || null;
+
+  const active =
+    CERTIFICATIONS.find((cert) => cert.key === activeKey) ?? null;
 
   return (
-    <div className="mt-7 sm:mt-8">
-      <div className="mb-3.5 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
+    <section className="mt-7 sm:mt-8">
+
+      {/* HEADER */}
+      <div className="mb-4 flex items-center justify-between gap-3 px-1">
+        <div className="flex min-w-0 items-center gap-2.5">
+
           <h3 className="font-display text-[15px] font-semibold text-black/80 sm:text-base">
             Professional Certifications
           </h3>
+
           <span
-            className="inline-flex items-center gap-1 rounded-full border border-black/10 bg-white/55 px-2 py-0.5 text-[10px] font-semibold text-black/60 backdrop-blur-sm"
-            style={{ boxShadow: "0 1px 0 rgba(255,255,255,0.7) inset, 0 4px 10px -6px rgba(0,0,0,0.15)" }}
+            className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold text-black/60"
+            style={{
+              background: "rgba(255,255,255,0.58)",
+              border: "1px solid rgba(255,255,255,0.8)",
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
+              boxShadow:
+                "0 1px 0 rgba(255,255,255,0.9) inset, 0 8px 20px -12px rgba(0,0,0,0.22)",
+            }}
           >
-            <CheckCircle2 className="h-3 w-3" style={{ color: "var(--accent-teal)" }} strokeWidth={2.4} />
-            {CERTIFICATIONS.reduce((n, c) => n + c.items.length, 0)} Verified
+            <CheckCircle2
+              className="h-3 w-3"
+              style={{ color: "var(--accent-teal)" }}
+            />
+
+            {CERTIFICATIONS.reduce(
+              (total, cert) => total + cert.items.length,
+              0
+            )}{" "}
+            Verified
           </span>
+
         </div>
-        <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-black/45">
+
+        <span className="shrink-0 text-[10px] font-medium uppercase tracking-[0.16em] text-black/40 sm:text-[11px]">
           Certified
         </span>
       </div>
 
-      <div className="cert-rail relative overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[var(--background)] to-transparent" />
-        <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[var(--background)] to-transparent" />
-        <div className="cert-rail-track flex w-max gap-3 py-1.5">
-          {[0, 1].map((dup) =>
-            CERTIFICATIONS.map((org) => {
-              const { Logo } = org;
-              return (
-                <button
-                  key={`${dup}-${org.key}`}
-                  type="button"
-                  tabIndex={dup === 1 ? -1 : 0}
-                  aria-hidden={dup === 1 || undefined}
-                  onClick={() => setActiveKey(org.key)}
-                  className="group flex h-[54px] w-[236px] shrink-0 items-center gap-2.5 rounded-full border border-white/60 px-3.5 text-left backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-[3px] hover:scale-[1.02] active:scale-[0.99]"
-                  style={{
-                    background: "rgba(255,255,255,0.5)",
-                    boxShadow: `0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 24px -16px ${org.accent}66, 0 5px 16px -12px rgba(0,0,0,0.2)`,
-                  }}
-                  aria-label={`Open ${org.name} certificate gallery`}
-                >
-                  <span
-                    className="relative flex h-[34px] w-[34px] shrink-0 items-center justify-center overflow-hidden rounded-full"
-                    style={{
-                      background: `radial-gradient(circle at 30% 30%, ${org.accent}26, ${org.accent}0d)`,
-                      border: `1px solid ${org.accent}3d`,
-                    }}
-                    aria-hidden
-                  >
-                    <Logo size={18} />
-                  </span>
-                  <span className="min-w-0 flex-1 truncate font-display text-[13.5px] font-semibold leading-tight text-black/85">
-                    {org.short}
-                  </span>
-                  <span
-                    className="inline-flex h-[24px] min-w-[32px] shrink-0 items-center justify-center rounded-full px-2 text-[11px] font-bold tabular-nums"
-                    style={{
-                      background: `${org.accent}1f`,
-                      color: org.accent,
-                      border: `1px solid ${org.accent}3d`,
-                    }}
-                  >
-                    ×{org.items.length}
-                  </span>
-                </button>
-              );
-            }),
-          )}
+
+      {/* CERTIFICATE CARDS */}
+      <div className="cert-scroll-container">
+
+        <div className="cert-scroll-track">
+
+          {CERTIFICATIONS.map((org, index) => {
+            const { Logo } = org;
+
+            return (
+              <motion.button
+                key={org.key}
+                type="button"
+                onClick={() => setActiveKey(org.key)}
+                className="cert-pill-card"
+                style={
+                  {
+                    "--cert-accent": org.accent,
+                  } as React.CSSProperties
+                }
+
+                animate={{
+                  y: [0, -5, 0],
+                }}
+
+                transition={{
+                  duration: 3.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: index * 0.2,
+                }}
+
+                whileHover={{
+                  y: -9,
+                  scale: 1.03,
+                }}
+
+                whileTap={{
+                  scale: 0.96,
+                }}
+
+                aria-label={`Open ${org.name} certificates`}
+              >
+
+                {/* LOGO */}
+                <span className="cert-pill-logo">
+                  <Logo size={19} />
+                </span>
+
+                {/* NAME */}
+                <span className="cert-pill-name">
+                  {org.short}
+                </span>
+
+                {/* COUNT */}
+                <span className="cert-pill-count">
+                  ×{org.items.length}
+                </span>
+
+              </motion.button>
+            );
+          })}
+
         </div>
+
       </div>
 
 
+      {/* MOBILE HINT */}
+      <div className="mt-2 flex justify-center sm:hidden">
+        <span className="text-[9px] font-medium uppercase tracking-[0.18em] text-black/30">
+          Swipe to explore
+        </span>
+      </div>
 
+
+      {/* CERTIFICATE POPUP */}
       <CertGallery
         open={!!active}
         org={active}
         onClose={() => setActiveKey(null)}
       />
-    </div>
+
+    </section>
   );
 }
 
