@@ -3545,59 +3545,54 @@ function VerifiedBadge({ color = "#22C55E", size = 12 }: { color?: string; size?
 }
 
 /* ---------------- Real PDF certificate viewer ---------------- */
-function CertificateArtwork({ org, item }: { org: CertOrg; item: CertItem }) {
-  const [status, setStatus] = useState<"loading" | "ok" | "missing">("loading");
-
-  useEffect(() => {
-    let cancelled = false;
-    setStatus("loading");
-    fetch(item.pdf, { method: "HEAD" })
-      .then((res) => {
-        if (cancelled) return;
-        const type = res.headers.get("content-type") || "";
-        setStatus(res.ok && !type.includes("text/html") ? "ok" : "missing");
-      })
-      .catch(() => {
-        if (!cancelled) setStatus("missing");
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [item.pdf]);
+/* ---------------- Certificate Image Viewer ---------------- */
+function CertificateArtwork({
+  org,
+  item,
+}: {
+  org: any;
+  item: any;
+}) {
+  // Automatically convert:
+  // /certificates/anthropic-1.pdf
+  // into:
+  // /certificates/anthropic-1.jpg
+  const imageSrc = item.pdf.replace(/\.pdf$/i, ".jpg");
 
   return (
     <div
       className="relative w-full overflow-hidden rounded-[18px]"
       style={{
-        aspectRatio: "1 / 1.35",
-        maxHeight: "62vh",
-        background: "rgba(255,255,255,0.72)",
-        border: "1px solid rgba(255,255,255,0.65)",
-        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.8), 0 24px 50px -30px rgba(0,0,0,0.4), 0 0 40px -24px ${org.accent}66`,
+        background: "rgba(255,255,255,0.82)",
+        border: "1px solid rgba(255,255,255,0.75)",
+        boxShadow: `
+          inset 0 1px 0 rgba(255,255,255,0.9),
+          0 24px 50px -30px rgba(0,0,0,0.45),
+          0 0 40px -24px ${org.accent}66
+        `,
       }}
     >
-      {status === "ok" ? (
-        <object data={`${item.pdf}#toolbar=0&navpanes=0&view=FitH`} type="application/pdf" className="h-full w-full">
-          <iframe
-            src={`${item.pdf}#toolbar=0&navpanes=0&view=FitH`}
-            title={`${org.name} — ${item.title}`}
-            className="h-full w-full border-0"
-          />
-        </object>
-      ) : (
-        <div className="flex h-full flex-col items-center justify-center gap-2 px-6 text-center">
-          <FileText className="h-7 w-7 text-black/35" />
-          <div className="font-display text-[14px] font-semibold text-black/75">{item.title}</div>
-          <div className="text-[11.5px] text-black/50">
-            {status === "loading" ? "Loading certificate…" : "PDF not added yet"}
-          </div>
-          {status === "missing" && (
-            <code className="mt-1 rounded-md bg-black/[0.06] px-2 py-1 font-mono text-[10.5px] text-black/55">
-              public{item.pdf}
-            </code>
-          )}
-        </div>
-      )}
+      <img
+        src={imageSrc}
+        alt={`${org.name} — ${item.title}`}
+        className="block h-auto w-full object-contain"
+        draggable={false}
+        loading="eager"
+        onError={(e) => {
+          const target = e.currentTarget;
+          target.style.display = "none";
+        }}
+      />
+
+      {/* Soft glass reflection */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(115deg, rgba(255,255,255,0.16), transparent 35%, transparent 70%, rgba(255,255,255,0.08))",
+        }}
+      />
     </div>
   );
 }
