@@ -3458,16 +3458,62 @@ const CERTIFICATIONS: CertOrg[] = [
     ],
   },
   {
-    key: "infosys",
-    name: "Infosys",
-    short: "Infosys Python",
-    accent: "#007CC3",
-    Logo: InfosysLogo,
-    items: [
-      { title: "Python Foundation", year: "2024", credentialId: "INF-PY-F-8821", pdf: "/certificates/infosys-1.pdf" },
-      { title: "Advanced Python Programming", year: "2024", credentialId: "INF-PY-A-9034", pdf: "/certificates/infosys-2.pdf" },
-    ],
-  },
+  key: "infosys",
+  name: "Infosys",
+  short: "Infosys Python",
+  accent: "#007CC3",
+  Logo: InfosysLogo,
+  items: [
+    {
+      title: "Python Foundation",
+      year: "2024",
+      credentialId: "INF-PY-F-8821",
+      pdf: "/certificates/infosys-1.pdf",
+    },
+    {
+      title: "Advanced Python Programming",
+      year: "2024",
+      credentialId: "INF-PY-A-9034",
+      pdf: "/certificates/infosys-2.pdf",
+    },
+    {
+      title: "Infosys Certificate 3",
+      year: "2024",
+      credentialId: "INF-PY-003",
+      pdf: "/certificates/infosys-3.pdf",
+    },
+    {
+      title: "Infosys Certificate 4",
+      year: "2024",
+      credentialId: "INF-PY-004",
+      pdf: "/certificates/infosys-4.pdf",
+    },
+    {
+      title: "Infosys Certificate 5",
+      year: "2024",
+      credentialId: "INF-PY-005",
+      pdf: "/certificates/infosys-5.pdf",
+    },
+    {
+      title: "Infosys Certificate 6",
+      year: "2024",
+      credentialId: "INF-PY-006",
+      pdf: "/certificates/infosys-6.pdf",
+    },
+    {
+      title: "Infosys Certificate 7",
+      year: "2024",
+      credentialId: "INF-PY-007",
+      pdf: "/certificates/infosys-7.pdf",
+    },
+    {
+      title: "Infosys Certificate 8",
+      year: "2024",
+      credentialId: "INF-PY-008",
+      pdf: "/certificates/infosys-8.pdf",
+    },
+  ],
+},
   {
     key: "datavalley",
     name: "DataValley",
@@ -4201,7 +4247,7 @@ function Footer() {
               </li>
               <li>
                 <a href="tel:+919381471651" className="transition-colors hover:text-foreground">
-                  +91 93814 71651
+                  +91 95055 61854
                 </a>
               </li>
               <li>Andhra Pradesh, India</li>

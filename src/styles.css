@@ -1320,3 +1320,61 @@ a:hover > .card-arrow { transform: translateX(3px) rotate(-6deg); }
     font-size: 13px;
   }
 }
+
+/* =========================================================
+   MOBILE CERTIFICATIONS — SWIPE FIX
+   Does NOT change desktop
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+  /* Allow finger swipe */
+  .cert-rail {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
+  }
+
+  /* Hide scrollbar */
+  .cert-rail::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  /* Certificate row */
+  .cert-rail-track {
+    display: flex !important;
+    width: max-content !important;
+    gap: 12px !important;
+    padding-left: 4px !important;
+    padding-right: 16px !important;
+
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* Complete pill shape */
+  .cert-rail-track > button {
+    flex: 0 0 236px !important;
+    width: 236px !important;
+    min-width: 236px !important;
+    max-width: 236px !important;
+
+    border-radius: 9999px !important;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Small press effect */
+  .cert-rail-track > button:active {
+    transform: scale(0.98) !important;
+  }
+}
