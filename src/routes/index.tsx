@@ -1002,21 +1002,21 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
 
             {/* Action buttons */}
             <Reveal delay={0.2}>
-              <div className="mt-5 sm:mt-6 flex flex-wrap items-center gap-3.5 sm:gap-4">
+              <div className="mt-5 sm:mt-6 flex flex-row items-center gap-2.5 sm:gap-4 w-full sm:w-auto">
                 <MagneticButton
                   href="#projects"
                   onClick={(e) => {
                     e?.preventDefault?.();
                     smoothScrollTo("projects");
                   }}
-                  className="inline-flex h-[46px] sm:h-[48px] items-center justify-center gap-2 px-6 sm:px-7 rounded-full text-[14px] sm:text-[14.5px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-95 shadow-[0_8px_24px_rgba(112,51,255,0.35)] hover:shadow-[0_12px_28px_rgba(112,51,255,0.45)]"
+                  className="flex-1 sm:flex-initial inline-flex h-[38px] sm:h-[48px] items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-7 rounded-full text-[12px] sm:text-[14.5px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-95 shadow-[0_8px_24px_rgba(112,51,255,0.35)] hover:shadow-[0_12px_28px_rgba(112,51,255,0.45)] shrink-0"
                   style={{
                     background: "linear-gradient(110deg, #7033FF 0%, #B829D6 55%, #0EA5E9 100%)",
                     border: "1px solid rgba(255, 255, 255, 0.65)",
                   }}
                 >
-                  <span className="drop-shadow-sm">Explore Projects</span>
-                  <ArrowRight className="h-4 w-4 drop-shadow-sm" />
+                  <span className="drop-shadow-sm whitespace-nowrap">Explore Projects</span>
+                  <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 drop-shadow-sm shrink-0" />
                 </MagneticButton>
 
                 <MagneticButton
@@ -1024,28 +1024,28 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
                   target="_blank"
                   rel="noopener noreferrer"
                   download="Shaik_Eesub_Vali_Resume.pdf"
-                  className="inline-flex h-[46px] sm:h-[48px] items-center justify-center gap-2 px-5 sm:px-6 rounded-full text-[14px] sm:text-[14.5px] font-semibold text-[#1F1D2E] transition-all duration-300 hover:-translate-y-0.5 active:scale-95 shadow-[0_4px_16px_rgba(85,65,120,0.1)] hover:shadow-[0_8px_20px_rgba(85,65,120,0.16)]"
+                  className="flex-1 sm:flex-initial inline-flex h-[38px] sm:h-[48px] items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-6 rounded-full text-[12px] sm:text-[14.5px] font-semibold text-[#1F1D2E] transition-all duration-300 hover:-translate-y-0.5 active:scale-95 shadow-[0_4px_16px_rgba(85,65,120,0.1)] hover:shadow-[0_8px_20px_rgba(85,65,120,0.16)] shrink-0"
                   style={{
                     background: "rgba(255, 255, 255, 0.95)",
                     border: "1px solid rgba(255, 255, 255, 1)",
                   }}
                 >
-                  <Download className="h-4 w-4 text-[#7033FF]" />
-                  <span>Resume</span>
+                  <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#7033FF] shrink-0" />
+                  <span className="whitespace-nowrap">Resume</span>
                 </MagneticButton>
               </div>
             </Reveal>
 
             {/* Statistics grid — compact, approximately square boxes */}
             <Reveal delay={0.25}>
-              <div className="mt-5 sm:mt-6 grid grid-cols-2 sm:flex sm:items-center gap-2.5 sm:gap-3 lg:gap-3.5 w-fit">
+              <div className="mt-5 sm:mt-6 grid grid-cols-4 sm:flex sm:items-center gap-1.5 sm:gap-3 lg:gap-3.5 w-full sm:w-fit">
                 {statistics.map((s) => (
                   <motion.div
                     key={s.label}
                     whileHover={{ y: -3, scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ type: "spring", stiffness: 320, damping: 20 }}
-                    className="flex h-[90px] w-[90px] sm:h-[94px] sm:w-[94px] lg:h-[100px] lg:w-[100px] xl:h-[104px] xl:w-[104px] aspect-square flex-col items-center justify-center rounded-[16px] sm:rounded-[18px] p-2 text-center transition-all duration-200 shrink-0"
+                    className="flex h-[66px] w-full sm:h-[94px] sm:w-[94px] lg:h-[100px] lg:w-[100px] xl:h-[104px] xl:w-[104px] flex-col items-center justify-center rounded-[12px] sm:rounded-[18px] px-1 py-1.5 sm:p-2 text-center transition-all duration-200 sm:shrink-0"
                     style={{
                       background: "rgba(255, 255, 255, 0.68)",
                       backdropFilter: "blur(14px)",
@@ -1055,12 +1055,12 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
                     }}
                   >
                     <span
-                      className="font-serif text-[22px] sm:text-[24px] lg:text-[26px] font-semibold leading-none tracking-tight"
+                      className="font-serif text-[17px] sm:text-[24px] lg:text-[26px] font-semibold leading-none tracking-tight"
                       style={{ fontFamily: "'Playfair Display', serif", color: "#C85CE8" }}
                     >
                       {s.value}
                     </span>
-                    <span className="mt-1.5 font-sans text-[8.5px] sm:text-[9.5px] font-semibold tracking-[0.35px] sm:tracking-[0.5px] text-[#625D7B] uppercase text-center leading-tight whitespace-nowrap">
+                    <span className="mt-1 font-sans text-[7px] sm:text-[9.5px] font-semibold tracking-[0.2px] sm:tracking-[0.5px] text-[#625D7B] uppercase text-center leading-tight whitespace-nowrap">
                       {s.label}
                     </span>
                   </motion.div>
@@ -1070,7 +1070,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
           </div>
 
           {/* RIGHT COLUMN — 3D Studio Visual Showcase */}
-          <div className="relative z-[1] flex w-full flex-col items-center justify-center pt-4 lg:pt-0">
+          <div className="relative z-[1] flex w-full flex-col items-center justify-center pt-6 sm:pt-4 lg:pt-0">
             <motion.div
               style={{
                 rotateX: reduce ? 0 : tiltX,
@@ -1079,15 +1079,15 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
               }}
               animate={reduce ? undefined : { y: [0, -8, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative flex w-full max-w-[460px] sm:max-w-[540px] md:max-w-[620px] lg:max-w-[690px] xl:max-w-[760px] items-center justify-center"
+              className="relative flex w-full max-w-[95%] sm:max-w-[540px] md:max-w-[620px] lg:max-w-[690px] xl:max-w-[760px] items-center justify-center scale-105 sm:scale-100"
             >
-              {/* Soft ambient back glow behind 3D studio */}
+              {/* Vibrant ambient back glow behind 3D studio for depth and lighting */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-2 -z-10 rounded-full opacity-70 blur-3xl"
+                className="pointer-events-none absolute -inset-2 sm:inset-2 -z-10 rounded-full opacity-85 sm:opacity-70 blur-2xl sm:blur-3xl"
                 style={{
                   background:
-                    "radial-gradient(circle at 50% 50%, rgba(232, 121, 249, 0.35) 0%, rgba(64, 224, 239, 0.24) 55%, transparent 75%)",
+                    "radial-gradient(circle at 50% 50%, rgba(232, 121, 249, 0.45) 0%, rgba(64, 224, 239, 0.32) 55%, transparent 75%)",
                 }}
               />
 
@@ -1098,7 +1098,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
                 height={770}
                 loading="eager"
                 decoding="async"
-                className="h-auto w-full object-contain drop-shadow-[0_18px_40px_rgba(110,70,150,0.15)] select-none pointer-events-none"
+                className="h-auto w-full object-contain drop-shadow-[0_20px_45px_rgba(110,70,150,0.22)] select-none pointer-events-none transition-transform duration-300"
                 style={{ imageRendering: "auto" }}
               />
             </motion.div>
@@ -1106,10 +1106,10 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
             {/* Diffused ambient ground shadow */}
             <div
               aria-hidden
-              className="pointer-events-none -mt-4 sm:-mt-6 h-5 sm:h-7 w-[70%] rounded-[50%] blur-xl opacity-80"
+              className="pointer-events-none -mt-4 sm:-mt-6 h-6 sm:h-7 w-[85%] sm:w-[70%] rounded-[50%] blur-xl opacity-90 sm:opacity-80"
               style={{
                 background:
-                  "radial-gradient(ellipse at center, rgba(168, 85, 247, 0.32) 0%, rgba(64, 224, 239, 0.16) 50%, transparent 70%)",
+                  "radial-gradient(ellipse at center, rgba(168, 85, 247, 0.4) 0%, rgba(64, 224, 239, 0.22) 50%, transparent 70%)",
               }}
             />
           </div>
@@ -1748,6 +1748,10 @@ function TechIcon({ name }: { name: string }) {
     />
   );
 }
+function techGlow(name: string) {
+  return TECH_META[name]?.glow ?? "oklch(0.7 0.1 295 / 0.35)";
+}
+
 
 function ProjectsReelSlider() {
   const projects = PROJECTS;
@@ -2066,14 +2070,149 @@ function ProjectsReelSlider() {
   );
 }
 
+
+function ProjectCardBody({ p }: { p: (typeof PROJECTS)[number] }) {
+  return (
+    <Link
+      to="/projects/$slug"
+      params={{ slug: p.slug }}
+      search={{ project: p.slug }}
+      onClick={() => {
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("eesub_active_project", p.slug);
+        }
+      }}
+      className="group/card relative flex h-full w-full flex-col"
+      aria-label={`Open ${p.title} details`}
+    >
+      <div
+        className="relative aspect-[16/10] overflow-hidden"
+        style={{ background: p.gradient }}
+      >
+        <img
+          src={p.cover}
+          alt={`${p.title} cover`}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.04]"
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(160deg, oklch(1 0 0 / 0.25) 0%, transparent 35%, transparent 70%, oklch(1 0 0 / 0.12) 100%)",
+          }}
+        />
+        {p.status === "Live" ? (
+          <span
+            className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-white shadow-xs"
+            style={{
+              background:
+                "linear-gradient(135deg, oklch(0.74 0.2 150), oklch(0.66 0.22 158))",
+              border: "1px solid oklch(0.88 0.18 150 / 0.7)",
+              boxShadow:
+                "0 0 18px oklch(0.78 0.22 150 / 0.55), inset 0 1px 0 oklch(1 0 0 / 0.45)",
+            }}
+          >
+            <span
+              className="h-1.5 w-1.5 rounded-full bg-white animate-pulse"
+              style={{ boxShadow: "0 0 8px white" }}
+            />
+            Live
+          </span>
+        ) : (
+          <span
+            className="glass-pill absolute right-3 top-3 px-2.5 py-1 text-[10px] font-medium"
+            style={{
+              color:
+                p.status === "In Progress"
+                  ? "oklch(0.6 0.18 60)"
+                  : "var(--accent-purple)",
+            }}
+          >
+            {p.status}
+          </span>
+        )}
+      </div>
+
+      <div className="relative z-10 flex flex-1 flex-col p-4.5 sm:p-5">
+        <div className="flex items-center gap-2">
+          <h3 className="font-display text-[19px] sm:text-[21px] font-semibold leading-tight tracking-tight text-foreground">
+            {p.title}
+          </h3>
+          <CheckCircle2
+            aria-label="Verified project"
+            className="h-4 w-4 shrink-0 text-sky-500 drop-shadow-xs"
+          />
+        </div>
+
+        <div className="mt-1 text-[11px] font-mono font-medium uppercase tracking-wide text-muted-foreground">
+          {p.kicker}
+        </div>
+
+        <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground font-normal">
+          {p.body}
+        </p>
+
+        {/* Tech stack chips */}
+        <div className="mt-3.5 flex flex-wrap items-center gap-1.5">
+          {p.tags.slice(0, 4).map((t) => (
+            <span
+              key={t}
+              className="inline-flex h-6.5 items-center justify-center gap-1.5 rounded-full border border-[var(--glass-border)] px-2.5 text-[10.5px] font-medium leading-none text-foreground/85"
+              style={{
+                background: "oklch(1 0 0 / 0.65)",
+                boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.55)",
+              }}
+            >
+              <TechIcon name={t} />
+              <span className="whitespace-nowrap">{t}</span>
+            </span>
+          ))}
+        </div>
+
+        {/* View Project Details CTA button */}
+        <div className="mt-4 pt-3 border-t border-[var(--glass-border)] flex items-center justify-between">
+          <span className="text-[12px] font-semibold text-[var(--accent-purple)] group-hover/card:underline">
+            View Project Details
+          </span>
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--glass-border)] bg-white/70 text-foreground transition-transform duration-200 group-hover/card:translate-x-1 shadow-xs">
+            <ArrowRight className="h-3.5 w-3.5" />
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function MobileProjectsVerticalList() {
+  return (
+    <div className="flex flex-col gap-5 sm:hidden">
+      {PROJECTS.map((p, i) => (
+        <Reveal key={p.slug} delay={i * 0.05} className="w-full">
+          <div className="glass-card glow-hover animated-border relative flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--glass-border)] shadow-md">
+            <ProjectCardBody p={p} />
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
 function Projects() {
   return (
     <Section
       id="projects"
-      eyebrow="3D Reel Showcase · Click any card or View Project Details"
+      eyebrow="Creative experiments & real-world builds · Click any card for details"
       title="Featured Projects"
     >
-      <ProjectsReelSlider />
+      {/* Mobile view (< sm): Compact, vertically browsable project cards */}
+      <MobileProjectsVerticalList />
+
+      {/* Desktop & Laptop view (sm+): 3D Reel Showcase slider */}
+      <div className="hidden sm:block">
+        <ProjectsReelSlider />
+      </div>
     </Section>
   );
 }
