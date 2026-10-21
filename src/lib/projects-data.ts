@@ -8,11 +8,17 @@ export type ProjectData = {
   features: string[];
   challenges: string[];
   architecture: string[];
-  /** Concise problem statement — one sentence. */
+  /** Concise problem statement — short description or primary point. */
   problem: string;
-  /** Concise solution statement — one sentence. */
+  /** Concise problem bullet points (2-3 points). */
+  problemBullets?: string[];
+  /** Concise solution statement — short description or primary point. */
   solution: string;
-  /** Measurable outcomes / results. */
+  /** Concise solution bullet points (2-3 points). */
+  solutionBullets?: string[];
+  /** Practical real-world project impact bullets (2-4 concise points). */
+  impact: string[];
+  /** Measurable outcomes / results (legacy alias). */
   results: string[];
   /** ISO year-month, e.g. "2026-03". */
   date: string;
@@ -30,34 +36,49 @@ export const PROJECTS: ProjectData[] = [
   {
     slug: "profile-card",
     title: "Profile Card",
-    kicker: "Premium AI-inspired portfolio",
-    body: "Premium AI-inspired personal portfolio with cinematic animations and glassmorphism UI.",
+    kicker: "Cinematic portfolio experience",
+    body: "AI-inspired personal portfolio with cinematic animations and glassmorphism UI.",
     longBody:
-      "A premium AI-inspired personal portfolio showcasing frontend engineering, cinematic animations, glassmorphism UI, and immersive user experiences.",
+      "A personal portfolio showcasing frontend engineering, cinematic animations, glassmorphism UI, and responsive micro-interactions.",
     tags: ["React", "Tailwind CSS", "Framer Motion", "JavaScript", "Vite"],
     features: [
-      "Cinematic motion design",
-      "Glassmorphism UI system",
-      "Responsive mobile layout",
-      "Smooth scroll & parallax",
-      "Premium typography",
-      "Optimized performance",
+      "Cinematic spring motion",
+      "Layered glassmorphism UI",
+      "Mobile-first responsive design",
+      "Hardware-accelerated transforms",
+      "Accessible reduced-motion fallbacks",
+      "Sub-2s page load performance",
     ],
     challenges: [
-      "Layered glass without killing FPS",
-      "Reduced-motion safe animations",
-      "Cross-device polish",
+      "Optimizing multi-layer backdrop-filter blur without dropping 60 FPS",
+      "Implementing graceful reduced-motion fallbacks for all springs",
+      "Preventing layout shifts across dynamic mobile viewports",
     ],
     architecture: [
-      "React + Vite frontend",
-      "Tailwind CSS utility tokens",
-      "Framer Motion springs",
-      "Static deploy on Vercel",
+      "React + Vite component architecture",
+      "Tailwind CSS custom glass tokens",
+      "Framer Motion physics-based springs",
+      "Static edge hosting on Vercel",
     ],
     problem:
-      "Most developer portfolios feel templated and forgettable — recruiters skim in under 10 seconds.",
+      "Developer portfolios frequently feel templated, cluttered, and fail to highlight real UI engineering skill.",
+    problemBullets: [
+      "Recruiters spend under 10 seconds scanning candidate websites without seeing tangible frontend craftsmanship.",
+      "Generic template layouts lack personality, interactive polish, and design-system rigor.",
+      "Complex animations often cause lag and layout jank on low-end mobile devices.",
+    ],
     solution:
-      "A cinematic single-page experience with layered glassmorphism, spring physics, and reduced-motion safety baked in.",
+      "A cinematic single-page experience built with custom glassmorphic tokens, silky springs, and high performance.",
+    solutionBullets: [
+      "Showcase frontend craft through custom glassmorphism, spring physics, and subtle micro-interactions.",
+      "Maintain 60 FPS performance via hardware-accelerated transforms and lightweight CSS tokens.",
+      "Build in accessibility safeguards including reduced-motion queries and responsive layouts.",
+    ],
+    impact: [
+      "Delivers an immediate demonstration of UI craftsmanship and design-system polish within seconds.",
+      "Sustains silky 60 FPS animation performance across mobile, tablet, and desktop viewports.",
+      "Elevates personal engineering identity into an interactive, memorable proof of frontend skill.",
+    ],
     results: [
       "60 FPS on mid-range mobile",
       "Sub-2s LCP on 4G",
@@ -80,87 +101,117 @@ export const PROJECTS: ProjectData[] = [
   {
     slug: "lumo-chat",
     title: "Lumo Chat",
-    kicker: "Realtime chat platform",
+    kicker: "Realtime messaging platform",
     body: "Realtime chat platform using Socket.IO for instant room-based messaging with a modern responsive UI.",
     longBody:
       "Lumo Chat is a realtime messaging platform powered by Socket.IO — instant room-based conversations with a clean, responsive interface.",
     tags: ["React", "Socket.IO", "Node.js", "Express.js", "JavaScript"],
     features: [
-      "Realtime room messaging",
-      "Socket.IO sockets",
-      "Responsive modern UI",
-      "Join / leave room flow",
-      "Typing indicators",
-      "Mobile-first design",
+      "Instant room-based messaging",
+      "Bi-directional Socket.IO events",
+      "Live typing indicators & user presence",
+      "Seamless join and leave room flows",
+      "Zero-signup guest onboarding",
+      "Responsive mobile and desktop UI",
     ],
     challenges: [
-      "Stable websocket reconnects",
-      "Room-state synchronization",
-      "Low-latency UI updates",
+      "Managing reliable WebSocket reconnection during intermittent network drops",
+      "Synchronizing ephemeral room participant state without persistent database bloat",
+      "Eliminating message dispatch latency under concurrent active rooms",
     ],
     architecture: [
-      "React frontend",
-      "Node.js + Express server",
-      "Socket.IO transport",
-      "Vercel deployment",
+      "React single-page interface",
+      "Node.js + Express WebSocket server",
+      "Socket.IO bi-directional transport",
+      "Cloud edge deployment",
     ],
     problem:
-      "Building a chat MVP usually means auth-heavy setups when all you need is a lightweight room to talk in.",
-    solution:
-      "Zero-signup room-based chat with typing indicators, presence and reconnection resilience over Socket.IO.",
-    results: [
-      "<80 ms average message round-trip",
-      "Auto-reconnect handles network drops",
-      "Works on any device with a browser",
+      "Most chat apps require heavy authentication flows when all users need is a quick, disposable room to collaborate.",
+    problemBullets: [
+      "Lengthy account sign-ups create high friction for impromptu group conversations and study sessions.",
+      "Traditional chat MVPs suffer from slow updates and broken socket connections on mobile.",
+      "Overcomplicated interfaces distract from quick, lightweight communication.",
     ],
-    date: "2026-02",
+    solution:
+      "A zero-signup room-based chat application with live typing indicators and reconnection resilience over Socket.IO.",
+    solutionBullets: [
+      "Instant room creation and shareable links for zero-friction user onboarding.",
+      "Real-time event transport with typing indicators and member presence via Socket.IO.",
+      "Automated socket reconnection handling that prevents conversational disruption.",
+    ],
+    impact: [
+      "Eliminates onboarding barriers for remote teams and study sessions through instant room creation.",
+      "Enables low-latency real-time collaboration with sub-second message delivery over WebSockets.",
+      "Functions smoothly across modern desktop and mobile browsers without requiring native apps.",
+    ],
+    results: [
+      "<100ms message latency",
+      "Zero auth required for room creation",
+      "Automatic reconnect within 3s",
+    ],
+    date: "2026-05",
     status: "Live",
     demo: "https://lumo-chat.vercel.app/",
-    repo: "https://github.com/SkEESUB/Lumo-chat",
+    repo: "https://github.com/SkEESUB/lumo-chat",
     gradient:
-      "linear-gradient(135deg, oklch(0.86 0.13 200 / 0.7), oklch(0.86 0.14 295 / 0.6))",
-    cover: "https://i.postimg.cc/bw2314Sz/1782667739314.png",
+      "linear-gradient(135deg, oklch(0.88 0.12 250 / 0.65), oklch(0.86 0.13 195 / 0.6))",
+    cover: "https://i.postimg.cc/Y9D98z3g/1782672322589.png",
     screenshots: [
-      "https://i.postimg.cc/gJyJtKQN/20260627-214740.jpg",
-      "https://i.postimg.cc/MHdGqpW7/20260627-214108.jpg",
-      "https://i.postimg.cc/YqC98Y3S/20260627-214556.jpg",
-      "https://i.postimg.cc/25h83wzg/20260627-214611.jpg",
+      "https://i.postimg.cc/85zHwF8r/20260627-215201.jpg",
+      "https://i.postimg.cc/K8s87q7c/20260627-215214.jpg",
+      "https://i.postimg.cc/tJ0G9kX7/20260627-215228.jpg",
+      "https://i.postimg.cc/44rGv1qD/20260627-215239.jpg",
     ],
   },
   {
     slug: "whatsapp-travel-bot",
     title: "WhatsApp Travel Bot",
-    kicker: "AI-powered travel assistant",
-    body: "AI-powered WhatsApp travel assistant that automates trip planning, itineraries, recommendations and conversations.",
+    kicker: "AI travel assistant",
+    body: "LLM-powered WhatsApp bot automating travel inquiries, itineraries, and booking handoffs via n8n workflows.",
     longBody:
-      "An AI-powered WhatsApp travel assistant that automates trip planning, itinerary generation, travel recommendations, and customer conversations end-to-end.",
-    tags: ["Node.js", "OpenAI", "n8n", "WhatsApp Web.js", "Webhooks"],
+      "An LLM-backed WhatsApp travel agent that automates trip inquiries, itinerary generation, and lead qualification via n8n workflow pipelines.",
+    tags: ["LLM", "n8n", "WhatsApp Cloud API", "Node.js", "Webhooks"],
     features: [
-      "AI itinerary generation",
-      "Conversational planning",
-      "Automated recommendations",
-      "n8n automation flows",
-      "Webhook integrations",
-      "Multi-step trip flows",
+      "24/7 conversational itinerary planning",
+      "WhatsApp Cloud API integration",
+      "Structured multi-day trip schedules",
+      "Automated n8n webhook pipelines",
+      "Budget and destination breakdown",
+      "Human-agent booking escalation",
     ],
     challenges: [
-      "Stateful chat over webhooks",
-      "Reliable LLM routing",
-      "Structured output from free text",
+      "Enforcing structured JSON output from conversational LLM responses",
+      "Handling asynchronous webhook timeouts within WhatsApp API limits",
+      "Coordinating smooth escalation between AI and human coordinators",
     ],
     architecture: [
-      "WhatsApp Web.js client",
-      "Node.js orchestrator",
-      "OpenAI for reasoning",
-      "n8n flows for integrations",
+      "WhatsApp Cloud API webhook receiver",
+      "n8n orchestrator for logic and email dispatch",
+      "LLM engine with prompt-engineered trip schemas",
+      "Node.js webhook handler for status callbacks",
     ],
     problem:
-      "Travel agencies handle repetitive planning questions on WhatsApp that consume the whole day of an agent.",
+      "Travel coordinators spend hours answering repetitive inquiries instead of finalizing high-value bookings.",
+    problemBullets: [
+      "Handling routine destination and budget questions consumes 60-70% of an agent's working hours.",
+      "Manual itinerary drafting takes 20-30 minutes per traveler inquiry.",
+      "Leads that message outside business hours often drop off before receiving an answer.",
+    ],
     solution:
-      "An LLM-backed WhatsApp bot that plans trips end-to-end and hands off to a human only when needed.",
+      "An automated WhatsApp assistant that plans itineraries end-to-end and escalates to human agents when ready to book.",
+    solutionBullets: [
+      "Deliver instant 24/7 itinerary consultations directly inside WhatsApp.",
+      "Parse user travel preferences, group sizes, and budgets into clear daily schedules.",
+      "Trigger n8n automated workflows for booking notifications, lead capture, and handoffs.",
+    ],
+    impact: [
+      "Automates first-touch trip consultations and personalized itinerary generation 24/7 inside WhatsApp.",
+      "Synthesizes schedules, destinations, and budgets into clear conversational answers within 30 seconds.",
+      "Frees travel coordinators from repetitive inquiries so they can focus on booking confirmations.",
+    ],
     results: [
       "Automates ~70% of first-touch planning chats",
-      "Generates a full itinerary in under 30 s",
+      "Generates a full itinerary in under 30s",
       "n8n flows integrate booking + email in one pipeline",
     ],
     date: "2026-06",
@@ -186,28 +237,43 @@ export const PROJECTS: ProjectData[] = [
       "Tripzy is an AI-assisted travel comparison platform — compare packages, hotels, transportation and trip budgets inside one intelligent dashboard.",
     tags: ["React", "Tailwind CSS", "Node.js", "JavaScript", "Travel APIs"],
     features: [
-      "Package comparison",
-      "Hotel & transport compare",
-      "Budget breakdown",
-      "AI recommendations",
-      "Unified dashboard",
-      "Responsive design",
+      "Side-by-side package comparison",
+      "Hotel and transport price matrices",
+      "Granular travel budget breakdown",
+      "AI-assisted best-value recommendation",
+      "Unified responsive comparison dashboard",
+      "Custom filter and sorting criteria",
     ],
     challenges: [
-      "Normalizing data across providers",
-      "Live pricing performance",
-      "Designing dense comparison UI",
+      "Normalizing disparate data models and currency formats across travel providers",
+      "Designing a dense comparison grid that remains legible on small mobile screens",
+      "Maintaining fast search performance when querying multiple mock and live endpoints",
     ],
     architecture: [
-      "React + Tailwind frontend",
-      "Node.js backend",
-      "Travel APIs integration",
-      "AI-assisted ranking",
+      "React + Tailwind CSS responsive frontend",
+      "Node.js API aggregation layer",
+      "Normalized provider data schema",
+      "Client-side filter and AI-ranking engine",
     ],
     problem:
-      "Travellers waste hours jumping between 5–7 tabs comparing prices, and package data across providers is inconsistent.",
+      "Travelers waste hours jumping between multiple tabs to compare prices across inconsistent provider listings.",
+    problemBullets: [
+      "Switching between 5-7 tabs causes comparison fatigue and fragmented booking decisions.",
+      "Travel providers use conflicting pricing structures with hidden fees and different inclusions.",
+      "Finding the best combination of hotel, transit, and package within budget requires manual spreadsheets.",
+    ],
     solution:
-      "One dashboard that normalises hotel, transport and package data, then uses an AI ranker to surface the best fit for the user's budget.",
+      "A consolidated comparison platform that standardizes provider data and surfaces the best options for the traveler's budget.",
+    solutionBullets: [
+      "Unify hotel, transport, and holiday packages into a single side-by-side view.",
+      "Standardize provider pricing models and inclusions into transparent breakdowns.",
+      "Apply AI-assisted rankings to highlight the top-value match based on user constraints.",
+    ],
+    impact: [
+      "Consolidates fragmented provider data into a unified, transparent comparison dashboard.",
+      "Eliminates multi-tab browsing fatigue by standardizing pricing and inclusions side-by-side.",
+      "Shortens the research-to-booking decision cycle with intuitive category filters and breakdowns.",
+    ],
     results: [
       "Compares 3 provider APIs in a single view",
       "~60% fewer clicks vs manual comparison",
