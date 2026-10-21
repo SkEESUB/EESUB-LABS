@@ -607,20 +607,24 @@ function Nav() {
 
         {/* Mobile capsule nav */}
         <nav
-          className="nav-capsule nav-capsule-sheen relative flex h-[48px] w-[min(340px,calc(100vw-2rem))] items-center justify-between px-3 md:hidden rounded-full border border-white/90"
+          className="nav-capsule nav-capsule-sheen relative grid grid-cols-[36px_1fr_36px] items-center h-[48px] w-[min(340px,calc(100vw-2rem))] px-2.5 md:hidden rounded-full border border-white/90"
           aria-label="Mobile"
           style={{
             background: "rgba(255, 255, 255, 0.85)",
             boxShadow: "0 10px 30px -8px rgba(110, 85, 140, 0.18)",
           }}
         >
+          {/* Left spacer matching menu button width for true mathematical centering */}
+          <div className="w-9 h-9" aria-hidden="true" />
+
+          {/* Centered Brand Group */}
           <a
             href="#home"
             onClick={(e) => handleClick(e, "home")}
-            className="flex items-center gap-2 shrink-0 whitespace-nowrap"
+            className="flex items-center justify-center gap-2 whitespace-nowrap mx-auto"
           >
             <div
-              className="flex h-7 w-7 items-center justify-center rounded-xl border font-display text-[11px] font-bold shadow-sm"
+              className="flex h-7 w-7 items-center justify-center rounded-xl border font-display text-[11px] font-bold shadow-sm shrink-0"
               style={{
                 borderColor: "#E879F9",
                 color: "#C84CE8",
@@ -630,7 +634,7 @@ function Nav() {
               EL
             </div>
             <span
-              className="font-display text-[16px] font-semibold leading-none tracking-tight whitespace-nowrap"
+              className="font-display text-[15.5px] font-semibold leading-none tracking-tight whitespace-nowrap"
               style={{
                 whiteSpace: "nowrap",
                 background: "linear-gradient(to right, #7953FF, #D94AD5, #F47AB9)",
@@ -643,6 +647,7 @@ function Nav() {
             </span>
           </a>
 
+          {/* Right Menu Button */}
           <motion.button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -650,7 +655,7 @@ function Nav() {
             transition={{ type: "spring", stiffness: 380, damping: 22 }}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="relative flex h-9 w-9 items-center justify-center rounded-full"
+            className="relative flex h-9 w-9 items-center justify-center rounded-full justify-self-end"
             style={{
               background: "rgba(255, 255, 255, 0.85)",
               border: "1px solid rgba(255, 255, 255, 0.9)",
@@ -1045,7 +1050,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
                     whileHover={{ y: -3, scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ type: "spring", stiffness: 320, damping: 20 }}
-                    className="flex h-[66px] w-full sm:h-[94px] sm:w-[94px] lg:h-[100px] lg:w-[100px] xl:h-[104px] xl:w-[104px] flex-col items-center justify-center rounded-[12px] sm:rounded-[18px] px-1 py-1.5 sm:p-2 text-center transition-all duration-200 sm:shrink-0"
+                    className="flex h-[72px] w-full sm:h-[94px] sm:w-[94px] lg:h-[100px] lg:w-[100px] xl:h-[104px] xl:w-[104px] flex-col items-center justify-center rounded-[12px] sm:rounded-[18px] px-1 py-2 sm:p-2 text-center transition-all duration-200 sm:shrink-0"
                     style={{
                       background: "rgba(255, 255, 255, 0.68)",
                       backdropFilter: "blur(14px)",
@@ -1060,7 +1065,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
                     >
                       {s.value}
                     </span>
-                    <span className="mt-1 font-sans text-[7px] sm:text-[9.5px] font-semibold tracking-[0.2px] sm:tracking-[0.5px] text-[#625D7B] uppercase text-center leading-tight whitespace-nowrap">
+                    <span className="mt-2 font-sans text-[7.5px] sm:text-[9.5px] font-semibold tracking-[0.25px] sm:tracking-[0.5px] text-[#625D7B] uppercase text-center leading-none whitespace-nowrap">
                       {s.label}
                     </span>
                   </motion.div>
@@ -1070,7 +1075,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
           </div>
 
           {/* RIGHT COLUMN — 3D Studio Visual Showcase */}
-          <div className="relative z-[1] flex w-full flex-col items-center justify-center pt-6 sm:pt-4 lg:pt-0">
+          <div className="relative z-[1] flex w-full flex-col items-center justify-center pt-5 sm:pt-4 lg:pt-0">
             <motion.div
               style={{
                 rotateX: reduce ? 0 : tiltX,
@@ -1079,12 +1084,12 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
               }}
               animate={reduce ? undefined : { y: [0, -8, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative flex w-full max-w-[95%] sm:max-w-[540px] md:max-w-[620px] lg:max-w-[690px] xl:max-w-[760px] items-center justify-center scale-105 sm:scale-100"
+              className="relative flex w-full max-w-[100%] sm:max-w-[540px] md:max-w-[620px] lg:max-w-[690px] xl:max-w-[760px] items-center justify-center scale-[1.12] sm:scale-100"
             >
               {/* Vibrant ambient back glow behind 3D studio for depth and lighting */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute -inset-2 sm:inset-2 -z-10 rounded-full opacity-85 sm:opacity-70 blur-2xl sm:blur-3xl"
+                className="pointer-events-none absolute -inset-3 sm:inset-2 -z-10 rounded-full opacity-90 sm:opacity-70 blur-2xl sm:blur-3xl"
                 style={{
                   background:
                     "radial-gradient(circle at 50% 50%, rgba(232, 121, 249, 0.45) 0%, rgba(64, 224, 239, 0.32) 55%, transparent 75%)",
@@ -1106,7 +1111,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
             {/* Diffused ambient ground shadow */}
             <div
               aria-hidden
-              className="pointer-events-none -mt-4 sm:-mt-6 h-6 sm:h-7 w-[85%] sm:w-[70%] rounded-[50%] blur-xl opacity-90 sm:opacity-80"
+              className="pointer-events-none -mt-3 sm:-mt-6 h-6 sm:h-7 w-[90%] sm:w-[70%] rounded-[50%] blur-xl opacity-90 sm:opacity-80"
               style={{
                 background:
                   "radial-gradient(ellipse at center, rgba(168, 85, 247, 0.4) 0%, rgba(64, 224, 239, 0.22) 50%, transparent 70%)",
@@ -2185,16 +2190,105 @@ function ProjectCardBody({ p }: { p: (typeof PROJECTS)[number] }) {
   );
 }
 
-function MobileProjectsVerticalList() {
+function MobileProjectsSwipeDeck() {
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = useState(0);
+  const total = PROJECTS.length;
+
+  useEffect(() => {
+    const root = scrollerRef.current;
+    if (!root) return;
+    const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-snap-card]"));
+    const io = new IntersectionObserver(
+      (entries) => {
+        let best = { ratio: 0, idx: active };
+        entries.forEach((e) => {
+          const idx = Number((e.target as HTMLElement).dataset.idx);
+          if (e.intersectionRatio > best.ratio) best = { ratio: e.intersectionRatio, idx };
+        });
+        if (best.ratio > 0.5) setActive(best.idx);
+      },
+      { root, threshold: [0.5, 0.75, 0.9] },
+    );
+    cards.forEach((c) => io.observe(c));
+    return () => io.disconnect();
+  }, [total]);
+
+  const scrollTo = (idx: number) => {
+    const root = scrollerRef.current;
+    if (!root) return;
+    const card = root.querySelector<HTMLElement>(`[data-idx="${idx}"]`);
+    if (!card) return;
+    root.scrollTo({
+      left: card.offsetLeft - (root.clientWidth - card.clientWidth) / 2,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <div className="flex flex-col gap-5 sm:hidden">
-      {PROJECTS.map((p, i) => (
-        <Reveal key={p.slug} delay={i * 0.05} className="w-full">
-          <div className="glass-card glow-hover animated-border relative flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--glass-border)] shadow-md">
-            <ProjectCardBody p={p} />
-          </div>
-        </Reveal>
-      ))}
+    <div className="relative -mx-4 sm:hidden select-none">
+      {/* Horizontal snap-scroll rail showing peek of neighboring cards */}
+      <div
+        ref={scrollerRef}
+        className="flex snap-x snap-mandatory gap-3.5 overflow-x-auto px-[7%] pb-4 pt-1"
+        style={{
+          scrollbarWidth: "none",
+          WebkitOverflowScrolling: "touch",
+          overscrollBehaviorX: "contain",
+        }}
+      >
+        <style>{`.no-scrollbar::-webkit-scrollbar{display:none}`}</style>
+        {PROJECTS.map((p, i) => {
+          const isActive = i === active;
+          return (
+            <div
+              key={p.slug}
+              data-snap-card
+              data-idx={i}
+              className="no-scrollbar shrink-0 snap-center w-[86vw] max-w-[340px]"
+              style={{
+                transform: `scale(${isActive ? 1 : 0.96})`,
+                opacity: isActive ? 1 : 0.78,
+                transition: "transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease",
+              }}
+            >
+              <div className="glass-card glow-hover animated-border relative flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--glass-border)] shadow-md">
+                <ProjectCardBody p={p} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Pagination indicators and counter */}
+      <div className="mt-2 flex items-center justify-between px-6">
+        <span className="text-[11px] font-mono font-medium text-foreground/70">
+          <strong className="text-foreground">{String(active + 1).padStart(2, "0")}</strong>
+          <span className="opacity-40"> / </span>
+          <span>{String(total).padStart(2, "0")}</span>
+        </span>
+
+        {/* Clickable dots */}
+        <div className="flex items-center gap-1.5">
+          {PROJECTS.map((p, idx) => (
+            <button
+              key={p.slug}
+              type="button"
+              onClick={() => scrollTo(idx)}
+              aria-label={`Go to project ${idx + 1}: ${p.title}`}
+              className={`transition-all duration-300 rounded-full focus:outline-none ${
+                idx === active
+                  ? "h-1.5 w-5 bg-accent-purple shadow-sm shadow-accent-purple/50"
+                  : "h-1.5 w-1.5 bg-foreground/20 hover:bg-foreground/40"
+              }`}
+            />
+          ))}
+        </div>
+
+        <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground/60">
+          Swipe ↔
+        </span>
+      </div>
     </div>
   );
 }
@@ -2207,7 +2301,7 @@ function Projects() {
       title="Featured Projects"
     >
       {/* Mobile view (< sm): Compact, vertically browsable project cards */}
-      <MobileProjectsVerticalList />
+      <MobileProjectsSwipeDeck />
 
       {/* Desktop & Laptop view (sm+): 3D Reel Showcase slider */}
       <div className="hidden sm:block">
@@ -4684,25 +4778,25 @@ function Footer() {
 
   return (
     <footer className="relative z-10 mt-16 overflow-hidden border-t border-[var(--glass-border)] bg-[var(--glass-tint-2)] backdrop-blur-xl">
-      <div className="relative mx-auto max-w-6xl px-6 py-10 sm:py-12">
-        <div className="grid gap-10 sm:grid-cols-3 sm:items-start">
+      <div className="relative mx-auto max-w-6xl px-5 py-7 sm:px-6 sm:py-12">
+        <div className="grid gap-6 sm:gap-10 sm:grid-cols-3 sm:items-start">
           {/* Column 1 — Brand */}
           <div>
             <motion.div
               whileHover={{ scale: 1.04 }}
-              className="inline-block font-display text-2xl font-bold"
+              className="inline-block font-display text-xl sm:text-2xl font-bold"
               style={{ background: "var(--gradient-name)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}
             >
               Eesub Labs
             </motion.div>
-            <div className="mt-1 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+            <div className="mt-0.5 text-[9.5px] sm:text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
               BUILD · INNOVATE · ELEVATE
             </div>
-            <div className="mt-2 min-h-[1.4em] text-xs text-muted-foreground">
+            <div className="mt-1.5 min-h-[1.3em] text-xs text-muted-foreground">
               {typed}
               <span className="type-caret" />
             </div>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-3 sm:mt-4 flex gap-2">
               <SocialIcon Icon={Linkedin} color="#0A66C2" href="https://www.linkedin.com/in/skeesubvali20040/?skipRedirect=true" />
               <SocialIcon Icon={Github} color="#181717" href="https://github.com/SkEESUB" />
               <SocialIcon
@@ -4717,8 +4811,8 @@ function Footer() {
 
           {/* Column 2 — Navigate */}
           <div>
-            <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/70">Navigate</div>
-            <ul className="mt-3 grid grid-cols-2 gap-x-5 gap-y-2 text-xs text-muted-foreground">
+            <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/70">Navigate</div>
+            <ul className="mt-2 sm:mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
               {NAV.map((n) => (
                 <li key={n.id}>
                   <a href={`#${n.id}`} className="story-link transition-colors hover:text-foreground">
@@ -4731,8 +4825,8 @@ function Footer() {
 
           {/* Column 3 — Contact */}
           <div className="text-xs text-muted-foreground sm:text-right">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/70">Contact</div>
-            <ul className="mt-3 space-y-1.5">
+            <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/70">Contact</div>
+            <ul className="mt-2 sm:mt-3 space-y-1 sm:space-y-1.5">
               <li>
                 <a href="mailto:shaikeesub376@gmail.com" className="transition-colors hover:text-foreground">
                   shaikeesub376@gmail.com
@@ -4744,7 +4838,7 @@ function Footer() {
                 </a>
               </li>
               <li>Andhra Pradesh, India</li>
-              <li className="inline-flex items-center gap-1.5 sm:justify-end">
+              <li className="inline-flex items-center gap-1.5 sm:justify-end pt-0.5">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-70" style={{ background: "oklch(0.75 0.18 150)" }} />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: "oklch(0.7 0.2 150)" }} />
@@ -4756,7 +4850,7 @@ function Footer() {
         </div>
 
         <div
-          className="mt-8 h-px w-full"
+          className="mt-6 sm:mt-8 h-px w-full"
           style={{
             background:
               "linear-gradient(90deg, transparent, oklch(0.78 0.18 295 / 0.5), oklch(0.78 0.13 195 / 0.5), transparent)",
@@ -4768,7 +4862,7 @@ function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-5 flex flex-col items-center justify-between gap-2 text-[11px] text-muted-foreground sm:flex-row"
+          className="mt-4 sm:mt-5 flex flex-col items-center justify-between gap-1.5 text-[10.5px] sm:text-[11px] text-muted-foreground sm:flex-row"
         >
           <div>© 2026 Shaik Eesub Vali · All rights reserved.</div>
           <div>Crafted with <span style={{ color: "var(--accent-purple)" }}>♥</span> · Graduating 2027</div>
