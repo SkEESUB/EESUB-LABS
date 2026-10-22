@@ -28,6 +28,9 @@ import {
   Linkedin,
   Instagram,
   MessageCircle,
+  MessageSquare,
+  Copy,
+  Atom,
   Code2,
   Palette,
   Layers,
@@ -76,15 +79,15 @@ function ProfilePortrait({ src }: { src: string }) {
   return (
     <div
       style={{ perspective: 1400 }}
-      className="relative mx-auto w-full max-w-[340px] sm:max-w-[360px]"
+      className="relative mx-auto w-full max-w-[310px] sm:max-w-[335px]"
     >
       {/* Ambient under-glow (static) */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-3 -z-10 rounded-[28px] opacity-70 blur-2xl"
+        className="pointer-events-none absolute -inset-3 -z-10 rounded-[28px] opacity-75 blur-2xl"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 65%, oklch(0.86 0.11 295 / 0.38), oklch(0.88 0.09 210 / 0.24) 55%, transparent 78%)",
+            "radial-gradient(ellipse at 50% 65%, oklch(0.86 0.11 295 / 0.42), oklch(0.88 0.09 210 / 0.26) 55%, transparent 78%)",
         }}
       />
       {/* Frame — stationary; hover-only 3D lift */}
@@ -92,15 +95,15 @@ function ProfilePortrait({ src }: { src: string }) {
         style={{
           transformStyle: "preserve-3d",
           boxShadow:
-            "0 24px 48px -20px oklch(0.28 0.06 280 / 0.4), 0 12px 28px -14px oklch(0.55 0.16 300 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.9)",
+            "-3px -3px 10px 0 rgba(255, 255, 255, 0.95), inset 1px 1px 2px 0 rgba(255, 255, 255, 0.95), 4px 12px 28px -4px rgba(110, 85, 140, 0.22)",
         }}
         whileHover={{
           y: -5,
-          rotateX: 2,
-          rotateY: -2,
-          transition: { type: "spring", stiffness: 180, damping: 18 },
+          rotateX: 2.5,
+          rotateY: -2.5,
+          transition: { type: "spring", stiffness: 220, damping: 20 },
         }}
-        className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border-2 border-white/85 bg-slate-900/10 dark:border-white/20 shadow-md"
+        className="relative aspect-[4/4.7] w-full overflow-hidden rounded-2xl border-2 border-white/90 bg-slate-900/10 dark:border-white/25 shadow-md"
       >
         <img
           src={src}
@@ -530,25 +533,22 @@ function Nav() {
           <a
             href="#home"
             onClick={(e) => handleClick(e, "home")}
-            className="shrink-0 flex items-center gap-2 pl-0.5 pr-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-full group"
+            className="shrink-0 flex items-center gap-2 pl-0.5 pr-2.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-full group"
           >
-            <div
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border font-display text-[12.5px] font-bold shadow-sm transition-transform duration-200 group-hover:scale-105"
-              style={{
-                borderColor: "#E879F9",
-                color: "#C84CE8",
-                background: "rgba(255, 255, 255, 0.9)",
-              }}
-            >
-              EL
-            </div>
+            <div className="neu-icon-holder h-7 w-7 text-[11px] font-bold text-purple-600">EL</div>
             <span
-              className="font-display text-[15px] sm:text-[16px] font-semibold tracking-tight text-[#28263D] dark:text-white whitespace-nowrap"
-              style={{ whiteSpace: "nowrap" }}
+              className="font-display text-[18px] sm:text-[19px] font-bold tracking-tight whitespace-nowrap transition-transform duration-200 group-hover:scale-[1.02]"
+              style={{
+                fontFamily: "var(--font-display), 'Playfair Display', serif",
+                background: "linear-gradient(135deg, #7033FF 0%, #B829D6 55%, #D946EF 100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
             >
               Eesub Labs
             </span>
-            <span className="text-muted-foreground/40 text-xs font-semibold select-none">·</span>
+            <span className="text-muted-foreground/35 text-xs font-semibold select-none ml-1">·</span>
           </a>
 
           {/* Navigation Items */}
@@ -578,8 +578,8 @@ function Nav() {
                       layoutId="nav-pill"
                       className="absolute inset-0 rounded-full"
                       style={{
-                        background: "linear-gradient(110deg, #F472D0, #8B5CF6)",
-                        boxShadow: "0 0 18px rgba(192, 91, 255, 0.35)",
+                        background: "linear-gradient(135deg, #9333EA 0%, #C084FC 100%)",
+                        boxShadow: "-1.5px -1.5px 4px 0 rgba(255, 255, 255, 0.7), 2px 4px 10px -1px rgba(147, 51, 234, 0.35), inset 0.5px 0.5px 1px 0 rgba(255, 255, 255, 0.5)",
                       }}
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
@@ -621,23 +621,13 @@ function Nav() {
           <a
             href="#home"
             onClick={(e) => handleClick(e, "home")}
-            className="flex items-center justify-center gap-2 whitespace-nowrap mx-auto"
+            className="flex items-center justify-center whitespace-nowrap mx-auto"
           >
-            <div
-              className="flex h-7 w-7 items-center justify-center rounded-xl border font-display text-[11px] font-bold shadow-sm shrink-0"
-              style={{
-                borderColor: "#E879F9",
-                color: "#C84CE8",
-                background: "rgba(255, 255, 255, 0.9)",
-              }}
-            >
-              EL
-            </div>
             <span
-              className="font-display text-[15.5px] font-semibold leading-none tracking-tight whitespace-nowrap"
+              className="font-display text-[20px] font-bold leading-none tracking-[-0.015em] whitespace-nowrap"
               style={{
-                whiteSpace: "nowrap",
-                background: "linear-gradient(to right, #7953FF, #D94AD5, #F47AB9)",
+                fontFamily: "var(--font-display), 'Playfair Display', serif",
+                background: "linear-gradient(135deg, #7033FF 0%, #B829D6 55%, #D946EF 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -998,10 +988,8 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
             </Reveal>
 
             <Reveal delay={0.15}>
-              <p className="max-w-[520px] font-sans text-[14.5px] sm:text-[15px] lg:text-[16px] leading-relaxed text-[#625D7B]">
-                I build premium React applications and AI-powered products with beautiful user
-                experiences under{" "}
-                <strong className="font-semibold text-[#3F3A5B]">Eesub Labs</strong>.
+              <p className="max-w-[480px] font-sans text-[14px] sm:text-[15px] lg:text-[16px] leading-snug sm:leading-relaxed text-[#5F5A77]">
+                I build premium React apps and AI-powered products with beautiful user experiences.
               </p>
             </Reveal>
 
@@ -1050,14 +1038,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
                     whileHover={{ y: -3, scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ type: "spring", stiffness: 320, damping: 20 }}
-                    className="flex h-[72px] w-full sm:h-[94px] sm:w-[94px] lg:h-[100px] lg:w-[100px] xl:h-[104px] xl:w-[104px] flex-col items-center justify-center rounded-[12px] sm:rounded-[18px] px-1 py-2 sm:p-2 text-center transition-all duration-200 sm:shrink-0"
-                    style={{
-                      background: "rgba(255, 255, 255, 0.68)",
-                      backdropFilter: "blur(14px)",
-                      WebkitBackdropFilter: "blur(14px)",
-                      border: "1px solid rgba(255, 255, 255, 0.85)",
-                      boxShadow: "0 4px 16px rgba(120, 80, 150, 0.05)",
-                    }}
+                    className="neu-card neu-card-interactive flex h-[72px] w-full sm:h-[94px] sm:w-[94px] lg:h-[100px] lg:w-[100px] xl:h-[104px] xl:w-[104px] flex-col items-center justify-center rounded-[12px] sm:rounded-[18px] px-1 py-2 sm:p-2 text-center transition-all duration-200 sm:shrink-0"
                   >
                     <span
                       className="font-serif text-[17px] sm:text-[24px] lg:text-[26px] font-semibold leading-none tracking-tight"
@@ -1167,7 +1148,6 @@ function MagneticButton({
       download={download as never}
       target={target}
       rel={rel}
-      // @ts-expect-error handler union
       onClick={onClick}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
@@ -1183,10 +1163,10 @@ function MagneticButton({
 /* ================================== About ================================= */
 function About() {
   const whoBullets = [
-    { Icon: Code2, label: "Frontend Developer" },
-    { Icon: Layers, label: "React Developer" },
-    { Icon: Palette, label: "UI Designer" },
-    { Icon: Sparkles, label: "AI Builder & Prompt Engineer" },
+    { Icon: Code2, label: "Frontend Developer", color: "#9333ea" },
+    { Icon: Atom, label: "React Developer", color: "#06b6d4" },
+    { Icon: Palette, label: "UI Designer", color: "#ec4899" },
+    { Icon: Sparkles, label: "AI Builder & Prompt Engineer", color: "#9333ea" },
   ];
   const interests = [
     "React",
@@ -1214,7 +1194,7 @@ function About() {
     <Section
       id="about"
       eyebrow="The person behind the pixels"
-      title="About Me"
+      title={<>About <span style={{ background: "linear-gradient(135deg, #B829D6, #D946EF)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Me</span></>}
     >
       <div
         aria-hidden
@@ -1227,28 +1207,36 @@ function About() {
         style={{ background: "oklch(0.82 0.14 195 / 0.5)" }}
       />
 
-      <div className="grid items-stretch gap-4 sm:gap-6 md:grid-cols-[0.94fr_1.36fr] lg:grid-cols-[360px_1fr]">
-        {/* Profile — single clean card */}
+      <div className="grid items-stretch gap-5 sm:gap-6 md:grid-cols-[330px_1fr] lg:grid-cols-[355px_1fr]">
+        {/* Profile — perfectly proportioned card without social icons */}
         <Reveal className="flex">
-          <motion.div
-            whileHover={{ y: -4, scale: 1.01 }}
-            whileTap={{ scale: 0.985 }}
-            transition={{ type: "spring", stiffness: 280, damping: 22 }}
-            className="glass-card-clean flex w-full flex-col justify-between p-4 sm:p-5"
-          >
+          <Tilt className="group flex flex-1" intensity={3}>
+            <motion.div
+              style={{
+                transformStyle: "preserve-3d",
+              }}
+              whileHover={{
+                y: -4,
+                boxShadow:
+                  "-3px -3px 10px 0 rgba(255, 255, 255, 0.95), 6px 18px 36px -4px rgba(110, 85, 140, 0.2), inset 1px 1px 2px 0 rgba(255, 255, 255, 1)",
+                transition: { type: "spring", stiffness: 280, damping: 22 },
+              }}
+              whileTap={{ scale: 0.985 }}
+              className="neu-card neu-neon-edge flex w-full flex-col justify-between p-4.5 sm:p-5.5 rounded-[26px]"
+            >
             <ProfilePortrait src={portrait} />
 
             <div className="mt-3.5 flex flex-1 flex-col justify-between space-y-2.5">
               <div>
-                <div className="font-display text-xl sm:text-2xl font-bold leading-tight">
+                <div className="font-display text-[22px] sm:text-[24px] font-bold leading-tight text-foreground">
                   Shaik Eesub Vali
                 </div>
-                <div className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+                <div className="text-xs sm:text-[13px] text-muted-foreground mt-0.5">
                   Frontend Developer
                 </div>
               </div>
 
-              <div className="space-y-1.5 text-[12.5px] sm:text-[13px] text-muted-foreground">
+              <div className="space-y-1.5 text-[12.5px] sm:text-[13px] text-muted-foreground pt-1.5">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 shrink-0" style={{ color: "var(--accent-pink)" }} />
                   <span>Narasaraopet, AP</span>
@@ -1267,40 +1255,34 @@ function About() {
               </div>
             </div>
           </motion.div>
+          </Tilt>
         </Reveal>
 
-        {/* Right side: ONE container, three stacked horizontal cards */}
+        {/* Right side: THREE neatly balanced horizontal cards */}
         <Reveal delay={0.08} className="flex">
-          <div className="flex w-full flex-col justify-between gap-3 sm:gap-4 md:h-full">
+          <div className="flex w-full flex-col justify-between gap-3.5 sm:gap-4 md:h-full">
             {/* Who I Am */}
             <Tilt className="group flex flex-1" intensity={3}>
               <motion.div
-                whileHover={{ y: -3 }}
+                whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.99 }}
                 transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                className="glass-card glow-hover flex w-full flex-col justify-center p-4 sm:p-5"
+                className="neu-card neu-card-interactive neu-neon-edge flex w-full flex-col justify-center p-4 sm:p-4.5 rounded-[24px]"
               >
-                <div className="flex items-center gap-2.5">
-                  <motion.div
-                    whileHover={{ rotate: 8, scale: 1.08 }}
-                    className="flex h-9 w-9 items-center justify-center rounded-2xl text-white shadow-[0_10px_24px_-8px_oklch(0.5_0.2_295/0.5)]"
-                    style={{ background: "var(--gradient-pink-purple)" }}
-                  >
-                    <User className="h-4.5 w-4.5" />
-                  </motion.div>
-                  <div className="font-semibold text-sm sm:text-base">Who I Am</div>
+                <div className="flex items-center gap-3">
+                  <motion.div whileHover={{ rotate: 8, scale: 1.08 }} className="neu-icon-holder-purple h-10 w-10"><User className="h-4.5 w-4.5" /></motion.div>
+                  <div className="font-display text-[16px] sm:text-[17px] font-bold text-foreground">Who I Am</div>
                 </div>
-                <ul className="mt-3 grid grid-cols-1 gap-2 text-[12.5px] sm:text-[13px] text-muted-foreground sm:grid-cols-2">
+                <ul className="mt-3 grid grid-cols-1 gap-2.5 text-[12.5px] text-muted-foreground sm:grid-cols-2">
                   {whoBullets.map((b) => (
                     <li
                       key={b.label}
-                      className="flex items-center gap-2.5 rounded-xl border border-[var(--glass-border)] bg-white/20 dark:bg-white/5 px-3 py-2 font-medium text-foreground/90 backdrop-blur-sm"
+                      className="neu-pill flex min-h-[40px] items-center gap-2.5 px-3 py-1.5 font-semibold text-foreground/90"
                     >
-                      <b.Icon
-                        className="h-4 w-4 shrink-0"
-                        style={{ color: "var(--accent-purple)" }}
-                      />
-                      <span className="truncate">{b.label}</span>
+                      <span className="neu-icon-holder h-6.5 w-6.5 shrink-0" style={{ color: b.color }}>
+                        <b.Icon className="h-3.5 w-3.5 shrink-0" />
+                      </span>
+                      <span className="truncate text-[12px]">{b.label}</span>
                     </li>
                   ))}
                 </ul>
@@ -1310,29 +1292,23 @@ function About() {
             {/* My Interests */}
             <Tilt className="group flex flex-1" intensity={3}>
               <motion.div
-                whileHover={{ y: -3 }}
+                whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.99 }}
                 transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                className="glass-card glow-hover flex w-full flex-col justify-center p-4 sm:p-5"
+                className="neu-card neu-card-interactive neu-neon-edge flex w-full flex-col justify-center p-4 sm:p-4.5 rounded-[24px]"
               >
-                <div className="flex items-center gap-2.5">
-                  <motion.div
-                    whileHover={{ rotate: -8, scale: 1.08 }}
-                    className="flex h-9 w-9 items-center justify-center rounded-2xl text-white shadow-[0_10px_24px_-8px_oklch(0.5_0.2_295/0.5)]"
-                    style={{ background: "var(--gradient-teal-purple)" }}
-                  >
-                    <Heart className="h-4.5 w-4.5" />
-                  </motion.div>
-                  <div className="font-semibold text-sm sm:text-base">My Interests</div>
+                <div className="flex items-center gap-3">
+                  <motion.div whileHover={{ rotate: -8, scale: 1.08 }} className="neu-icon-holder-cyan h-10 w-10"><Heart className="h-4.5 w-4.5" /></motion.div>
+                  <div className="font-display text-[16px] sm:text-[17px] font-bold text-foreground">My Interests</div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {interests.map((t) => (
                     <motion.span
                       key={t}
-                      whileHover={{ y: -2, scale: 1.04 }}
+                      whileHover={{ y: -1, scale: 1.04 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 320, damping: 16 }}
-                      className="glass-pill px-3 py-1 text-xs font-medium text-foreground/90"
+                      className="neu-pill px-3.5 py-1.5 text-xs font-semibold text-foreground/90 cursor-default"
                     >
                       {t}
                     </motion.span>
@@ -1344,32 +1320,22 @@ function About() {
             {/* What I Do */}
             <Tilt className="group flex flex-1" intensity={3}>
               <motion.div
-                whileHover={{ y: -3 }}
+                whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.99 }}
                 transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                className="glass-card glow-hover flex w-full flex-col justify-center p-4 sm:p-5"
+                className="neu-card neu-card-interactive neu-neon-edge flex w-full flex-col justify-center p-4 sm:p-4.5 rounded-[24px]"
               >
-                <div className="flex items-center gap-2.5">
-                  <motion.div
-                    whileHover={{ rotate: 8, scale: 1.08 }}
-                    className="flex h-9 w-9 items-center justify-center rounded-2xl text-white shadow-[0_10px_24px_-8px_oklch(0.5_0.2_295/0.5)]"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, oklch(0.82 0.13 195), oklch(0.82 0.13 350))",
-                    }}
-                  >
-                    <Wrench className="h-4.5 w-4.5" />
-                  </motion.div>
-                  <div className="font-semibold text-sm sm:text-base">What I Do</div>
+                <div className="flex items-center gap-3">
+                  <motion.div whileHover={{ rotate: 8, scale: 1.08 }} className="neu-icon-holder-pink h-10 w-10"><Wrench className="h-4.5 w-4.5" /></motion.div>
+                  <div className="font-display text-[16px] sm:text-[17px] font-bold text-foreground">What I Do</div>
                 </div>
-                <ul className="mt-3 grid grid-cols-1 gap-2 text-[12.5px] sm:text-[13px] text-muted-foreground sm:grid-cols-2">
+                <ul className="mt-3 grid grid-cols-1 gap-2.5 text-[12.5px] text-muted-foreground sm:grid-cols-2">
                   {doItems.map((it) => (
-                    <li key={it} className="flex items-center gap-2">
-                      <CheckCircle2
-                        className="h-3.5 w-3.5 shrink-0"
-                        style={{ color: "var(--accent-teal)" }}
-                      />
-                      <span>{it}</span>
+                    <li key={it} className="flex items-center gap-2.5 text-[12.5px] font-medium text-foreground/85">
+                      <span className="neu-icon-holder h-5 w-5 bg-cyan-50/90 text-cyan-600 border-cyan-100 shrink-0">
+                        <Check className="h-3 w-3 stroke-[2.5]" />
+                      </span>
+                      <span className="truncate">{it}</span>
                     </li>
                   ))}
                 </ul>
@@ -1430,7 +1396,7 @@ function SocialIcon({
       whileHover={{ y: -3, scale: 1.08 }}
       whileTap={{ scale: 0.94 }}
       transition={{ type: "spring", stiffness: 300, damping: 16 }}
-      className="glass-pill brand-glow relative flex h-9 w-9 cursor-pointer items-center justify-center"
+      className="neu-icon-btn relative flex h-9 w-9 cursor-pointer items-center justify-center"
       style={style}
     >
       {isInstagram ? (
@@ -1639,25 +1605,29 @@ function Skills() {
   const [tab, setTab] = useState<SkillTab>("Frontend");
   const items = SKILLS.filter((s) => TAB_MAP[tab].includes(s.name));
   return (
-    <Section id="skills" eyebrow="Technologies I design and build with" title="Stack">
+    <Section id="skills" eyebrow="Technologies I design and build with" title={<span style={{ background: "linear-gradient(135deg, #7033FF, #B829D6, #D946EF)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Stack</span>}>
       {/* Tabs */}
-      <div className="mb-6 flex flex-wrap gap-1.5">
+      <div className="mb-6 flex flex-wrap gap-2">
         {SKILL_TABS.map((t) => {
           const active = tab === t;
           return (
             <motion.button
               key={t}
-              whileTap={{ scale: 0.94 }}
+              whileTap={{ scale: 0.96 }}
+              whileHover={{ y: -1.5 }}
               onClick={() => setTab(t)}
-              className={`relative rounded-full px-4 py-1.5 text-xs font-medium transition-colors ${
-                active ? "text-white" : "text-muted-foreground hover:text-foreground"
+              className={`relative h-9 rounded-full px-4 text-xs font-semibold tracking-wide transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                active
+                  ? "text-white shadow-md shadow-purple-500/25"
+                  : "neu-card-subtle text-foreground/75 hover:text-foreground"
               }`}
             >
               {active && (
                 <motion.span
                   layoutId="skill-tab"
-                  className="nav-pill-active absolute inset-0 rounded-full"
-                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: "var(--gradient-button)" }}
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
               <span className="relative z-10">{t}</span>
@@ -1671,7 +1641,7 @@ function Skills() {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        className="grid auto-rows-fr gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        className="grid auto-rows-fr gap-3.5 sm:grid-cols-2 lg:grid-cols-3"
       >
         {items.map((s, i) => (
           <motion.div
@@ -1681,22 +1651,17 @@ function Skills() {
             transition={{ delay: i * 0.04, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex"
           >
-            <Tilt className="group flex w-full" intensity={8}>
+            <Tilt className="group flex w-full" intensity={6}>
               <motion.div
-                whileHover={{ y: -6 }}
-                whileTap={{ y: -3, scale: 0.985 }}
+                whileHover={{ y: -3 }}
+                whileTap={{ y: -1, scale: 0.985 }}
                 transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                className="glass-card glow-hover relative flex w-full items-center gap-3 overflow-hidden p-4"
+                className="neu-card neu-card-interactive neu-neon-edge relative flex w-full items-center gap-3.5 overflow-hidden p-3 sm:p-3.5 rounded-[20px]"
               >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-60"
-                  style={{ background: s.color }}
-                />
+                {/* 3D Floating Skill Icon Object */}
                 <motion.div
-                  whileHover={{ rotate: [0, -8, 8, 0], scale: 1.08 }}
-                  transition={{ duration: 0.6 }}
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-tint-1)] shadow-[0_10px_24px_-8px_oklch(0.3_0.1_280/0.35)]"
+                  whileHover={{ scale: 1.06 }}
+                  className="neu-skill-icon-3d shrink-0"
                   style={
                     s.name === "GitHub" || s.name === "Vercel" || s.name === "Next.js"
                       ? { color: s.color }
@@ -1705,9 +1670,10 @@ function Skills() {
                 >
                   {s.Logo ? <s.Logo /> : <Monogram letter={s.name[0]} color={s.color} />}
                 </motion.div>
-                <div className="min-w-0">
-                  <div className="truncate text-sm font-semibold">{s.name}</div>
-                  <div className="truncate text-[10px] uppercase tracking-wide text-muted-foreground">
+
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-[14px] sm:text-[15px] font-bold text-foreground leading-tight">{s.name}</div>
+                  <div className="truncate text-[9.5px] uppercase font-semibold tracking-wider text-muted-foreground mt-0.5">
                     {s.category}
                   </div>
                 </div>
@@ -1809,7 +1775,7 @@ function ProjectsReelSlider() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [total]);
 
-  // Circular offset calculation
+  // Circular offset calculation for 3D coverflow
   const getOffset = (idx: number) => {
     let diff = (idx - currentIdx) % total;
     if (diff < -Math.floor(total / 2)) diff += total;
@@ -1829,12 +1795,12 @@ function ProjectsReelSlider() {
   };
 
   return (
-    <div className="relative w-full overflow-x-clip py-2">
+    <div className="relative w-full overflow-x-clip py-4 sm:py-6">
       {/* ================= 1. 3D REEL SLIDER STAGE ================= */}
       <div className="relative mx-auto w-full max-w-5xl px-2 sm:px-6">
         <div
-          className="reel-3d-stage relative flex h-[240px] sm:h-[310px] md:h-[370px] w-full items-center justify-center select-none"
-          style={{ touchAction: "pan-y" }}
+          className="reel-3d-stage relative flex h-[260px] sm:h-[350px] md:h-[420px] lg:h-[460px] w-full items-center justify-center select-none"
+          style={{ perspective: 1400, touchAction: "pan-y" }}
         >
           {projects.map((p, idx) => {
             const offset = getOffset(idx);
@@ -1843,32 +1809,32 @@ function ProjectsReelSlider() {
             const isRight = offset === 1;
             const isHidden = Math.abs(offset) >= 2;
 
-            // Responsive positioning & 3D Coverflow transform
+            // Responsive positioning & 3D Coverflow transform matching Reference
             let xOffset = "0%";
-            if (isLeft) xOffset = "-48%";
-            else if (isRight) xOffset = "48%";
-            else if (isHidden) xOffset = offset > 0 ? "88%" : "-88%";
+            if (isLeft) xOffset = "-44%";
+            else if (isRight) xOffset = "44%";
+            else if (isHidden) xOffset = offset > 0 ? "85%" : "-85%";
 
             const rotateYVal = shouldReduceMotion
               ? 0
               : isCenter
                 ? 0
                 : isLeft
-                  ? 24
+                  ? 20
                   : isRight
-                    ? -24
+                    ? -20
                     : offset > 0
-                      ? -38
-                      : 38;
-            const zVal = shouldReduceMotion ? 0 : isCenter ? 0 : isLeft || isRight ? -120 : -240;
-            const scaleVal = isCenter ? 1 : isLeft || isRight ? 0.82 : 0.65;
-            const opacityVal = isCenter ? 1 : isLeft || isRight ? 0.62 : 0;
+                      ? -35
+                      : 35;
+            const zVal = shouldReduceMotion ? 0 : isCenter ? 0 : isLeft || isRight ? -90 : -200;
+            const scaleVal = isCenter ? 1 : isLeft || isRight ? 0.86 : 0.7;
+            const opacityVal = isCenter ? 1 : isLeft || isRight ? 0.72 : 0;
             const zIndexVal = isCenter ? 30 : isLeft || isRight ? 20 : 10;
 
             return (
               <motion.div
                 key={p.slug}
-                className="reel-3d-card absolute aspect-[16/10] w-[82vw] max-w-[300px] sm:max-w-[420px] md:max-w-[530px] rounded-2xl sm:rounded-3xl cursor-pointer"
+                className="reel-3d-card absolute aspect-[16/10] w-[86vw] max-w-[340px] sm:max-w-[500px] md:max-w-[620px] lg:max-w-[680px] rounded-[22px] sm:rounded-[28px] cursor-pointer"
                 style={{
                   zIndex: zIndexVal,
                 }}
@@ -1879,8 +1845,8 @@ function ProjectsReelSlider() {
                   z: zVal,
                   opacity: opacityVal,
                   filter: isCenter
-                    ? "brightness(1) saturate(1.05)"
-                    : "brightness(0.8) saturate(0.9)",
+                    ? "brightness(1) saturate(1.04)"
+                    : "brightness(0.82) saturate(0.92)",
                 }}
                 transition={{
                   duration: 0.52,
@@ -1910,12 +1876,12 @@ function ProjectsReelSlider() {
                   }
                 }}
               >
-                {/* Outer Glass Card Container */}
-                <div className="relative h-full w-full overflow-hidden rounded-2xl sm:rounded-3xl border-2 border-white/80 dark:border-white/20 bg-slate-900/40 shadow-2xl backdrop-blur-md group">
+                {/* Outer Glass Card Container with subtle neon edge lighting */}
+                <div className="neu-card neu-neon-edge relative h-full w-full overflow-hidden rounded-[22px] sm:rounded-[28px] group shadow-xl">
                   {/* Screenshot Cover */}
                   <img
                     src={p.cover}
-                    alt={`${p.title} preview screenshot`}
+                    alt={`${p.title} preview`}
                     loading={isCenter ? "eager" : "lazy"}
                     className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
@@ -1932,55 +1898,49 @@ function ProjectsReelSlider() {
                     className="pointer-events-none absolute inset-0 opacity-40"
                     style={{
                       background:
-                        "linear-gradient(135deg, oklch(1 0 0 / 0.35) 0%, transparent 45%, transparent 70%, oklch(1 0 0 / 0.1) 100%)",
+                        "linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, transparent 45%, transparent 70%, rgba(255, 255, 255, 0.1) 100%)",
                     }}
                   />
 
-                  {/* Top Header Pills on Card */}
-                  <div className="absolute top-2.5 sm:top-3.5 left-2.5 sm:left-3.5 right-2.5 sm:right-3.5 flex items-center justify-between gap-2 pointer-events-none">
-                    {/* Status Pill */}
+                  {/* Top Header Pills on Card matching Reference */}
+                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between gap-2 pointer-events-none">
+                    {/* Status Pill on Left */}
                     {p.status === "Live" ? (
-                      <span
-                        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-lg"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, oklch(0.72 0.2 150), oklch(0.65 0.22 160))",
-                        }}
-                      >
+                      <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white bg-emerald-600 shadow-md">
                         <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
                         Live
                       </span>
                     ) : (
-                      <span className="glass-pill px-2.5 py-1 text-[10px] sm:text-[11px] font-semibold text-white/90 backdrop-blur-md shadow-sm">
+                      <span className="inline-flex items-center rounded-full border border-white/25 bg-black/40 px-3 py-1 text-[10px] sm:text-[11px] font-semibold text-white/90 backdrop-blur-md shadow-sm">
                         {p.status}
                       </span>
                     )}
 
-                    {/* Category kicker on right */}
-                    <span className="glass-pill px-2.5 py-1 text-[9.5px] sm:text-[10.5px] font-mono uppercase tracking-wider text-white/90 backdrop-blur-md shadow-sm">
+                    {/* Category pill on Right */}
+                    <span className="inline-flex items-center rounded-full bg-white/85 text-black/85 px-3 sm:px-3.5 py-1 text-[9.5px] sm:text-[10px] font-mono font-semibold uppercase tracking-wider shadow-sm backdrop-blur-md">
                       {p.kicker}
                     </span>
                   </div>
 
-                  {/* Bottom Info Banner Inside Card */}
-                  <div className="absolute bottom-0 inset-x-0 p-3 sm:p-5 flex items-end justify-between gap-3">
+                  {/* Bottom Info Banner Inside Card matching Reference */}
+                  <div className="absolute bottom-0 inset-x-0 p-4 sm:p-6 flex items-end justify-between gap-3">
                     <div className="min-w-0 flex-1">
-                      <div className="text-[10px] font-mono tracking-widest text-white/70 uppercase">
+                      <div className="text-[10px] sm:text-[11px] font-mono font-semibold tracking-widest text-white/80 uppercase">
                         {String(idx + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
                       </div>
-                      <h5 className="font-display text-base sm:text-2xl font-bold text-white drop-shadow-md truncate">
+                      <h5 className="font-display text-xl sm:text-3xl lg:text-4xl font-normal text-white drop-shadow-md truncate leading-tight mt-0.5">
                         {p.title}
                       </h5>
                     </div>
 
-                    {/* Action prompt badge */}
+                    {/* Action prompt button */}
                     {isCenter ? (
-                      <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/20 px-2.5 py-1 text-[10.5px] font-semibold text-white backdrop-blur-md shadow transition-transform group-hover:scale-105">
-                        <Eye className="h-3 w-3 text-white" />
-                        <span className="hidden sm:inline">View Details</span>
+                      <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-black/60 px-3.5 py-1.5 text-xs font-medium text-white backdrop-blur-md shadow-sm transition-transform hover:scale-105 active:scale-95">
+                        <Eye className="h-3.5 w-3.5 text-white" />
+                        <span>View Details</span>
                       </span>
                     ) : (
-                      <span className="shrink-0 inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/40 px-2 py-0.5 text-[9.5px] font-medium text-white/80 backdrop-blur-md">
+                      <span className="shrink-0 inline-flex items-center rounded-full border border-white/20 bg-black/50 px-3 py-1 text-[10.5px] font-medium text-white/80 backdrop-blur-md">
                         <span>Select</span>
                       </span>
                     )}
@@ -1991,16 +1951,22 @@ function ProjectsReelSlider() {
           })}
         </div>
 
-        {/* ================= REEL CONTROLS (Counter, Dots, Prev/Next) ================= */}
-        <div className="mt-4 sm:mt-6 flex items-center justify-between gap-4 px-2 sm:px-4">
-          {/* Position Indicator: 01 / 04 */}
-          <div className="flex items-center gap-2 text-xs font-mono font-semibold tracking-widest text-muted-foreground">
+        {/* ================= REEL CONTROLS (Counter + Progress, Dots, Prev/Next) ================= */}
+        <div className="mt-5 sm:mt-7 flex items-center justify-between gap-4 px-2 sm:px-4">
+          {/* Left: Position Indicator + Progress Bar */}
+          <div className="flex items-center gap-2.5 font-mono text-xs font-semibold tracking-widest text-muted-foreground">
             <span className="text-foreground font-bold text-sm">
               {String(currentIdx + 1).padStart(2, "0")}
             </span>
             <span className="opacity-40">/</span>
             <span>{String(total).padStart(2, "0")}</span>
-            <span className="hidden sm:inline ml-2 h-px w-12 bg-muted-foreground/30" />
+            <div className="relative ml-1 h-[2px] w-12 sm:w-16 rounded-full bg-muted-foreground/25 overflow-hidden">
+              <motion.div
+                className="h-full bg-purple-600 rounded-full"
+                animate={{ width: `${((currentIdx + 1) / total) * 100}%` }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
           </div>
 
           {/* Center clickable pill dots */}
@@ -2013,42 +1979,42 @@ function ProjectsReelSlider() {
                 aria-label={`Go to slide ${idx + 1}: ${p.title}`}
                 className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent-purple ${
                   idx === currentIdx
-                    ? "h-2 w-7 rounded-full bg-accent-purple shadow-sm shadow-accent-purple/50"
-                    : "h-2 w-2 rounded-full bg-foreground/20 hover:bg-foreground/45"
+                    ? "h-2 w-7 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-500 shadow-sm shadow-purple-500/40"
+                    : "h-2 w-2 rounded-full bg-foreground/25 hover:bg-foreground/45"
                 }`}
               />
             ))}
           </div>
 
-          {/* Circular Previous / Next buttons */}
+          {/* Right: Circular Prev / Next buttons */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               type="button"
               onClick={handlePrev}
               aria-label="Previous project (Left arrow)"
-              className="group flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-[var(--glass-border)] bg-[var(--glass-tint-1)] text-foreground shadow-sm backdrop-blur-md transition-all duration-200 hover:scale-105 hover:bg-white/60 dark:hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent-purple"
+              className="neu-icon-btn h-9 w-9 sm:h-10 sm:w-10 text-foreground focus:outline-none focus:ring-2 focus:ring-accent-purple"
             >
-              <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+              <ChevronLeft className="h-4 w-4" />
             </button>
 
             <button
               type="button"
               onClick={handleNext}
               aria-label="Next project (Right arrow)"
-              className="group flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-[var(--glass-border)] bg-foreground text-background shadow-md backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent-purple"
+              className="neu-icon-btn h-9 w-9 sm:h-10 sm:w-10 text-foreground focus:outline-none focus:ring-2 focus:ring-accent-purple"
             >
-              <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              <ChevronRight className="h-4 w-4" />
             </button>
           </div>
         </div>
 
-        {/* ================= CLEAN VIEW PROJECT DETAILS ACTION ================= */}
-        <div className="mt-6 sm:mt-7 flex flex-col items-center justify-center gap-3 text-center">
+        {/* ================= CLEAN VIEW PROJECT DETAILS ACTION MATCHING REFERENCE ================= */}
+        <div className="mt-5 sm:mt-6 flex flex-col items-center justify-center gap-3 text-center">
           <div className="flex items-center gap-2">
-            <span className="font-display text-lg sm:text-xl font-bold tracking-tight text-foreground">
+            <span className="font-display text-lg sm:text-2xl font-bold tracking-tight text-foreground">
               {project.title}
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-purple" />
+            <span className="h-1.5 w-1.5 rounded-full bg-purple-600 mx-1" />
             <span className="text-xs sm:text-sm font-medium text-muted-foreground">
               {project.kicker}
             </span>
@@ -2063,18 +2029,17 @@ function ProjectsReelSlider() {
                 sessionStorage.setItem("eesub_active_project", project.slug);
               }
             }}
-            className="group inline-flex items-center gap-2.5 rounded-full border border-white/60 dark:border-white/20 bg-white/45 dark:bg-white/10 px-6 py-2.5 text-xs sm:text-sm font-semibold text-foreground shadow-[0_8px_20px_-6px_rgba(0,0,0,0.12)] backdrop-blur-md transition-all duration-200 hover:scale-[1.03] hover:bg-white/65 dark:hover:bg-white/15 hover:border-white/80 dark:hover:border-white/30 hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.18)] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-accent-purple"
+            className="neu-icon-btn inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-[13px] font-semibold text-foreground shadow-sm border border-white/90 hover:scale-105 active:scale-95 transition-all mt-1"
             aria-label={`View Project Details for ${project.title}`}
           >
             <span>View Project Details</span>
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </div>
     </div>
   );
 }
-
 
 function ProjectCardBody({ p }: { p: (typeof PROJECTS)[number] }) {
   return (
@@ -2164,7 +2129,7 @@ function ProjectCardBody({ p }: { p: (typeof PROJECTS)[number] }) {
           {p.tags.slice(0, 4).map((t) => (
             <span
               key={t}
-              className="inline-flex h-6.5 items-center justify-center gap-1.5 rounded-full border border-[var(--glass-border)] px-2.5 text-[10.5px] font-medium leading-none text-foreground/85"
+              className="inline-flex h-6.5 items-center justify-center gap-1.5 rounded-full neu-card-subtle px-2.5 text-[10.5px] font-medium leading-none text-foreground/85"
               style={{
                 background: "oklch(1 0 0 / 0.65)",
                 boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.55)",
@@ -2252,7 +2217,7 @@ function MobileProjectsSwipeDeck() {
                 transition: "transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease",
               }}
             >
-              <div className="glass-card glow-hover animated-border relative flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--glass-border)] shadow-md">
+              <div className="neu-card neu-card-interactive animated-border relative flex w-full flex-col overflow-hidden rounded-2xl">
                 <ProjectCardBody p={p} />
               </div>
             </div>
@@ -2298,15 +2263,9 @@ function Projects() {
     <Section
       id="projects"
       eyebrow="Creative experiments & real-world builds · Click any card for details"
-      title="Featured Projects"
+      title={<>Featured <span style={{ background: "linear-gradient(135deg, #7033FF, #B829D6, #D946EF)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Projects</span></>}
     >
-      {/* Mobile view (< sm): Compact, vertically browsable project cards */}
-      <MobileProjectsSwipeDeck />
-
-      {/* Desktop & Laptop view (sm+): 3D Reel Showcase slider */}
-      <div className="hidden sm:block">
-        <ProjectsReelSlider />
-      </div>
+      <ProjectsReelSlider />
     </Section>
   );
 }
@@ -2582,56 +2541,50 @@ function GradientIcon({
   from,
   to,
   active,
+  index = 0,
 }: {
   icon: LucideIcon;
   from: string;
   to: string;
   active: boolean;
+  index?: number;
 }) {
+  const holderClasses = [
+    "neu-icon-holder-pink",
+    "neu-icon-holder-orange",
+    "neu-icon-holder-purple",
+    "neu-icon-holder-cyan",
+    "neu-icon-holder-amber",
+  ];
+  const holderClass = holderClasses[index % holderClasses.length];
+
   return (
-    <span
-      className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full"
-      style={{
-        background: "linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.75))",
-        backdropFilter: "blur(10px)",
-        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.95), 0 2px 5px rgba(0,0,0,0.07), 0 0 0 1px ${from}22${active ? `, 0 0 14px -2px ${from}66` : ""}`,
-      }}
-    >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-full"
-        style={{
-          padding: 1.5,
-          background: `linear-gradient(135deg, ${from}, ${to})`,
-          WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude",
-          opacity: 0.85,
-        }}
-      />
-      <Icon className="h-[18px] w-[18px]" strokeWidth={2.1} style={{ color: from }} />
+    <span className={`h-10.5 w-10.5 sm:h-11 sm:w-11 shrink-0 ${holderClass}`}>
+      <Icon className="h-[18px] w-[18px] text-white" strokeWidth={2.2} />
     </span>
   );
 }
 
 /** Parameters for independent subtle floating animation across Journey cards */
 const JOURNEY_FLOAT_PARAMS = [
-  { y: [0, -6, 0], duration: 5.6, delay: 0 },
-  { y: [0, 5, 0], duration: 6.4, delay: 1.2 },
-  { y: [0, -7, 0], duration: 4.8, delay: 0.6 },
-  { y: [0, 6, 0], duration: 6.8, delay: 2.0 },
-  { y: [0, -5, 0], duration: 5.2, delay: 1.5 },
+  { y: [0, -5, 0], duration: 5.6, delay: 0 },
+  { y: [0, 4, 0], duration: 6.4, delay: 1.2 },
+  { y: [0, -5, 0], duration: 4.8, delay: 0.6 },
+  { y: [0, 5, 0], duration: 6.8, delay: 2.0 },
+  { y: [0, -4, 0], duration: 5.2, delay: 1.5 },
 ];
 
-/** Glass pill — 74px desktop / 68px mobile. Sits above rope so rope hides behind. */
+/** Hanging Pill — compact reference-matched dimensions with balanced typography */
 function HangingPill({
   mi,
   isActive,
   onClick,
+  index = 0,
 }: {
   mi: MilestoneEx;
   isActive: boolean;
   onClick: () => void;
+  index?: number;
 }) {
   return (
     <motion.button
@@ -2640,147 +2593,133 @@ function HangingPill({
       aria-pressed={isActive}
       whileHover={{
         y: -2.5,
-        boxShadow: isActive
-          ? `0 12px 28px rgba(0,0,0,0.12), 0 24px 50px rgba(0,0,0,0.08), 0 0 0 1.5px ${mi.from}66, 0 0 28px -4px ${mi.from}77, inset 0 1px 0 rgba(255,255,255,1)`
-          : `0 10px 24px rgba(0,0,0,0.1), 0 20px 42px rgba(0,0,0,0.06), 0 0 0 1px rgba(255,255,255,1), 0 0 20px -6px ${mi.from}44, inset 0 1px 0 rgba(255,255,255,1)`,
+        boxShadow: "var(--neu-shadow-raised-hover)",
         borderColor: "rgba(255,255,255,1)",
         transition: { type: "spring", stiffness: 360, damping: 24 },
       }}
       whileTap={{
         scale: 0.985,
-        boxShadow: "0 3px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
+        boxShadow: "0 2px 5px rgba(110,85,140,0.1), inset 1px 1px 1px rgba(255,255,255,0.9)",
         transition: { duration: 0.1 },
       }}
       style={{
         paddingLeft: 20,
-        paddingRight: 22,
+        paddingRight: 20,
         borderRadius: 999,
-        background: "linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,255,255,0.9))",
-        backdropFilter: "blur(20px) saturate(1.5)",
-        WebkitBackdropFilter: "blur(20px) saturate(1.5)",
-        border: "1px solid rgba(255,255,255,0.9)",
-        boxShadow: isActive
-          ? `0 8px 20px rgba(0,0,0,0.08), 0 18px 40px rgba(0,0,0,0.05), 0 0 0 1px ${mi.from}44, 0 0 22px -6px ${mi.from}55, inset 0 1px 0 rgba(255,255,255,0.95)`
-          : `0 5px 12px rgba(0,0,0,0.06), 0 14px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95)`,
+        background: "var(--neu-bg)",
+        border: "1px solid var(--neu-border)",
+        boxShadow: "var(--neu-shadow-raised)",
         willChange: "transform",
       }}
-      className="group relative flex h-[68px] w-full items-center text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[oklch(0.7_0.18_295)] lg:h-[74px]"
+      className="neu-card neu-neon-edge group relative flex h-[66px] sm:h-[70px] w-full items-center text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
     >
-      {isActive && (
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-full"
-          style={{
-            padding: 1,
-            background: `linear-gradient(135deg, ${mi.from}88, transparent 50%, ${mi.to}88)`,
-            WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-            WebkitMaskComposite: "xor",
-            maskComposite: "exclude",
-          }}
-        />
-      )}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-1/2 rounded-t-full"
-        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.5), transparent)" }}
+        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.45), transparent)" }}
       />
 
-      <GradientIcon icon={mi.icon} from={mi.from} to={mi.to} active={isActive} />
+      <GradientIcon icon={mi.icon} from={mi.from} to={mi.to} active={isActive} index={index} />
 
-      <span className="relative ml-3.5 min-w-0 flex-1">
-        <span className="block text-[12px] font-medium leading-tight text-black/55">{mi.year}</span>
-        <span className="mt-0.5 block truncate text-[16.5px] font-semibold leading-tight text-black lg:text-[17.5px]">
+      <span className="relative ml-4 min-w-0 flex-1 flex flex-col justify-center">
+        <span className="block font-sans text-[11px] sm:text-[11.5px] font-semibold text-muted-foreground/80 uppercase tracking-[0.08em] leading-none">
+          {mi.year}
+        </span>
+        <span className="mt-1 block truncate font-display text-[18px] sm:text-[20px] font-semibold tracking-[-0.01em] leading-tight text-foreground">
           {mi.title}
         </span>
       </span>
+
+      {/* Right circular arrow button with smooth state rotation */}
+      <div
+        className="neu-icon-btn ml-auto h-8.5 w-8.5 sm:h-9 sm:w-9 shrink-0 flex items-center justify-center"
+        style={{ color: mi.from }}
+      >
+        <ArrowRight
+          className={`h-4 w-4 transition-transform duration-300 ${isActive ? "rotate-90" : "rotate-0"}`}
+        />
+      </div>
     </motion.button>
   );
 }
 
-/** Compact detail card — expands beneath the active pill. */
+/** Upgraded 3D Neumorphic Expanded Card with Subtle Neon Edge Lighting */
 function CompactDetail({ mi, isPresent }: { mi: MilestoneEx; isPresent: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.985, filter: "blur(6px)" }}
-      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-      exit={{ opacity: 0, scale: 0.985, filter: "blur(4px)" }}
-      whileHover={{
-        y: -2,
-        boxShadow: `0 12px 26px rgba(0,0,0,0.09), 0 28px 56px rgba(0,0,0,0.07), 0 0 32px -8px ${mi.from}66, inset 0 1px 0 rgba(255,255,255,1)`,
-        transition: { duration: 0.2 },
-      }}
-      transition={{ type: "spring", stiffness: 300, damping: 28, mass: 0.55 }}
+      initial={{ opacity: 0, scale: 0.985, y: -6 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.985, y: -4 }}
+      transition={{ type: "spring", stiffness: 320, damping: 28, mass: 0.6 }}
+      className="neu-card neu-neon-edge relative overflow-hidden rounded-[24px] p-4.5 sm:p-5.5"
       style={{
-        borderRadius: 22,
-        border: "1px solid rgba(255,255,255,0.85)",
-        background: "rgba(255,255,255,0.82)",
-        backdropFilter: "blur(22px) saturate(1.5)",
-        WebkitBackdropFilter: "blur(22px) saturate(1.5)",
-        boxShadow: `0 8px 18px rgba(0,0,0,0.06), 0 20px 48px rgba(0,0,0,0.05), 0 0 28px -10px ${mi.from}55, inset 0 1px 0 rgba(255,255,255,0.95)`,
+        boxShadow: `-3px -3px 8px rgba(255, 255, 255, 0.95), 4px 14px 30px -4px rgba(115, 80, 160, 0.16), 0 0 20px -4px ${mi.from}30, inset 1px 1px 1.5px rgba(255, 255, 255, 0.95), inset -1px -1px 1.5px rgba(140, 115, 175, 0.06)`,
+        transformStyle: "preserve-3d",
       }}
-      className="relative overflow-hidden p-4 sm:p-5"
     >
+      {/* Top Hairline Neon Accent */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[22px]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
         style={{
-          padding: 1.5,
-          background: `linear-gradient(135deg, ${mi.from}55, transparent 55%, ${mi.to}55)`,
-          WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude",
+          background: `linear-gradient(90deg, transparent, ${mi.from}aa, ${mi.to}aa, transparent)`,
         }}
       />
 
-      <div className="relative flex items-baseline justify-between gap-3">
+      {/* Header: Company & Duration/Location on left, Status Pill on right */}
+      <div className="relative flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="font-display text-[15px] font-semibold leading-tight text-black truncate">
+          <h4 className="font-display text-[17.5px] sm:text-[19px] font-semibold leading-tight text-foreground truncate">
             {mi.company}
-          </h3>
-          <p className="mt-0.5 text-[11.5px] text-black/55">{mi.duration}</p>
+          </h4>
+          <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11.5px] font-medium text-muted-foreground">
+            <span>{mi.duration}</span>
+            <span className="opacity-40">·</span>
+            <span className="inline-flex items-center gap-1">
+              <MapPin className="h-3 w-3 shrink-0 opacity-70" strokeWidth={2} />
+              {mi.location}
+            </span>
+          </div>
         </div>
-        <span
-          className="inline-flex flex-shrink-0 items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em]"
-          style={
-            isPresent
-              ? { background: "#fff4e6", color: "#a64f00", border: "1px solid #f3b673" }
-              : { background: "#e9faf0", color: "#117a3d", border: "1px solid #8ad7ad" }
-          }
+
+        <motion.span
+          whileHover={{ y: -1, scale: 1.02 }}
+          className="neu-pill inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] shrink-0 shadow-2xs cursor-default"
         >
-          {isPresent ? "Now" : "Done"}
-        </span>
+          <span
+            className={`h-1.5 w-1.5 rounded-full ${isPresent ? "bg-emerald-500 animate-pulse" : "bg-purple-500"}`}
+          />
+          <span className={isPresent ? "text-emerald-700 dark:text-emerald-400" : "text-purple-700 dark:text-purple-400"}>
+            {isPresent ? "Present" : "Completed"}
+          </span>
+        </motion.span>
       </div>
 
-      <div className="relative mt-1.5 flex items-center gap-1.5 text-[11px] text-black/50">
-        <MapPin className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
-        <span className="truncate">{mi.location}</span>
-      </div>
-
-      <ul className="relative mt-3 space-y-1.5">
-        {mi.achievements.slice(0, 3).map((a) => (
-          <li key={a} className="flex items-start gap-2 text-[12.5px] leading-snug text-black/75">
-            <CheckCircle2
-              className="mt-[2px] h-3.5 w-3.5 flex-shrink-0"
-              strokeWidth={2.2}
+      {/* Key Achievements: Concise bullet points with 3D floating icons */}
+      <ul className="relative mt-3.5 space-y-2">
+        {mi.achievements.map((a) => (
+          <li key={a} className="flex items-center gap-2.5 text-[12px] sm:text-[12.5px] leading-snug text-foreground/85 font-medium">
+            <span
+              className="neu-icon-holder h-5 w-5 shrink-0 flex items-center justify-center rounded-full shadow-2xs"
               style={{ color: mi.from }}
-            />
+            >
+              <Check className="h-2.5 w-2.5 stroke-[2.5]" />
+            </span>
             <span>{a}</span>
           </li>
         ))}
       </ul>
 
-      <div className="relative mt-3 flex flex-wrap gap-1.5 border-t border-black/[0.06] pt-3">
-        {mi.tags.slice(0, 3).map((t) => (
-          <span
+      {/* Tech Tags Row */}
+      <div className="relative mt-3.5 flex flex-wrap gap-1.5 border-t border-black/[0.06] dark:border-white/10 pt-2.5">
+        {mi.tags.map((t) => (
+          <motion.span
             key={t}
-            className="inline-flex items-center rounded-full bg-white/95 px-2 py-0.5 text-[10.5px] font-semibold text-black/70"
-            style={{
-              border: "1px solid rgba(0,0,0,0.06)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.95)",
-            }}
+            whileHover={{ y: -1, scale: 1.03 }}
+            className="neu-pill px-2.5 py-0.5 text-[10.5px] font-semibold text-foreground/80 cursor-default shadow-2xs"
           >
             {t}
-          </span>
+          </motion.span>
         ))}
       </div>
     </motion.div>
@@ -2795,7 +2734,7 @@ function Journey() {
 
   return (
     <Section id="journey" eyebrow="Suspended from a braided climbing rope" title="My Journey">
-      <div className="relative mx-auto max-w-3xl">
+      <div className="relative mx-auto max-w-2xl">
         {/* Ambient glow */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
           <motion.div
@@ -2862,6 +2801,7 @@ function Journey() {
                       mi={mi}
                       isActive={isActive}
                       onClick={() => setActiveKey((cur) => (cur === key ? null : key))}
+                      index={i}
                     />
                     {/* Titanium loop — embedded into pill's LEFT edge; rope threads through its opening.
                         Mobile loop offset aligns with rope at left=20 (loop center at x≈23).
@@ -2914,6 +2854,117 @@ function Journey() {
 }
 
 /* ================================ Contact ================================= */
+function ContactInfoRow({
+  Icon,
+  text,
+  iconBg,
+  copyable = false,
+  isAction = false,
+  href,
+}: {
+  Icon: typeof Mail;
+  text: string;
+  iconBg: string;
+  copyable?: boolean;
+  isAction?: boolean;
+  href?: string;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!copyable) return;
+    navigator.clipboard?.writeText(text);
+    setCopied(true);
+    toast.success(`Copied "${text}" to clipboard!`);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const content = (
+    <div className="group/row flex items-center justify-between gap-3 rounded-2xl px-3.5 py-2.5 bg-white/75 dark:bg-slate-900/50 border border-white/90 dark:border-white/10 shadow-[0_2px_8px_-2px_rgba(110,85,140,0.08),inset_0_1px_0_rgba(255,255,255,0.95)] hover:shadow-[0_6px_18px_-4px_rgba(110,85,140,0.15),inset_0_1px_0_rgba(255,255,255,1)] hover:-translate-y-0.5 transition-all duration-200">
+      <div className="flex items-center gap-3 min-w-0">
+        <span
+          className={`flex h-7.5 w-7.5 sm:h-8 sm:w-8 items-center justify-center rounded-xl sm:rounded-2xl border shadow-2xs shrink-0 group-hover/row:scale-105 transition-transform ${iconBg}`}
+        >
+          <Icon className="h-4 w-4" />
+        </span>
+        <span className="truncate text-xs sm:text-[13px] font-medium text-foreground/90">
+          {text}
+        </span>
+      </div>
+
+      {copyable && (
+        <motion.button
+          type="button"
+          onClick={handleCopy}
+          aria-label={`Copy ${text}`}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.92 }}
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-muted-foreground/70 hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+        >
+          {copied ? (
+            <Check className="h-3.5 w-3.5 text-emerald-600" />
+          ) : (
+            <Copy className="h-3.5 w-3.5" />
+          )}
+        </motion.button>
+      )}
+
+      {isAction && (
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-purple-600 transition-transform duration-200 group-hover/row:translate-x-1">
+          <ArrowRight className="h-3.5 w-3.5" />
+        </span>
+      )}
+    </div>
+  );
+
+  return href ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/50 rounded-2xl"
+    >
+      {content}
+    </a>
+  ) : (
+    <div
+      onClick={copyable ? handleCopy : undefined}
+      className={copyable ? "cursor-pointer" : ""}
+    >
+      {content}
+    </div>
+  );
+}
+
+function ContactSocialBtn({
+  Icon,
+  color,
+  href,
+  label,
+}: {
+  Icon: typeof Mail;
+  color: string;
+  href: string;
+  label: string;
+}) {
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={label}
+      whileHover={{ y: -3, scale: 1.08 }}
+      whileTap={{ scale: 0.93 }}
+      transition={{ type: "spring", stiffness: 350, damping: 20 }}
+      className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 dark:bg-slate-900/60 border border-white/95 dark:border-white/15 shadow-[0_4px_12px_-2px_rgba(110,85,140,0.14),inset_0_1px_0_rgba(255,255,255,0.95)] text-muted-foreground hover:text-foreground transition-all"
+    >
+      <Icon className="h-4 w-4" style={{ color }} />
+    </motion.a>
+  );
+}
+
 function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -2933,8 +2984,7 @@ function Contact() {
       throw new Error("invalid");
     }
     const subject = `Portfolio message from ${name}`;
-    const body = `From: ${name} <${email}>\nSent: ${new Date().toLocaleString()}\n\n${msg}`;
-    // Formspree-compatible POST if endpoint is set, else mailto fallback.
+    const body = `From: ${name} <${email}>\\nSent: ${new Date().toLocaleString()}\\n\\n${msg}`;
     const endpoint = (import.meta as { env?: Record<string, string | undefined> }).env
       ?.VITE_CONTACT_ENDPOINT;
     try {
@@ -2946,7 +2996,6 @@ function Contact() {
         });
         if (!res.ok) throw new Error("send failed");
       } else {
-        // Direct mail client fallback — guaranteed delivery channel
         const href = `mailto:shaikeesub376@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.location.href = href;
       }
@@ -2968,80 +3017,197 @@ function Contact() {
     <Section
       id="contact"
       eyebrow="Open to frontend internships & creative collaborations"
-      title="Connect"
+      title={
+        <>
+          Con
+          <span
+            style={{
+              background: "linear-gradient(135deg, #B829D6 0%, #D946EF 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            nect
+          </span>
+        </>
+      }
     >
       <div className="grid gap-5 md:grid-cols-2 md:items-stretch">
+        {/* Left Card: Let\'s Talk */}
         <Reveal className="flex">
-          <Tilt className="group flex flex-1" intensity={4}>
-            <div className="glass-card glow-hover flex flex-1 flex-col p-6">
-              <div className="text-base font-semibold">Let's Talk</div>
-              <div
-                className="mt-2 inline-flex w-max items-center gap-2 rounded-full px-3 py-1 text-[11px]"
-                style={{ background: "oklch(0.85 0.12 160 / 0.3)", color: "oklch(0.45 0.12 160)" }}
-              >
-                <span className="live-dot" /> Open to Opportunities
+          <Tilt className="group flex flex-1" intensity={3}>
+            <motion.div
+              style={{ transformStyle: "preserve-3d" }}
+              whileHover={{ y: -4, transition: { type: "spring", stiffness: 280, damping: 22 } }}
+              className="neu-card neu-neon-edge flex flex-1 flex-col justify-between p-6 sm:p-7 rounded-[26px] sm:rounded-[28px] border border-white/85 dark:border-white/10 bg-white/75 dark:bg-slate-900/40 backdrop-blur-xl shadow-[0_16px_36px_-12px_rgba(110,85,140,0.14),0_4px_12px_0_rgba(110,85,140,0.06),inset_0_1px_0_rgba(255,255,255,0.85)]"
+            >
+              {/* Top Header */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <motion.div
+                    whileHover={{ y: -2, scale: 1.05 }}
+                    className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-2xl bg-purple-100/70 dark:bg-purple-950/40 border border-purple-200/70 dark:border-purple-800/40 text-purple-600 shadow-[0_4px_12px_rgba(110,85,140,0.12),inset_0_1px_0_rgba(255,255,255,0.95)]"
+                  >
+                    <MessageSquare className="h-5 w-5" />
+                  </motion.div>
+                  <div className="font-display text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+                    Let's Talk
+                  </div>
+                </div>
+                <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold text-emerald-600 bg-emerald-50/90 border border-emerald-200/70 dark:bg-emerald-950/40 dark:border-emerald-800/40 shadow-2xs">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Open to Opportunities
+                </div>
               </div>
 
-              <div className="mt-6 space-y-3 text-sm">
-                <ContactRow Icon={Mail} text="shaikeesub376@gmail.com" color="#EA4335" />
-                <ContactRow Icon={Phone} text="+91 9505561854" color="#22C55E" />
-                <ContactRow Icon={MapPin} text="Narasaraopet, Andhra Pradesh" color="#EF4444" />
-                <ContactRow
+              {/* Rows */}
+              <div className="mt-5 space-y-2.5">
+                <ContactInfoRow
+                  Icon={Mail}
+                  text="shaikeesub376@gmail.com"
+                  iconBg="bg-rose-50 dark:bg-rose-950/40 border-rose-100 dark:border-rose-800/40 text-rose-500"
+                  copyable
+                />
+                <ContactInfoRow
+                  Icon={Phone}
+                  text="+91 9505561854"
+                  iconBg="bg-emerald-50 dark:bg-emerald-950/40 border-emerald-100 dark:border-emerald-800/40 text-emerald-600"
+                  copyable
+                />
+                <ContactInfoRow
+                  Icon={MapPin}
+                  text="Narasaraopet, Andhra Pradesh"
+                  iconBg="bg-pink-50 dark:bg-pink-950/40 border-pink-100 dark:border-pink-800/40 text-pink-500"
+                  copyable
+                />
+                <ContactInfoRow
                   Icon={MessageCircle}
                   text="Let's start a conversation"
-                  color="#3B82F6"
+                  iconBg="bg-sky-50 dark:bg-sky-950/40 border-sky-100 dark:border-sky-800/40 text-sky-500"
+                  href="mailto:shaikeesub376@gmail.com"
+                  isAction
                 />
               </div>
 
-              <div className="mt-6 text-xs text-muted-foreground">Find me on</div>
-              <div className="mt-2 flex gap-2">
-                <SocialIcon
-                  Icon={Linkedin}
-                  color="#0A66C2"
-                  href="https://www.linkedin.com/in/skeesubvali20040/?skipRedirect=true"
-                />
-                <SocialIcon Icon={Github} color="#181717" href="https://github.com/SkEESUB" />
-                <SocialIcon
-                  Icon={Instagram}
-                  gradient="linear-gradient(135deg,#F58529,#DD2A7B,#8134AF,#515BD4)"
-                  color="#DD2A7B"
-                  href="https://www.instagram.com/cubic_soul_?igsh=M3Y3ejhucXJ0Nm5n"
-                />
-                <SocialIcon Icon={Mail} color="#EA4335" href="mailto:shaikeesub376@gmail.com" />
+              {/* Find me on */}
+              <div className="mt-5 sm:mt-6">
+                <div className="text-xs font-medium text-muted-foreground mb-2.5">
+                  Find me on
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <ContactSocialBtn
+                    Icon={Linkedin}
+                    color="#0A66C2"
+                    href="https://www.linkedin.com/in/skeesubvali20040/?skipRedirect=true"
+                    label="LinkedIn"
+                  />
+                  <ContactSocialBtn
+                    Icon={Github}
+                    color="#181717"
+                    href="https://github.com/SkEESUB"
+                    label="GitHub"
+                  />
+                  <ContactSocialBtn
+                    Icon={Instagram}
+                    color="#E4405F"
+                    href="https://www.instagram.com/cubic_soul_?igsh=M3Y3ejhucXJ0Nm5n"
+                    label="Instagram"
+                  />
+                  <ContactSocialBtn
+                    Icon={Mail}
+                    color="#EA4335"
+                    href="mailto:shaikeesub376@gmail.com"
+                    label="Email"
+                  />
+                </div>
               </div>
-            </div>
+            </motion.div>
           </Tilt>
         </Reveal>
 
+        {/* Right Card: Send a Message */}
         <Reveal delay={0.08} className="flex">
-          <Tilt className="group flex flex-1" intensity={4}>
-            <div className="glass-card glow-hover flex flex-1 flex-col p-6">
-              <div className="text-base font-semibold">Send a Message</div>
+          <Tilt className="group flex flex-1" intensity={3}>
+            <motion.div
+              style={{ transformStyle: "preserve-3d" }}
+              whileHover={{ y: -4, transition: { type: "spring", stiffness: 280, damping: 22 } }}
+              className="neu-card neu-neon-edge flex flex-1 flex-col justify-between p-6 sm:p-7 rounded-[26px] sm:rounded-[28px] border border-white/85 dark:border-white/10 bg-white/75 dark:bg-slate-900/40 backdrop-blur-xl shadow-[0_16px_36px_-12px_rgba(110,85,140,0.14),0_4px_12px_0_rgba(110,85,140,0.06),inset_0_1px_0_rgba(255,255,255,0.85)]"
+            >
+              {/* Header */}
+              <div className="flex items-center gap-3">
+                <motion.div
+                  whileHover={{ y: -2, scale: 1.05 }}
+                  className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200/70 dark:border-sky-800/40 text-sky-500 shadow-[0_4px_12px_rgba(6,182,212,0.12),inset_0_1px_0_rgba(255,255,255,0.95)]"
+                >
+                  <Send className="h-5 w-5" />
+                </motion.div>
+                <div>
+                  <div className="font-display text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+                    Send a Message
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-0.5">
+                    I'll get back to you soon!
+                  </div>
+                </div>
+              </div>
+
+              {/* Form */}
               <form
-                className="mt-5 flex flex-1 flex-col gap-4"
+                className="mt-4 sm:mt-5 flex flex-1 flex-col justify-between gap-3"
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleSend().catch(() => {});
                 }}
               >
-                <FloatField id="cf-name" label="Your Name" value={name} onChange={setName} />
-                <FloatField
-                  id="cf-email"
-                  label="your@email.com"
-                  type="email"
-                  value={email}
-                  onChange={setEmail}
-                />
-                <FloatField
-                  id="cf-msg"
-                  label="Your message..."
-                  textarea
-                  value={msg}
-                  onChange={setMsg}
-                />
-                <SwipeToSend onSend={handleSend} sent={sent} />
+                {/* Name */}
+                <div className="flex items-center rounded-full bg-white/75 dark:bg-slate-900/50 border border-white/90 dark:border-white/10 px-3.5 h-11 shadow-[inset_0_2px_4px_rgba(110,85,140,0.06),inset_0_1px_1px_rgba(0,0,0,0.03),0_1px_0_rgba(255,255,255,0.9)] focus-within:border-purple-400/80 focus-within:shadow-[0_0_0_3px_rgba(168,85,247,0.15),inset_0_1px_2px_rgba(110,85,140,0.08)] transition-all">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-50 border border-sky-100 dark:bg-sky-950/40 dark:border-sky-800/40 text-sky-500 shrink-0 mr-2.5 shadow-2xs">
+                    <User className="h-3.5 w-3.5" />
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full bg-transparent text-xs sm:text-[13px] text-foreground placeholder:text-muted-foreground/65 outline-none"
+                  />
+                </div>
+
+                {/* Email */}
+                <div className="flex items-center rounded-full bg-white/75 dark:bg-slate-900/50 border border-white/90 dark:border-white/10 px-3.5 h-11 shadow-[inset_0_2px_4px_rgba(110,85,140,0.06),inset_0_1px_1px_rgba(0,0,0,0.03),0_1px_0_rgba(255,255,255,0.9)] focus-within:border-purple-400/80 focus-within:shadow-[0_0_0_3px_rgba(168,85,247,0.15),inset_0_1px_2px_rgba(110,85,140,0.08)] transition-all">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-purple-50 border border-purple-100 dark:bg-purple-950/40 dark:border-purple-800/40 text-purple-600 shrink-0 mr-2.5 shadow-2xs">
+                    <Mail className="h-3.5 w-3.5" />
+                  </span>
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-transparent text-xs sm:text-[13px] text-foreground placeholder:text-muted-foreground/65 outline-none"
+                  />
+                </div>
+
+                {/* Message */}
+                <div className="flex rounded-2xl bg-white/75 dark:bg-slate-900/50 border border-white/90 dark:border-white/10 p-3 shadow-[inset_0_2px_4px_rgba(110,85,140,0.06),inset_0_1px_1px_rgba(0,0,0,0.03),0_1px_0_rgba(255,255,255,0.9)] focus-within:border-purple-400/80 focus-within:shadow-[0_0_0_3px_rgba(168,85,247,0.15),inset_0_1px_2px_rgba(110,85,140,0.08)] transition-all">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-pink-50 border border-pink-100 dark:bg-pink-950/40 dark:border-pink-800/40 text-pink-500 shrink-0 mr-2.5 mt-0.5 shadow-2xs">
+                    <MessageSquare className="h-3.5 w-3.5" />
+                  </span>
+                  <textarea
+                    rows={3}
+                    placeholder="Your message..."
+                    value={msg}
+                    onChange={(e) => setMsg(e.target.value)}
+                    className="w-full bg-transparent text-xs sm:text-[13px] text-foreground placeholder:text-muted-foreground/65 outline-none resize-none"
+                  />
+                </div>
+
+                {/* Swipe To Send */}
+                <div className="mt-1">
+                  <SwipeToSend onSend={handleSend} sent={sent} />
+                </div>
               </form>
-            </div>
+            </motion.div>
           </Tilt>
         </Reveal>
       </div>
@@ -3059,7 +3225,7 @@ function SwipeToSend({ onSend, sent }: { onSend: () => Promise<void>; sent: bool
     const measure = () => {
       const el = trackRef.current;
       if (!el) return;
-      setMaxX(Math.max(80, el.clientWidth - 56));
+      setMaxX(Math.max(80, el.clientWidth - 50));
     };
     measure();
     window.addEventListener("resize", measure);
@@ -3073,20 +3239,21 @@ function SwipeToSend({ onSend, sent }: { onSend: () => Promise<void>; sent: bool
   return (
     <div
       ref={trackRef}
-      className="group/swipe relative h-[54px] w-full select-none overflow-hidden rounded-full border border-[var(--glass-border)] bg-[var(--glass-tint-2)] backdrop-blur transition-shadow duration-300 hover:shadow-[0_0_0_4px_oklch(0.7_0.18_295/0.18),0_14px_36px_-12px_oklch(0.5_0.18_295/0.4)]"
+      className="group/swipe relative h-[48px] sm:h-[50px] w-full select-none overflow-hidden rounded-full border border-white/95 dark:border-white/15 shadow-[0_4px_14px_-3px_rgba(110,85,140,0.14),inset_0_1px_0_rgba(255,255,255,0.95)]"
       style={{
-        boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.5), 0 10px 30px -10px oklch(0.2 0.04 280 / 0.25)",
+        background:
+          "linear-gradient(135deg, rgba(224, 242, 254, 0.72) 0%, rgba(243, 232, 255, 0.72) 50%, rgba(253, 230, 242, 0.72) 100%)",
       }}
     >
       <motion.div
         className="absolute inset-y-0 left-0 rounded-full"
-        style={{ width: fillW, background: "#0a0a0a", opacity: 0.95 }}
+        style={{ width: fillW, background: "rgba(17, 17, 24, 0.95)" }}
       />
       <motion.span
-        className="absolute inset-0 flex items-center justify-center text-[13px] font-medium text-foreground/80"
+        className="absolute inset-0 flex items-center justify-center text-xs sm:text-[13px] font-semibold text-foreground/80 tracking-tight"
         style={{ opacity: labelOpacity }}
       >
-        {sent ? "Sent ✓" : busy ? "Sending…" : "Swipe to Send"}
+        {sent ? "Sent ✓" : busy ? "Sending..." : "Swipe to Send"}
       </motion.span>
       <motion.button
         type="button"
@@ -3096,16 +3263,11 @@ function SwipeToSend({ onSend, sent }: { onSend: () => Promise<void>; sent: bool
         dragMomentum={false}
         style={{
           x,
-          background: "#0a0a0a",
-          border: "1px solid oklch(1 0 0 / 0.12)",
           touchAction: "none",
-          boxShadow: "0 8px 22px -6px oklch(0 0 0 / 0.45), inset 0 1px 0 oklch(1 0 0 / 0.15)",
+          boxShadow: "0 8px 20px -4px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
         }}
-        whileHover={{
-          boxShadow:
-            "0 0 0 4px oklch(0.7 0.18 295 / 0.22), 0 10px 26px -6px oklch(0.5 0.18 295 / 0.5), inset 0 1px 0 oklch(1 0 0 / 0.18)",
-        }}
-        whileTap={{ scale: 0.96 }}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.95 }}
         onDragEnd={async () => {
           if (x.get() > maxX * 0.85 && !busy) {
             setBusy(true);
@@ -3124,104 +3286,11 @@ function SwipeToSend({ onSend, sent }: { onSend: () => Promise<void>; sent: bool
           }
         }}
         aria-label="Swipe to send message"
-        className="absolute left-1 top-1 flex h-[46px] w-[46px] items-center justify-center rounded-full text-white"
+        className="absolute left-1 top-1 flex h-[40px] w-[40px] sm:h-[42px] sm:w-[42px] items-center justify-center rounded-full bg-[#111118] text-white shadow-md cursor-grab active:cursor-grabbing"
       >
-        {sent ? <CheckCircle2 className="h-5 w-5" /> : <Send className="h-4 w-4" />}
+        {sent ? <CheckCircle2 className="h-4 w-4 text-emerald-400" /> : <Send className="h-4 w-4" />}
       </motion.button>
     </div>
-  );
-}
-
-function FloatField({
-  id,
-  label,
-  type = "text",
-  textarea = false,
-  value,
-  onChange,
-}: {
-  id: string;
-  label: string;
-  type?: string;
-  textarea?: boolean;
-  value?: string;
-  onChange?: (v: string) => void;
-}) {
-  const [internal, setInternal] = useState("");
-  const controlled = value !== undefined;
-  const val = controlled ? value : internal;
-  const setVal = (v: string) => {
-    if (controlled) onChange?.(v);
-    else setInternal(v);
-  };
-  const [focus, setFocus] = useState(false);
-  const active = focus || val.length > 0;
-  const common =
-    "peer w-full rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-tint-1)] px-4 pt-5 pb-2 text-sm outline-none backdrop-blur transition-all duration-300 placeholder-transparent focus:border-[oklch(0.7_0.15_295)] focus:shadow-[0_0_0_4px_oklch(0.7_0.15_295/0.18)]";
-
-  return (
-    <div className="relative">
-      {textarea ? (
-        <textarea
-          id={id}
-          rows={5}
-          placeholder={label}
-          value={val}
-          onChange={(e) => setVal(e.target.value)}
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
-          className={`${common} resize-none`}
-        />
-      ) : (
-        <input
-          id={id}
-          type={type}
-          placeholder={label}
-          value={val}
-          onChange={(e) => setVal(e.target.value)}
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
-          className={common}
-        />
-      )}
-      <label
-        htmlFor={id}
-        className={`pointer-events-none absolute left-4 transition-all duration-200 ${
-          active
-            ? "top-1.5 text-[10px] font-medium uppercase tracking-wide text-[oklch(0.55_0.18_295)]"
-            : "top-3.5 text-sm text-muted-foreground"
-        }`}
-      >
-        {label}
-      </label>
-    </div>
-  );
-}
-
-function ContactRow({
-  Icon,
-  text,
-  color = "var(--accent-purple)",
-}: {
-  Icon: typeof Mail;
-  text: string;
-  color?: string;
-}) {
-  return (
-    <motion.div
-      whileHover={{ x: 4 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="flex items-center gap-3"
-    >
-      <span
-        className="glass-pill brand-glow flex h-9 w-9 items-center justify-center"
-        style={{ ["--brand" as never]: color }}
-      >
-        <Icon className="h-4 w-4" style={{ color }} />
-      </span>
-      <span className="text-foreground/90">{text}</span>
-    </motion.div>
   );
 }
 
@@ -3721,39 +3790,41 @@ function MobileResume() {
   return (
     <>
       <Reveal>
-        <div
-          className="relative overflow-hidden rounded-[28px] border border-[var(--glass-border)] bg-white/55 p-7 backdrop-blur-xl"
+        <motion.div
+          whileHover={{ y: -3 }}
+          className="neu-card neu-neon-edge relative overflow-hidden rounded-[28px] border border-white/85 dark:border-white/15 bg-white/70 dark:bg-slate-900/40 p-6 sm:p-7 backdrop-blur-xl"
           style={{
             boxShadow:
-              "0 40px 80px -30px oklch(0.3 0.12 290 / 0.4), 0 12px 30px -16px oklch(0.4 0.1 280 / 0.24), inset 0 1px 0 oklch(1 0 0 / 0.7)",
+              "-3px -3px 10px 0 rgba(255, 255, 255, 0.95), 0 32px 70px -28px rgba(110, 85, 140, 0.24), 0 12px 28px -14px rgba(110, 85, 140, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95)",
           }}
         >
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-black/45">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/80">
             Resume
           </div>
-          <h3 className="mt-2 font-display text-[1.9rem] leading-tight text-black">
+          <h3 className="mt-2 font-display text-[1.9rem] leading-tight text-foreground font-normal">
             {RESUME_META.name}
           </h3>
-          <div className="mt-1 text-[13px] text-black/60">{RESUME_META.role}</div>
-          <p className="mt-4 text-[13.5px] leading-relaxed text-black/65">{RESUME_META.summary}</p>
+          <div className="mt-1 text-[13px] text-muted-foreground">{RESUME_META.role}</div>
+          <p className="mt-4 text-[13.5px] leading-relaxed text-foreground/75 font-normal">{RESUME_META.summary}</p>
 
-          <div className="mt-6 flex items-center justify-between border-t border-black/[0.07] pt-4 text-[12px]">
-            <span className="font-semibold uppercase tracking-[0.12em] text-black/45">
+          <div className="mt-6 flex items-center justify-between border-t border-black/[0.07] dark:border-white/10 pt-4 text-[12px]">
+            <span className="font-semibold uppercase tracking-[0.12em] text-muted-foreground">
               Last Updated
             </span>
-            <span className="font-medium text-black/80">{RESUME.lastUpdated}</span>
+            <span className="font-medium text-foreground/90">{RESUME.lastUpdated}</span>
           </div>
 
           <div className="mt-6 flex flex-col gap-2.5">
             <motion.button
               type="button"
               onClick={() => setOpen(true)}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex h-[50px] w-full items-center justify-center gap-2 rounded-2xl px-5 text-[14px] font-semibold text-white"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex h-[50px] w-full items-center justify-center gap-2 rounded-2xl px-5 text-[14px] font-semibold text-white cursor-pointer"
               style={{
-                background: "linear-gradient(135deg, oklch(0.32 0.02 280), oklch(0.18 0.02 280))",
+                background: "linear-gradient(135deg, #181524, #0d0b16)",
                 boxShadow:
-                  "0 14px 30px -12px oklch(0 0 0 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.18)",
+                  "0 12px 26px -10px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.22)",
               }}
             >
               <Eye className="h-4 w-4" /> Open Resume
@@ -3761,17 +3832,14 @@ function MobileResume() {
             <motion.a
               href={RESUME.download}
               download={RESUME.filename}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex h-[48px] w-full items-center justify-center gap-2 rounded-2xl border border-black/10 bg-white/70 px-5 text-[13px] font-semibold text-black/85 backdrop-blur"
-              style={{
-                boxShadow:
-                  "0 6px 16px -10px oklch(0 0 0 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.85)",
-              }}
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.97 }}
+              className="neu-card inline-flex h-[48px] w-full items-center justify-center gap-2 rounded-2xl border border-white/90 dark:border-white/15 bg-white/80 dark:bg-white/10 px-5 text-[13px] font-semibold text-foreground/90 backdrop-blur shadow-2xs hover:shadow-sm"
             >
               <Download className="h-4 w-4" /> Download Resume
             </motion.a>
           </div>
-        </div>
+        </motion.div>
       </Reveal>
       <ResumeFullscreen open={open} onClose={() => setOpen(false)} />
     </>
@@ -3779,7 +3847,7 @@ function MobileResume() {
 }
 
 /* ---------- Desktop macOS Preview (unified 70/30 floating panel) ---------- */
-/* ---------- Desktop Resume — compact version matching mobile style ---------- */
+/* ---------- Desktop Resume · compact version matching mobile style ---------- */
 function DesktopResumePreview() {
   const [open, setOpen] = useState(false);
 
@@ -3792,14 +3860,14 @@ function DesktopResumePreview() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ y: -4 }}
-          className="relative overflow-hidden rounded-[28px] border border-[var(--glass-border)]"
+          className="relative overflow-hidden rounded-[28px] border border-white/85 dark:border-white/15 neu-neon-edge"
           style={{
             background:
-              "linear-gradient(135deg, oklch(0.99 0.008 280 / 0.74), oklch(0.94 0.025 295 / 0.56) 52%, oklch(0.94 0.025 200 / 0.5))",
+              "linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(250, 246, 255, 0.78) 52%, rgba(244, 248, 255, 0.82))",
             backdropFilter: "blur(24px) saturate(145%)",
             WebkitBackdropFilter: "blur(24px) saturate(145%)",
             boxShadow:
-              "0 38px 84px -34px oklch(0.3 0.12 290 / 0.36), 0 16px 34px -20px oklch(0.4 0.08 280 / 0.2), inset 0 1px 0 oklch(1 0 0 / 0.82)",
+              "-3px -3px 10px 0 rgba(255, 255, 255, 0.95), 0 32px 70px -28px rgba(110, 85, 140, 0.24), 0 12px 28px -14px rgba(110, 85, 140, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(110, 85, 140, 0.08)",
           }}
         >
           <div
@@ -3823,17 +3891,12 @@ function DesktopResumePreview() {
             <div className="flex min-w-0 flex-col justify-between">
               <div>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="flex h-10 w-10 items-center justify-center rounded-2xl"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, oklch(0.62 0.2 295 / 0.18), oklch(0.72 0.16 210 / 0.15))",
-                      boxShadow:
-                        "inset 0 1px 0 oklch(1 0 0 / 0.72), 0 8px 20px -12px oklch(0.4 0.15 295 / 0.35)",
-                    }}
+                  <motion.div
+                    whileHover={{ y: -2, scale: 1.05 }}
+                    className="neu-icon-holder-purple flex h-10 w-10 items-center justify-center rounded-2xl shadow-[0_4px_12px_rgba(110,85,140,0.14),inset_0_1px_0_rgba(255,255,255,0.95)]"
                   >
-                    <FileText className="h-4 w-4 text-black/70" />
-                  </div>
+                    <FileText className="h-4 w-4 text-purple-600" />
+                  </motion.div>
 
                   <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/45">
                     Resume
@@ -3851,21 +3914,27 @@ function DesktopResumePreview() {
                 </p>
               </div>
 
-              <div className="mt-6 flex flex-wrap gap-2.5">
-                <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.07] bg-white/50 px-3.5 py-2 text-[11px] font-medium text-black/60 backdrop-blur-md">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                            <div className="mt-6 flex flex-wrap gap-2.5">
+                <motion.span
+                  whileHover={{ y: -1.5, scale: 1.02 }}
+                  className="neu-pill inline-flex items-center gap-2 px-3.5 py-1.5 text-[11px] font-semibold text-foreground/85 shadow-2xs cursor-default"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   One-page PDF
-                </span>
+                </motion.span>
 
-                <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.07] bg-white/50 px-3.5 py-2 text-[11px] font-medium text-black/60 backdrop-blur-md">
-                  <GraduationCap className="h-3.5 w-3.5" />
-                  B.Tech CSE · 2027
-                </span>
+                <motion.span
+                  whileHover={{ y: -1.5, scale: 1.02 }}
+                  className="neu-pill inline-flex items-center gap-2 px-3.5 py-1.5 text-[11px] font-semibold text-foreground/85 shadow-2xs cursor-default"
+                >
+                  <GraduationCap className="h-3.5 w-3.5 text-purple-500" />
+                  B.Tech CSE — 2027
+                </motion.span>
               </div>
             </div>
 
             {/* Right: compact details and working actions */}
-            <div className="flex min-w-0 flex-col justify-between rounded-[22px] border border-black/[0.06] bg-white/35 p-5 backdrop-blur-xl">
+            <div className="flex min-w-0 flex-col justify-between rounded-[22px] border border-white/95 dark:border-white/10 bg-white/60 dark:bg-slate-900/40 p-5 backdrop-blur-xl shadow-[0_8px_20px_-6px_rgba(110,85,140,0.12),inset_0_1px_0_rgba(255,255,255,0.95)]">
               <div>
                 <div className="mb-2 text-[9.5px] font-semibold uppercase tracking-[0.18em] text-black/40">
                   Resume Details
@@ -3881,15 +3950,15 @@ function DesktopResumePreview() {
                 <motion.button
                   type="button"
                   onClick={() => setOpen(true)}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ y: -2, scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                  className="inline-flex h-[44px] items-center justify-center gap-2 rounded-2xl px-4 text-[12px] font-semibold text-white"
+                  className="inline-flex h-[44px] items-center justify-center gap-2 rounded-2xl px-4 text-[12px] font-semibold text-white cursor-pointer"
                   style={{
                     background:
-                      "linear-gradient(135deg, oklch(0.32 0.02 280), oklch(0.17 0.02 280))",
+                      "linear-gradient(135deg, #181524, #0d0b16)",
                     boxShadow:
-                      "0 14px 28px -14px oklch(0 0 0 / 0.42), inset 0 1px 0 oklch(1 0 0 / 0.18)",
+                      "0 10px 22px -6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.22)",
                   }}
                 >
                   <Eye className="h-3.5 w-3.5" />
@@ -3899,14 +3968,10 @@ function DesktopResumePreview() {
                 <motion.a
                   href={RESUME.download}
                   download={RESUME.filename}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ y: -2, scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                  className="inline-flex h-[44px] items-center justify-center gap-2 rounded-2xl border border-black/[0.08] bg-white/65 px-4 text-[12px] font-semibold text-black/75 backdrop-blur-xl transition-colors hover:bg-white/85"
-                  style={{
-                    boxShadow:
-                      "0 8px 18px -12px oklch(0 0 0 / 0.22), inset 0 1px 0 oklch(1 0 0 / 0.85)",
-                  }}
+                  className="neu-card inline-flex h-[44px] items-center justify-center gap-2 rounded-2xl border border-white/90 dark:border-white/15 bg-white/80 dark:bg-white/10 px-4 text-[12px] font-semibold text-foreground/90 backdrop-blur shadow-2xs hover:shadow-sm"
                 >
                   <Download className="h-3.5 w-3.5" />
                   Download
@@ -4737,36 +4802,17 @@ function Resume() {
 }
 
 /* ================================ Footer ================================== */
-/* ================================ Sparkle Star ============================ */
-function SparkleStar({
-  className = "",
-  style,
-}: {
-  className?: string;
-  style?: CSSProperties;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      style={style}
-      aria-hidden="true"
-    >
-      <path d="M12 0C12 6.627 6.627 12 0 12C6.627 12 12 17.373 12 24C12 17.373 17.373 12 24 12C17.373 12 12 6.627 12 0Z" />
-    </svg>
-  );
-}
-
-
-
-/* ================================ Footer ================================== */
 function Footer() {
   const tagline = "Building the web, one pixel at a time.";
   const [typed, setTyped] = useState("");
   useEffect(() => {
-    const reduce = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { setTyped(tagline); return; }
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setTyped(tagline);
+      return;
+    }
     let i = 0;
     const id = setInterval(() => {
       i++;
@@ -4781,69 +4827,137 @@ function Footer() {
       <div className="relative mx-auto max-w-6xl px-5 py-7 sm:px-6 sm:py-12">
         <div className="grid gap-6 sm:gap-10 sm:grid-cols-3 sm:items-start">
           {/* Column 1 — Brand */}
-          <div>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-purple-500 shadow-2xs" />
+              <span className="h-[1px] w-8 bg-gradient-to-r from-purple-500 to-transparent" />
+            </div>
+
             <motion.div
-              whileHover={{ scale: 1.04 }}
-              className="inline-block font-display text-xl sm:text-2xl font-bold"
-              style={{ background: "var(--gradient-name)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}
+              whileHover={{ scale: 1.03, y: -1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="inline-block font-display text-xl sm:text-2xl font-bold tracking-tight cursor-default"
             >
-              Eesub Labs
+              <span className="text-foreground">Eesub </span>
+              <span
+                style={{
+                  background: "linear-gradient(135deg, #A855F7 0%, #D946EF 100%)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                Labs
+              </span>
             </motion.div>
-            <div className="mt-0.5 text-[9.5px] sm:text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+
+            <div className="mt-0.5 text-[9.5px] sm:text-[10px] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
               BUILD · INNOVATE · ELEVATE
             </div>
+
             <div className="mt-1.5 min-h-[1.3em] text-xs text-muted-foreground">
               {typed}
               <span className="type-caret" />
             </div>
-            <div className="mt-3 sm:mt-4 flex gap-2">
-              <SocialIcon Icon={Linkedin} color="#0A66C2" href="https://www.linkedin.com/in/skeesubvali20040/?skipRedirect=true" />
-              <SocialIcon Icon={Github} color="#181717" href="https://github.com/SkEESUB" />
-              <SocialIcon
-                Icon={Instagram}
-                gradient="linear-gradient(135deg,#F58529,#DD2A7B,#8134AF,#515BD4)"
-                color="#DD2A7B"
-                href="https://www.instagram.com/cubic_soul_?igsh=M3Y3ejhucXJ0Nm5n"
+
+            <div className="mt-3.5 flex items-center gap-2.5">
+              <ContactSocialBtn
+                Icon={Linkedin}
+                color="#0A66C2"
+                href="https://www.linkedin.com/in/skeesubvali20040/?skipRedirect=true"
+                label="LinkedIn"
               />
-              <SocialIcon Icon={Mail} color="#EA4335" href="mailto:shaikeesub376@gmail.com" />
+              <ContactSocialBtn
+                Icon={Github}
+                color="#181717"
+                href="https://github.com/SkEESUB"
+                label="GitHub"
+              />
+              <ContactSocialBtn
+                Icon={Instagram}
+                color="#E4405F"
+                href="https://www.instagram.com/cubic_soul_?igsh=M3Y3ejhucXJ0Nm5n"
+                label="Instagram"
+              />
+              <ContactSocialBtn
+                Icon={Mail}
+                color="#EA4335"
+                href="mailto:shaikeesub376@gmail.com"
+                label="Email"
+              />
             </div>
           </div>
 
           {/* Column 2 — Navigate */}
-          <div>
-            <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/70">Navigate</div>
-            <ul className="mt-2 sm:mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
+          <div className="flex flex-col">
+            <div className="text-[10.5px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/80">
+              Navigate
+            </div>
+            <div className="flex items-center gap-1.5 mt-1 mb-2.5">
+              <span className="h-1 w-1 rounded-full bg-purple-500 shadow-2xs" />
+              <span className="h-[1px] w-7 bg-purple-500/30" />
+            </div>
+
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-muted-foreground">
               {NAV.map((n) => (
                 <li key={n.id}>
-                  <a href={`#${n.id}`} className="story-link transition-colors hover:text-foreground">
-                    {n.label}
-                  </a>
+                  <motion.a
+                    href={`#${n.id}`}
+                    whileHover={{ x: 2 }}
+                    className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+                  >
+                    <span className="h-1 w-1 rounded-full bg-purple-400/40 shadow-2xs" />
+                    <span>{n.label}</span>
+                  </motion.a>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Column 3 — Contact */}
-          <div className="text-xs text-muted-foreground sm:text-right">
-            <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/70">Contact</div>
-            <ul className="mt-2 sm:mt-3 space-y-1 sm:space-y-1.5">
-              <li>
-                <a href="mailto:shaikeesub376@gmail.com" className="transition-colors hover:text-foreground">
-                  shaikeesub376@gmail.com
+          <div className="flex flex-col text-xs text-muted-foreground sm:text-right">
+            <div className="text-[10.5px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/80">
+              Contact
+            </div>
+            <div className="flex items-center gap-1.5 mt-1 mb-2.5 sm:justify-end">
+              <span className="h-[1px] w-7 bg-purple-500/30" />
+              <span className="h-1 w-1 rounded-full bg-purple-500 shadow-2xs" />
+            </div>
+
+            <ul className="space-y-2">
+              <li className="sm:flex sm:justify-end">
+                <a
+                  href="mailto:shaikeesub376@gmail.com"
+                  className="group inline-flex items-center gap-2 transition-colors hover:text-foreground"
+                >
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-rose-50 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-800/40 text-rose-500 shadow-[0_2px_6px_rgba(244,63,94,0.15),inset_0_1px_0_rgba(255,255,255,0.95)] group-hover:scale-105 transition-transform">
+                    <Mail className="h-2.5 w-2.5" />
+                  </span>
+                  <span>shaikeesub376@gmail.com</span>
                 </a>
               </li>
-              <li>
-                <a href="tel:+919505561854" className="transition-colors hover:text-foreground">
-                  +91 95055 61854
+              <li className="sm:flex sm:justify-end">
+                <a
+                  href="tel:+919505561854"
+                  className="group inline-flex items-center gap-2 transition-colors hover:text-foreground"
+                >
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-800/40 text-emerald-600 shadow-[0_2px_6px_rgba(16,185,129,0.15),inset_0_1px_0_rgba(255,255,255,0.95)] group-hover:scale-105 transition-transform">
+                    <Phone className="h-2.5 w-2.5" />
+                  </span>
+                  <span>+91 95055 61854</span>
                 </a>
               </li>
-              <li>Andhra Pradesh, India</li>
-              <li className="inline-flex items-center gap-1.5 sm:justify-end pt-0.5">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-70" style={{ background: "oklch(0.75 0.18 150)" }} />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: "oklch(0.7 0.2 150)" }} />
+              <li className="inline-flex items-center gap-2 sm:justify-end">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-pink-50 dark:bg-pink-950/40 border border-pink-100 dark:border-pink-800/40 text-pink-500 shadow-[0_2px_6px_rgba(236,72,153,0.15),inset_0_1px_0_rgba(255,255,255,0.95)]">
+                  <MapPin className="h-2.5 w-2.5" />
                 </span>
-                Open to internships
+                <span>Andhra Pradesh, India</span>
+              </li>
+              <li className="inline-flex items-center gap-2 sm:justify-end pt-0.5">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-800/40 text-emerald-600 shadow-[0_2px_6px_rgba(16,185,129,0.15),inset_0_1px_0_rgba(255,255,255,0.95)]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                </span>
+                <span>Open to internships</span>
               </li>
             </ul>
           </div>
@@ -4853,7 +4967,7 @@ function Footer() {
           className="mt-6 sm:mt-8 h-px w-full"
           style={{
             background:
-              "linear-gradient(90deg, transparent, oklch(0.78 0.18 295 / 0.5), oklch(0.78 0.13 195 / 0.5), transparent)",
+              "linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.4), rgba(6, 182, 212, 0.4), transparent)",
           }}
         />
 
@@ -4865,14 +4979,15 @@ function Footer() {
           className="mt-4 sm:mt-5 flex flex-col items-center justify-between gap-1.5 text-[10.5px] sm:text-[11px] text-muted-foreground sm:flex-row"
         >
           <div>© 2026 Shaik Eesub Vali · All rights reserved.</div>
-          <div>Crafted with <span style={{ color: "var(--accent-purple)" }}>♥</span> · Graduating 2027</div>
+          <div>
+            Crafted with <span style={{ color: "var(--accent-purple)" }}>♥</span> · Graduating 2027
+          </div>
         </motion.div>
       </div>
     </footer>
   );
 }
 
-/* ================================ Section ================================= */
 function Section({
   id,
   eyebrow,
@@ -4882,7 +4997,7 @@ function Section({
 }: {
   id: string;
   eyebrow: string;
-  title: string;
+  title: React.ReactNode;
   children: React.ReactNode;
   className?: string;
 }) {

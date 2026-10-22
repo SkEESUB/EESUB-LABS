@@ -98,6 +98,42 @@
     0 10px 30px -10px oklch(0.4 0.1 280 / 0.15);
   --ring-glass: 0 0 0 1px oklch(1 0 0 / 0.6) inset,
     0 0 0 1px oklch(0.7 0.1 295 / 0.18);
+
+  /* Neumorphism tokens (Light Mode) — Reference Matched with Subtle Neon Ambient Lighting */
+  --neu-bg: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.90) 0%,
+    rgba(253, 249, 255, 0.84) 50%,
+    rgba(248, 243, 254, 0.88) 100%
+  );
+  --neu-bg-inset: rgba(246, 241, 252, 0.65);
+  --neu-bg-subtle: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(250, 246, 255, 0.88) 100%
+  );
+  --neu-border: rgba(255, 255, 255, 0.82);
+  --neu-border-subtle: rgba(255, 255, 255, 0.65);
+  --neu-shadow-raised:
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.9),
+    4px 10px 24px -4px rgba(115, 80, 160, 0.12),
+    0 2px 8px -2px rgba(6, 182, 212, 0.07),
+    inset 1px 1px 1.5px 0 rgba(255, 255, 255, 0.95),
+    inset -1px -1px 1.5px 0 rgba(140, 115, 175, 0.05);
+  --neu-shadow-raised-hover:
+    -3px -3px 8px 0 rgba(255, 255, 255, 0.95),
+    6px 16px 30px -3px rgba(120, 75, 175, 0.16),
+    0 4px 14px -2px rgba(6, 182, 212, 0.12),
+    inset 1px 1px 2px 0 rgba(255, 255, 255, 1),
+    inset -1px -1px 1.5px 0 rgba(140, 115, 175, 0.07);
+  --neu-shadow-subtle:
+    -1.5px -1.5px 4px 0 rgba(255, 255, 255, 0.85),
+    2px 4px 10px -1px rgba(110, 85, 140, 0.1),
+    inset 0.5px 0.5px 1px 0 rgba(255, 255, 255, 0.95);
+  --neu-shadow-inset:
+    inset 2px 2px 5px 0 rgba(110, 85, 140, 0.12),
+    inset -2px -2px 5px 0 rgba(255, 255, 255, 0.9),
+    0 1px 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .dark {
@@ -134,6 +170,36 @@
   --shadow-glass-sm:
     0 1px 0 0 oklch(1 0 0 / 0.1) inset,
     0 10px 30px -10px oklch(0 0 0 / 0.4);
+
+  /* Neumorphism tokens (Dark Mode) */
+  --neu-bg: linear-gradient(
+    135deg,
+    rgba(34, 28, 54, 0.9) 0%,
+    rgba(26, 22, 44, 0.88) 100%
+  );
+  --neu-bg-inset: rgba(18, 15, 30, 0.6);
+  --neu-bg-subtle: rgba(30, 25, 48, 0.7);
+  --neu-border: rgba(255, 255, 255, 0.12);
+  --neu-border-subtle: rgba(255, 255, 255, 0.08);
+  --neu-shadow-raised:
+    -4px -4px 12px 0 rgba(255, 255, 255, 0.06),
+    inset 1px 1px 1px 0 rgba(255, 255, 255, 0.14),
+    inset -1px -1px 1px 0 rgba(0, 0, 0, 0.3),
+    6px 8px 24px -4px rgba(0, 0, 0, 0.5),
+    10px 16px 32px -6px rgba(0, 0, 0, 0.4);
+  --neu-shadow-raised-hover:
+    -6px -6px 16px 0 rgba(255, 255, 255, 0.09),
+    inset 1px 1px 1.5px 0 rgba(255, 255, 255, 0.2),
+    inset -1px -1px 1px 0 rgba(0, 0, 0, 0.4),
+    8px 12px 30px -4px rgba(0, 0, 0, 0.6),
+    14px 22px 42px -6px rgba(0, 0, 0, 0.48);
+  --neu-shadow-subtle:
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.05),
+    inset 1px 1px 1px 0 rgba(255, 255, 255, 0.1),
+    3px 4px 12px -2px rgba(0, 0, 0, 0.4);
+  --neu-shadow-inset:
+    inset 2.5px 2.5px 6px 0 rgba(0, 0, 0, 0.55),
+    inset -2.5px -2.5px 6px 0 rgba(255, 255, 255, 0.06);
 }
 
 @layer base {
@@ -321,50 +387,21 @@
 
 @utility nav-pill-active {
   position: relative;
-  isolation: isolate;
-  color: oklch(0.99 0 0);
-  background: var(--gradient-button);
-  background-size: 200% 100%;
-  animation: nav-pill-glow 4s ease-in-out infinite;
+  color: #ffffff;
+  background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+  border-radius: 9999px;
   box-shadow:
-    0 1px 0 0 oklch(1 0 0 / 0.4) inset,
-    0 6px 18px -6px oklch(0.5 0.2 295 / 0.55),
-    0 0 22px -2px oklch(0.65 0.2 295 / 0.45);
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    border-radius: inherit;
-    background: var(--gradient-pink-purple);
-    background-size: 200% 100%;
-    filter: blur(10px);
-    opacity: 0.55;
-    z-index: -1;
-    animation: nav-pill-glow 4s ease-in-out infinite reverse;
-  }
+    -1.5px -1.5px 4px 0 rgba(255, 255, 255, 0.7),
+    2px 4px 10px -1px rgba(147, 51, 234, 0.35),
+    inset 0.5px 0.5px 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-@keyframes nav-pill-glow {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Hover glow: iridescent edge halo on hover */
+/* Hover elevation: clean dimensional lift without glowing halos */
 @utility glow-hover {
-  transition: box-shadow 400ms ease, transform 400ms ease;
+  transition: box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1), transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
   &:hover {
-    box-shadow:
-      0 1px 0 0 oklch(1 0 0 / 0.6) inset,
-      0 0 0 1px oklch(0.78 0.15 295 / 0.45),
-      0 30px 60px -18px oklch(0.4 0.15 280 / 0.32),
-      0 0 30px -5px oklch(0.78 0.18 295 / 0.35),
-      0 0 60px -10px oklch(0.78 0.13 195 / 0.25);
+    transform: translateY(-2.5px);
+    box-shadow: var(--neu-shadow-raised-hover);
   }
 }
 
@@ -400,7 +437,7 @@
     0 1px 0 0 oklch(1 0 0 / 0.7) inset,
     0 -1px 0 0 oklch(0.85 0.05 295 / 0.25) inset,
     0 20px 50px -12px oklch(0.4 0.15 280 / 0.35),
-    0 0 40px -8px oklch(0.78 0.18 295 / 0.2) !important;
+    0 10px 24px -6px rgba(110, 85, 140, 0.15) !important;
 }
 .dark .nav-scrolled {
   box-shadow:
@@ -583,11 +620,11 @@ html.theme-transitioning .orb {
   transition: transform 0.25s ease, box-shadow 0.3s ease;
 }
 .brand-glow:hover {
-  transform: translateY(-3px) scale(1.08);
+  transform: translateY(-2px) scale(1.05);
   box-shadow:
-    0 1px 0 0 oklch(1 0 0 / 0.6) inset,
-    0 10px 24px -8px var(--brand, oklch(0.7 0.15 295) / 0.6),
-    0 0 22px -4px var(--brand, oklch(0.7 0.15 295) / 0.55);
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.95),
+    3px 6px 14px -1px rgba(110, 85, 140, 0.22),
+    inset 1px 1px 1px 0 #ffffff;
 }
 
 /* Floating profile halo (about section) */
@@ -628,7 +665,7 @@ html.theme-transitioning .orb {
     0 1px 0 0 var(--glass-sheen) inset,
     0 -1px 0 0 oklch(0.85 0.05 295 / 0.2) inset,
     0 18px 40px -12px oklch(0.4 0.15 280 / 0.32),
-    0 0 24px -6px oklch(0.78 0.18 295 / 0.25);
+    0 10px 20px -6px rgba(110, 85, 140, 0.14);
 }
 @utility nav-capsule-sheen {
   position: relative;
@@ -994,13 +1031,7 @@ a:hover > .card-arrow { transform: translateX(3px) rotate(-6deg); }
    ============================================================ */
 #resume .resume-paper,
 #resume .glass-card {
-  box-shadow:
-    0 1px 0 0 oklch(1 0 0 / 0.7) inset,
-    0 2px 4px -2px oklch(0.4 0.1 280 / 0.10),
-    0 12px 24px -6px oklch(0.4 0.1 280 / 0.18),
-    0 32px 60px -18px oklch(0.4 0.12 280 / 0.28),
-    0 56px 110px -30px oklch(0.5 0.15 295 / 0.22),
-    0 0 40px -8px oklch(0.78 0.18 295 / 0.20);
+  box-shadow: var(--neu-shadow-raised);
 }
 
 /* ============================================================
@@ -1161,23 +1192,19 @@ a:hover > .card-arrow { transform: translateX(3px) rotate(-6deg); }
 
   scroll-snap-align: center;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.75),
-      rgba(255,255,255,0.42)
-    );
+  background: var(--neu-bg);
 
-  border: 1px solid rgba(255,255,255,0.9);
+  border: 1px solid var(--neu-border);
 
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.95),
-    inset 0 -1px 0 rgba(255,255,255,0.25),
-    0 18px 38px -24px rgba(0,0,0,0.35),
-    0 0 30px -16px var(--cert-accent);
+    -4px -4px 12px 0 rgba(255, 255, 255, 0.95),
+    inset 1px 1px 1.5px 0 rgba(255, 255, 255, 1),
+    inset -1px -1px 1px 0 rgba(215, 195, 235, 0.25),
+    4px 6px 18px -2px rgba(135, 105, 170, 0.12),
+    4px 8px 18px -4px rgba(110, 85, 140, 0.14);
 
   -webkit-tap-highlight-color: transparent;
 }
@@ -1229,7 +1256,7 @@ a:hover > .card-arrow { transform: translateX(3px) rotate(-6deg); }
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.9),
-    0 8px 18px -12px var(--cert-accent);
+    inset 1px 1px 1px #fff, 2px 4px 10px -1px rgba(110, 85, 140, 0.16);
 }
 
 
@@ -1457,4 +1484,363 @@ a:hover > .card-arrow { transform: translateX(3px) rotate(-6deg); }
     perspective: none !important;
     transform: none !important;
   }
+}
+
+/* ==========================================================================
+   EESUB LABS — PREMIUM NEUMORPHIC (SOFT UI) CARD SYSTEM
+   ========================================================================== */
+
+.neu-card,
+.neu-card-interactive,
+.neon-glass-card,
+.glass-card,
+.glass-card-clean {
+  position: relative;
+  background: var(--neu-bg);
+  border: 1px solid var(--neu-border);
+  box-shadow: var(--neu-shadow-raised);
+  border-radius: var(--radius-2xl);
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: auto;
+}
+
+/* Molded soft rim highlight — removed unneeded glowing sheen */
+.neu-card::before,
+.neu-card-interactive::before,
+.neon-glass-card::before,
+.glass-card::before,
+.glass-card-clean::before {
+  display: none !important;
+}
+
+/* Interactive Desktop Hover: Gentle physical elevation and shadow softness */
+@media (hover: hover) and (pointer: fine) {
+  .neu-card-interactive:hover,
+  .neu-card:hover,
+  .neon-glass-card:hover,
+  .glass-card:hover,
+  .glass-card-clean:hover {
+    transform: translate3d(0, -3px, 0);
+    box-shadow: var(--neu-shadow-raised-hover);
+    border-color: rgba(255, 255, 255, 1);
+  }
+}
+
+/* Pressed / Inset Neumorphic Surface */
+.neu-card-inset,
+.neu-inset {
+  position: relative;
+  background: var(--neu-bg-inset);
+  border: 1px solid var(--neu-border-subtle);
+  box-shadow: var(--neu-shadow-inset);
+  border-radius: var(--radius-xl);
+}
+
+/* Subtle Secondary Neumorphic Surface (chips, small badges, nested panels) */
+.neu-card-subtle {
+  position: relative;
+  background: var(--neu-bg-subtle);
+  border: 1px solid var(--neu-border);
+  box-shadow: var(--neu-shadow-subtle);
+  border-radius: var(--radius-lg);
+}
+
+/* Mobile: clean stable depth without hover jitter */
+@media (max-width: 767px) {
+  .neu-card,
+  .neu-card-interactive,
+  .neon-glass-card,
+  .glass-card,
+  .glass-card-clean {
+    animation: none !important;
+  }
+}
+
+/* Dark mode adjustment for neumorphic cards */
+.dark .neu-card,
+.dark .neu-card-interactive,
+.dark .neon-glass-card,
+.dark .glass-card,
+.dark .glass-card-clean {
+  background: var(--neu-bg);
+  border-color: var(--neu-border);
+  box-shadow: var(--neu-shadow-raised);
+}
+
+.dark .neu-card-inset,
+.dark .neu-inset {
+  background: var(--neu-bg-inset);
+  border-color: var(--neu-border-subtle);
+  box-shadow: var(--neu-shadow-inset);
+}
+
+.dark .neu-card-subtle {
+  background: var(--neu-bg-subtle);
+  border-color: var(--neu-border);
+  box-shadow: var(--neu-shadow-subtle);
+}
+
+
+/* ==========================================================================
+   EESUB LABS — 3D NEUMORPHIC ICON HOLDERS & PILL CONTROLS (REFERENCE-MATCHED)
+   ========================================================================== */
+
+/* 3D Raised Icon Holder (Neutral White Base) */
+.neu-icon-holder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #ffffff 0%, #f6f1fc 100%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    -2px -2px 5px 0 rgba(255, 255, 255, 0.95),
+    2px 4px 10px -1px rgba(110, 85, 140, 0.16),
+    inset 1px 1px 1px 0 #ffffff,
+    inset -1px -1px 1px 0 rgba(140, 115, 175, 0.06);
+  flex-shrink: 0;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 3D Raised Circular Button (Interactive — Socials, Arrows, Navigation) */
+.neu-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #ffffff 0%, #f7f2fd 100%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.95),
+    2px 4px 10px -1px rgba(110, 85, 140, 0.16),
+    inset 1px 1px 1px 0 #ffffff;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.neu-icon-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow:
+    -3px -3px 8px 0 rgba(255, 255, 255, 1),
+    3px 6px 14px -1px rgba(110, 85, 140, 0.22),
+    inset 1px 1px 1.5px 0 #ffffff;
+}
+.neu-icon-btn:active {
+  transform: translateY(0.5px) scale(0.96);
+  box-shadow:
+    -1px -1px 3px 0 rgba(255, 255, 255, 0.8),
+    1px 2px 5px 0 rgba(110, 85, 140, 0.14),
+    inset 1px 1px 2px 0 rgba(110, 85, 140, 0.12);
+}
+
+/* 3D Tinted Heading & Milestone Bubbles (Reference-Matched) */
+.neu-icon-holder-purple {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #9333EA 0%, #7E22CE 100%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.75),
+    2px 5px 12px -1px rgba(126, 34, 206, 0.35),
+    inset 1px 1px 2px 0 rgba(255, 255, 255, 0.5),
+    inset -1px -1px 2px 0 rgba(0, 0, 0, 0.15);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.neu-icon-holder-cyan {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #06B6D4 0%, #0284C7 100%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.75),
+    2px 5px 12px -1px rgba(2, 132, 199, 0.35),
+    inset 1px 1px 2px 0 rgba(255, 255, 255, 0.5),
+    inset -1px -1px 2px 0 rgba(0, 0, 0, 0.15);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.neu-icon-holder-pink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #EC4899 0%, #DB2777 100%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.75),
+    2px 5px 12px -1px rgba(219, 39, 119, 0.35),
+    inset 1px 1px 2px 0 rgba(255, 255, 255, 0.5),
+    inset -1px -1px 2px 0 rgba(0, 0, 0, 0.15);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.neu-icon-holder-orange {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #F97316 0%, #EA580C 100%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.75),
+    2px 5px 12px -1px rgba(234, 88, 12, 0.35),
+    inset 1px 1px 2px 0 rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.neu-icon-holder-amber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #F59E0B 0%, #D97706 100%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.75),
+    2px 5px 12px -1px rgba(217, 119, 6, 0.35),
+    inset 1px 1px 2px 0 rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+/* 3D Raised Pill / Chip */
+.neu-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #ffffff 0%, #f6f0fc 100%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    -1.5px -1.5px 4px 0 rgba(255, 255, 255, 0.9),
+    2px 3px 8px -1px rgba(110, 85, 140, 0.12),
+    inset 0.5px 0.5px 1px 0 #ffffff;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.neu-pill:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    -2px -2px 6px 0 rgba(255, 255, 255, 0.95),
+    2px 5px 12px -1px rgba(110, 85, 140, 0.16),
+    inset 0.5px 0.5px 1px 0 #ffffff;
+}
+
+/* Dark mode adjustments */
+.dark .neu-icon-holder,
+.dark .neu-icon-btn,
+.dark .neu-pill {
+  background: linear-gradient(145deg, rgba(38, 32, 58, 0.9) 0%, rgba(28, 24, 46, 0.88) 100%);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    -1.5px -1.5px 4px 0 rgba(255, 255, 255, 0.06),
+    2px 4px 10px -1px rgba(0, 0, 0, 0.4),
+    inset 0.5px 0.5px 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+
+/* 3D Floating Skill Icon Object */
+.neu-skill-icon-3d {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 0.95rem;
+  background: linear-gradient(145deg, #ffffff 0%, #f7f3fd 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    -2px -2px 5px 0 rgba(255, 255, 255, 1),
+    2px 5px 12px -2px rgba(110, 85, 150, 0.20),
+    0 1px 3px 0 rgba(110, 85, 150, 0.10),
+    inset 1px 1px 1.5px 0 #ffffff,
+    inset -1px -1px 1.5px 0 rgba(140, 115, 175, 0.08);
+  flex-shrink: 0;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.neu-skill-icon-3d svg,
+.neu-skill-icon-3d img {
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.10));
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .neu-skill-icon-3d {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    -3px -3px 8px 0 rgba(255, 255, 255, 1),
+    3px 8px 18px -2px rgba(110, 85, 150, 0.26),
+    0 2px 6px 0 rgba(110, 85, 150, 0.14),
+    inset 1px 1px 2px 0 #ffffff;
+}
+
+.group:hover .neu-skill-icon-3d svg {
+  transform: scale(1.06);
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.16));
+}
+
+/* Subtle Neon Edge Lighting for Cards */
+.neu-neon-edge {
+  position: relative;
+}
+.neu-neon-edge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(217, 70, 239, 0.20) 30%,
+    rgba(6, 182, 212, 0.20) 70%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
+}
+.neu-neon-edge:hover::after {
+  opacity: 1;
+}
+
+/* Premium 3D Floating Layers & Tactile Surfaces */
+@media (prefers-reduced-motion: no-preference) {
+  .floating-layer-card {
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .floating-layer-card:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* Subtle 3D Inset Surface for inputs and inner wells */
+.well-3d-inset {
+  box-shadow:
+    inset 0 2px 4px rgba(110, 85, 140, 0.06),
+    inset 0 1px 1.5px rgba(0, 0, 0, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.dark .well-3d-inset {
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.4),
+    inset 0 1px 2px rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.06);
 }

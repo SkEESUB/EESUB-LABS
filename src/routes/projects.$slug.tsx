@@ -56,7 +56,7 @@ export const Route = createFileRoute("/projects/$slug")({
   loader: ({ params }) => {
     const p = getProject(params.slug);
     if (!p) throw notFound();
-    return p;
+    return p as NonNullable<typeof p>;
   },
   component: ProjectPage,
   notFoundComponent: () => (
@@ -80,7 +80,7 @@ export const Route = createFileRoute("/projects/$slug")({
 });
 
 function ProjectPage() {
-  const p = Route.useLoaderData();
+  const p = Route.useLoaderData() as any;
   const hasDemo = Boolean(p.demo && p.demo.trim().length > 0);
   const hasRepo = Boolean(p.repo && p.repo.trim().length > 0);
 
@@ -253,11 +253,7 @@ function ProjectPage() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="glass-card glow-hover relative overflow-hidden rounded-2xl sm:rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl"
-            style={{
-              boxShadow:
-                "0 1px 0 0 rgba(255, 255, 255, 0.8) inset, 0 16px 36px -12px rgba(0, 0, 0, 0.1), 0 24px 48px -20px rgba(100, 50, 150, 0.12)",
-            }}
+            className="neu-card relative overflow-hidden rounded-2xl sm:rounded-3xl"
           >
             <div
               className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden flex items-center justify-center"
@@ -292,11 +288,7 @@ function ProjectPage() {
             {/* B. The Problem Card */}
             {p.problem && (
               <div
-                className="glass-card glow-hover relative overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-tint-2)] p-4.5 sm:p-5.5 backdrop-blur-xl shadow-md transition-all duration-300"
-                style={{
-                  boxShadow:
-                    "0 1px 0 0 rgba(255, 255, 255, 0.7) inset, 0 8px 24px -10px rgba(239, 68, 68, 0.08)",
-                }}
+                className="neu-card relative overflow-hidden rounded-2xl p-4.5 sm:p-5.5 transition-all duration-300"
               >
                 <div
                   aria-hidden
@@ -333,11 +325,7 @@ function ProjectPage() {
             {/* C. The Solution Card */}
             {p.solution && (
               <div
-                className="glass-card glow-hover relative overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-tint-2)] p-4.5 sm:p-5.5 backdrop-blur-xl shadow-md transition-all duration-300"
-                style={{
-                  boxShadow:
-                    "0 1px 0 0 rgba(255, 255, 255, 0.7) inset, 0 8px 24px -10px rgba(20, 184, 166, 0.08)",
-                }}
+                className="neu-card relative overflow-hidden rounded-2xl p-4.5 sm:p-5.5 transition-all duration-300"
               >
                 <div
                   aria-hidden
@@ -377,11 +365,7 @@ function ProjectPage() {
         {impactItems.length > 0 && (
           <section aria-label="Project Impact">
             <div
-              className="glass-card glow-hover relative overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-tint-2)] p-5 sm:p-6 backdrop-blur-xl shadow-md"
-              style={{
-                boxShadow:
-                  "0 1px 0 0 rgba(255, 255, 255, 0.75) inset, 0 10px 28px -12px rgba(120, 60, 200, 0.1)",
-              }}
+              className="neu-card relative overflow-hidden rounded-2xl p-5 sm:p-6"
             >
               <div
                 aria-hidden
@@ -412,7 +396,7 @@ function ProjectPage() {
                 {impactItems.map((point: string, idx: number) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-2 rounded-xl border border-[var(--glass-border)] bg-white/40 dark:bg-white/[0.03] p-3 backdrop-blur-sm"
+                    className="neu-card-subtle flex items-start gap-2 rounded-xl p-3"
                   >
                     <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-500 mt-0.5" />
                     <span className="text-xs sm:text-sm text-foreground/85 leading-snug">
@@ -445,10 +429,10 @@ function ProjectPage() {
               </span>
             </div>
 
-            <div className="glass-card rounded-2xl p-3 sm:p-4.5 shadow-md border border-[var(--glass-border)]">
+            <div className="neu-card rounded-2xl p-3 sm:p-4.5">
               {/* Active Screenshot Display */}
               <div
-                className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-xl border border-[var(--glass-border)] bg-black/[0.04] dark:bg-black/40 cursor-pointer group flex items-center justify-center"
+                className="neu-card-inset relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-xl cursor-pointer group flex items-center justify-center"
                 onClick={() => setIsLightboxOpen(true)}
               >
                 <AnimatePresence mode="wait">
@@ -512,7 +496,7 @@ function ProjectPage() {
         >
           {/* Key Features */}
           {p.features && p.features.length > 0 && (
-            <div className="glass-card glow-hover rounded-2xl p-4.5 sm:p-5.5 border border-[var(--glass-border)] shadow-md">
+            <div className="neu-card rounded-2xl p-4.5 sm:p-5.5">
               <div className="flex items-center gap-2.5 mb-3">
                 <span
                   className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
@@ -543,7 +527,7 @@ function ProjectPage() {
 
           {/* Technology Stack */}
           {p.tags && p.tags.length > 0 && (
-            <div className="glass-card glow-hover rounded-2xl p-4.5 sm:p-5.5 border border-[var(--glass-border)] shadow-md">
+            <div className="neu-card rounded-2xl p-4.5 sm:p-5.5">
               <div className="flex items-center gap-2.5 mb-3">
                 <span
                   className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
@@ -570,7 +554,7 @@ function ProjectPage() {
                   return (
                     <span
                       key={t}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--glass-border)] bg-white/70 dark:bg-white/[0.06] px-2.5 py-1 text-xs font-medium text-foreground backdrop-blur-sm shadow-xs transition-colors hover:border-[var(--accent-purple)]/40 hover:bg-white/90"
+                      className="neu-card-subtle inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium text-foreground transition-colors hover:border-[var(--accent-purple)]/40"
                     >
                       {meta && (
                         <img
@@ -601,7 +585,7 @@ function ProjectPage() {
           >
             {/* Architecture */}
             {p.architecture && p.architecture.length > 0 && (
-              <div className="glass-card glow-hover rounded-2xl p-4.5 sm:p-5.5 border border-[var(--glass-border)] shadow-md">
+              <div className="neu-card rounded-2xl p-4.5 sm:p-5.5">
                 <div className="flex items-center gap-2.5 mb-3">
                   <span
                     className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
@@ -635,7 +619,7 @@ function ProjectPage() {
 
             {/* Engineering Challenges */}
             {p.challenges && p.challenges.length > 0 && (
-              <div className="glass-card glow-hover rounded-2xl p-4.5 sm:p-5.5 border border-[var(--glass-border)] shadow-md">
+              <div className="neu-card rounded-2xl p-4.5 sm:p-5.5">
                 <div className="flex items-center gap-2.5 mb-3">
                   <span
                     className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
@@ -699,7 +683,7 @@ function ProjectPage() {
                       sessionStorage.setItem("eesub_active_project", o.slug);
                     }
                   }}
-                  className="glass-card glow-hover group relative block overflow-hidden rounded-xl border border-[var(--glass-border)] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                  className="neu-card neu-card-interactive group relative block overflow-hidden rounded-xl transition-all duration-300"
                 >
                   <div
                     className="relative aspect-[16/10] overflow-hidden"
