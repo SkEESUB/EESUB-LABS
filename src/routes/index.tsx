@@ -1606,8 +1606,8 @@ function Skills() {
   const items = SKILLS.filter((s) => TAB_MAP[tab].includes(s.name));
   return (
     <Section id="skills" eyebrow="Technologies I design and build with" title={<span style={{ background: "linear-gradient(135deg, #7033FF, #B829D6, #D946EF)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Stack</span>}>
-      {/* Tabs */}
-      <div className="mb-6 flex flex-wrap gap-2">
+      {/* Tabs: Responsive 4x2 grid on mobile (< sm), flex-wrap on desktop */}
+      <div className="mb-6 grid grid-cols-4 gap-1.5 sm:flex sm:flex-wrap sm:gap-2">
         {SKILL_TABS.map((t) => {
           const active = tab === t;
           return (
@@ -1616,7 +1616,7 @@ function Skills() {
               whileTap={{ scale: 0.96 }}
               whileHover={{ y: -1.5 }}
               onClick={() => setTab(t)}
-              className={`relative h-9 rounded-full px-4 text-xs font-semibold tracking-wide transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+              className={`relative flex h-8.5 sm:h-9 w-full sm:w-auto items-center justify-center rounded-full px-1 sm:px-4 text-[10px] min-[360px]:text-[11px] min-[390px]:text-[11.5px] sm:text-xs font-semibold tracking-tight sm:tracking-wide whitespace-nowrap transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                 active
                   ? "text-white shadow-md shadow-purple-500/25"
                   : "neu-card-subtle text-foreground/75 hover:text-foreground"
@@ -1630,7 +1630,7 @@ function Skills() {
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
-              <span className="relative z-10">{t}</span>
+              <span className="relative z-10 truncate">{t}</span>
             </motion.button>
           );
         })}
@@ -2210,14 +2210,21 @@ function MobileProjectsSwipeDeck() {
               key={p.slug}
               data-snap-card
               data-idx={i}
-              className="no-scrollbar shrink-0 snap-center w-[86vw] max-w-[340px]"
+              className="no-scrollbar shrink-0 snap-center w-[85vw] max-w-[340px]"
               style={{
                 transform: `scale(${isActive ? 1 : 0.96})`,
-                opacity: isActive ? 1 : 0.78,
+                opacity: isActive ? 1 : 0.8,
                 transition: "transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease",
               }}
             >
-              <div className="neu-card neu-card-interactive animated-border relative flex w-full flex-col overflow-hidden rounded-2xl">
+              <div
+                className="glass-card animated-border neu-neon-edge relative flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--glass-border)]"
+                style={{
+                  boxShadow: isActive
+                    ? "0 20px 42px -16px rgba(112, 51, 255, 0.28), 0 8px 18px -8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.95)"
+                    : "0 10px 24px -14px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.7)",
+                }}
+              >
                 <ProjectCardBody p={p} />
               </div>
             </div>
@@ -2265,7 +2272,13 @@ function Projects() {
       eyebrow="Creative experiments & real-world builds · Click any card for details"
       title={<>Featured <span style={{ background: "linear-gradient(135deg, #7033FF, #B829D6, #D946EF)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Projects</span></>}
     >
-      <ProjectsReelSlider />
+      {/* Mobile view (< sm): Horizontal swipe deck */}
+      <MobileProjectsSwipeDeck />
+
+      {/* Desktop & Laptop view (sm+): 3D Reel Showcase slider */}
+      <div className="hidden sm:block">
+        <ProjectsReelSlider />
+      </div>
     </Section>
   );
 }
@@ -4726,33 +4739,19 @@ function Certifications() {
                 key={org.key}
                 type="button"
                 onClick={() => setActiveKey(org.key)}
-                className="cert-pill-card"
+                className="cert-pill-card neu-neon-edge"
                 style={
                   {
                     "--cert-accent": org.accent,
                   } as React.CSSProperties
                 }
-
-                animate={{
-                  y: [0, -5, 0],
-                }}
-
-                transition={{
-                  duration: 3.2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: index * 0.2,
-                }}
-
                 whileHover={{
-                  y: -9,
-                  scale: 1.03,
+                  y: -4,
+                  scale: 1.02,
                 }}
-
                 whileTap={{
-                  scale: 0.96,
+                  scale: 0.97,
                 }}
-
                 aria-label={`Open ${org.name} certificates`}
               >
                 {/* LOGO */}
