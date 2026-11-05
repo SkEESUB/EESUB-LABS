@@ -34,6 +34,87 @@ export type ProjectData = {
 
 export const PROJECTS: ProjectData[] = [
   {
+    slug: "billbuddy",
+    title: "BillBuddy",
+    kicker: "Full-Stack SaaS Application",
+    body: "Smart Bill & Personal Expense Management Platform",
+    longBody:
+      "BillBuddy is a full-stack personal finance platform that simplifies bill management, tracks daily expenses, monitors budgets and provides clear insights into personal spending.",
+    tags: [
+      "React 19",
+      "TypeScript",
+      "TanStack Start",
+      "TanStack Router",
+      "Tailwind CSS v4",
+      "Supabase",
+      "PostgreSQL",
+      "Vite",
+      "Recharts",
+      "Nitro",
+    ],
+    features: [
+      "Smart Bill Management",
+      "Recurring Bill Scheduling",
+      "Income & Expense Tracking",
+      "Monthly Spending Dashboard",
+      "Budget Management",
+      "Financial Insights",
+      "Transaction History and Export",
+      "Payment Reminders",
+      "Email OTP Authentication",
+      "Secure User Data Access with Supabase RLS",
+    ],
+    challenges: [
+      "Accurate recurring bill calculations, including month-end date handling.",
+      "Financial balance calculations with correct transfer and unsettled transaction handling.",
+      "Budget health and safe-to-spend calculations.",
+      "Secure multi-user data isolation using Supabase Row Level Security.",
+      "Efficient handling of large financial datasets.",
+      "Dashboard performance optimization and transaction pagination.",
+    ],
+    architecture: [
+      "Full-stack SSR architecture using TanStack Start & Nitro server engine",
+      "PostgreSQL relational schema managed on Supabase with Row Level Security",
+      "Type-safe file-based client routing powered by TanStack Router",
+      "Tailwind CSS v4 utility design system with dark mode glassmorphism",
+      "Interactive financial visual analytics built with Recharts",
+      "Passwordless user authentication with secure Email OTP verification",
+    ],
+    problem:
+      "Personal financial tracking is often fragmented across multiple banking apps, spreadsheets, and manual notes, causing missed bill deadlines and budget overshoot.",
+    problemBullets: [
+      "Month-end and variable-interval recurring bills are easy to overlook, leading to late penalties.",
+      "Manual balance tracking frequently miscalculates pending transfers and unsettled transactions.",
+      "Users lack immediate visibility into safe-to-spend daily thresholds and monthly cash-flow health.",
+    ],
+    solution:
+      "A full-stack personal finance and smart bill management platform featuring automated scheduling, safe-to-spend insights, and enterprise-grade data isolation.",
+    solutionBullets: [
+      "Automate recurring bill schedules with reliable month-end edge-case calculation.",
+      "Deliver instant financial insights with interactive Recharts spending dashboards and safe-to-spend metrics.",
+      "Guarantee data isolation and privacy through strict Supabase Row Level Security policies.",
+    ],
+    impact: [
+      "Eliminates missed bill payments through automated recurring schedules and proactive payment reminders.",
+      "Provides real-time clarity on safe-to-spend thresholds and discretionary spending limits.",
+      "Guarantees multi-user data privacy and security with zero data leakage across accounts.",
+    ],
+    results: [
+      "Accurate recurring bill engine",
+      "100% RLS-enforced multi-user isolation",
+      "Sub-second dashboard analytics via Nitro",
+    ],
+    date: "2026-07",
+    featured: true,
+    status: "Live",
+    demo: "https://bill-buddy-liart.vercel.app/",
+    repo: "https://github.com/SkEESUB/Bill-Buddy.git",
+    gradient: "linear-gradient(135deg, oklch(0.82 0.16 270 / 0.7), oklch(0.85 0.14 295 / 0.65))",
+    cover: "/billbuddy-placeholder.svg",
+    screenshots: ["/billbuddy-placeholder.svg"],
+  },
+
+  {
     slug: "profile-card",
     title: "Profile Card",
     kicker: "Cinematic portfolio experience",
@@ -88,8 +169,7 @@ export const PROJECTS: ProjectData[] = [
     status: "Live",
     demo: "https://eesub-profile-card-dtul.vercel.app/",
     repo: "https://github.com/SkEESUB/eesub-profile-card",
-    gradient:
-      "linear-gradient(135deg, oklch(0.88 0.12 295 / 0.7), oklch(0.88 0.1 200 / 0.6))",
+    gradient: "linear-gradient(135deg, oklch(0.88 0.12 295 / 0.7), oklch(0.88 0.1 200 / 0.6))",
     cover: "https://i.postimg.cc/9MxG6Bw0/1782672070176.png",
     screenshots: [
       "https://i.postimg.cc/L5fVbGRW/20260627-215328.jpg",
@@ -153,8 +233,7 @@ export const PROJECTS: ProjectData[] = [
     status: "Live",
     demo: "https://lumo-chat.vercel.app/",
     repo: "https://github.com/SkEESUB/lumo-chat",
-    gradient:
-      "linear-gradient(135deg, oklch(0.88 0.12 250 / 0.65), oklch(0.86 0.13 195 / 0.6))",
+    gradient: "linear-gradient(135deg, oklch(0.88 0.12 250 / 0.65), oklch(0.86 0.13 195 / 0.6))",
     cover: "https://i.postimg.cc/Y9D98z3g/1782672322589.png",
     screenshots: [
       "https://i.postimg.cc/85zHwF8r/20260627-215201.jpg",
@@ -218,8 +297,7 @@ export const PROJECTS: ProjectData[] = [
     status: "Coming Soon",
     demo: "",
     repo: "https://github.com/SkEESUB/whatsapp-Travel-agent",
-    gradient:
-      "linear-gradient(135deg, oklch(0.88 0.13 150 / 0.65), oklch(0.86 0.13 200 / 0.6))",
+    gradient: "linear-gradient(135deg, oklch(0.88 0.13 150 / 0.65), oklch(0.86 0.13 200 / 0.6))",
     cover: "https://i.postimg.cc/qqk5LQVk/1782664525128.png",
     screenshots: [
       "https://i.postimg.cc/1zknjXt3/20260627-214855.jpg",
@@ -284,8 +362,7 @@ export const PROJECTS: ProjectData[] = [
     status: "Coming Soon",
     demo: "",
     repo: "https://github.com/SkEESUB/tripzy-compare.-book.-travel",
-    gradient:
-      "linear-gradient(135deg, oklch(0.86 0.12 320 / 0.7), oklch(0.86 0.13 200 / 0.65))",
+    gradient: "linear-gradient(135deg, oklch(0.86 0.12 320 / 0.7), oklch(0.86 0.13 200 / 0.65))",
     cover: "https://i.postimg.cc/fL44xxRF/file-00000000050071f5ab7b907cdfc96f2f.png",
     screenshots: [
       "https://i.postimg.cc/Pq9YnK6r/20260627-215043.jpg",
@@ -296,22 +373,18 @@ export const PROJECTS: ProjectData[] = [
   },
 ];
 
-export const getProject = (slug: string) =>
-  PROJECTS.find((p) => p.slug === slug);
+export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug);
 
 export const RESUME = {
   driveId: "1gnwFKQlxFI3dhPvH8xYBKR5yAwbagq3c",
   view: "https://drive.google.com/file/d/1gnwFKQlxFI3dhPvH8xYBKR5yAwbagq3c/view?usp=sharing",
-  download:
-    "https://drive.google.com/uc?export=download&id=1gnwFKQlxFI3dhPvH8xYBKR5yAwbagq3c",
-  thumb:
-    "https://drive.google.com/thumbnail?id=1gnwFKQlxFI3dhPvH8xYBKR5yAwbagq3c&sz=w1200",
+  download: "https://drive.google.com/uc?export=download&id=1gnwFKQlxFI3dhPvH8xYBKR5yAwbagq3c",
+  thumb: "https://drive.google.com/thumbnail?id=1gnwFKQlxFI3dhPvH8xYBKR5yAwbagq3c&sz=w1200",
   filename: "Shaik-Eesub-Vali-Resume.pdf",
   lastUpdated: "July 2026",
 };
 
-export const PORTRAIT_URL =
-  "https://i.postimg.cc/m25T2FXg/1782567277864.jpg";
+export const PORTRAIT_URL = "https://i.postimg.cc/m25T2FXg/1782567277864.jpg";
 
 export const SITE_META = {
   version: "v2.0",

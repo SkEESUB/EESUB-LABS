@@ -23,7 +23,9 @@ import { getProject, PROJECTS } from "@/lib/projects-data";
 
 const TECH_META: Record<string, { slug: string; color: string }> = {
   React: { slug: "react", color: "61DAFB" },
+  "React 19": { slug: "react", color: "61DAFB" },
   "Tailwind CSS": { slug: "tailwindcss", color: "06B6D4" },
+  "Tailwind CSS v4": { slug: "tailwindcss", color: "06B6D4" },
   "Framer Motion": { slug: "framer", color: "0055FF" },
   JavaScript: { slug: "javascript", color: "F7DF1E" },
   TypeScript: { slug: "typescript", color: "3178C6" },
@@ -37,6 +39,12 @@ const TECH_META: Record<string, { slug: string; color: string }> = {
   "Travel APIs": { slug: "googlemaps", color: "4285F4" },
   Vite: { slug: "vite", color: "646CFF" },
   MongoDB: { slug: "mongodb", color: "47A248" },
+  "TanStack Start": { slug: "tanstack", color: "FF4154" },
+  "TanStack Router": { slug: "tanstack", color: "FF4154" },
+  Supabase: { slug: "supabase", color: "3ECF8E" },
+  PostgreSQL: { slug: "postgresql", color: "4169E1" },
+  Recharts: { slug: "chartdotjs", color: "22B5BF" },
+  Nitro: { slug: "unjs", color: "F43F5E" },
 };
 
 export const Route = createFileRoute("/projects/$slug")({
@@ -63,7 +71,9 @@ export const Route = createFileRoute("/projects/$slug")({
     <div className="relative min-h-screen flex items-center justify-center bg-background px-4 py-20 text-center">
       <div className="glass-card max-w-md p-6 sm:p-8 shadow-2xl">
         <div className="font-mono text-5xl font-bold text-accent-purple">404</div>
-        <h1 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-foreground">Project Not Found</h1>
+        <h1 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-foreground">
+          Project Not Found
+        </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           The project you requested does not exist or may have been moved.
         </p>
@@ -107,12 +117,18 @@ function ProjectPage() {
   };
 
   const impactItems = p.impact && p.impact.length > 0 ? p.impact : p.results || [];
-  const problemBullets = p.problemBullets && p.problemBullets.length > 0 
-    ? p.problemBullets 
-    : (p.problem ? [p.problem] : []);
-  const solutionBullets = p.solutionBullets && p.solutionBullets.length > 0 
-    ? p.solutionBullets 
-    : (p.solution ? [p.solution] : []);
+  const problemBullets =
+    p.problemBullets && p.problemBullets.length > 0
+      ? p.problemBullets
+      : p.problem
+        ? [p.problem]
+        : [];
+  const solutionBullets =
+    p.solutionBullets && p.solutionBullets.length > 0
+      ? p.solutionBullets
+      : p.solution
+        ? [p.solution]
+        : [];
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-background text-foreground selection:bg-accent-purple/20">
@@ -287,9 +303,7 @@ function ProjectPage() {
           >
             {/* B. The Problem Card */}
             {p.problem && (
-              <div
-                className="neu-card relative overflow-hidden rounded-2xl p-4.5 sm:p-5.5 transition-all duration-300"
-              >
+              <div className="neu-card relative overflow-hidden rounded-2xl p-4.5 sm:p-5.5 transition-all duration-300">
                 <div
                   aria-hidden
                   className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-rose-500/10 blur-2xl"
@@ -324,9 +338,7 @@ function ProjectPage() {
 
             {/* C. The Solution Card */}
             {p.solution && (
-              <div
-                className="neu-card relative overflow-hidden rounded-2xl p-4.5 sm:p-5.5 transition-all duration-300"
-              >
+              <div className="neu-card relative overflow-hidden rounded-2xl p-4.5 sm:p-5.5 transition-all duration-300">
                 <div
                   aria-hidden
                   className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-teal-500/10 blur-2xl"
@@ -364,9 +376,7 @@ function ProjectPage() {
         {/* ================= D. PROJECT IMPACT — COMPACT ================= */}
         {impactItems.length > 0 && (
           <section aria-label="Project Impact">
-            <div
-              className="neu-card relative overflow-hidden rounded-2xl p-5 sm:p-6"
-            >
+            <div className="neu-card relative overflow-hidden rounded-2xl p-5 sm:p-6">
               <div
                 aria-hidden
                 className="pointer-events-none absolute right-0 top-0 h-40 w-40 rounded-full bg-accent-purple/10 blur-3xl"
@@ -394,10 +404,7 @@ function ProjectPage() {
 
               <div className="grid gap-2.5 sm:grid-cols-2">
                 {impactItems.map((point: string, idx: number) => (
-                  <div
-                    key={idx}
-                    className="neu-card-subtle flex items-start gap-2 rounded-xl p-3"
-                  >
+                  <div key={idx} className="neu-card-subtle flex items-start gap-2 rounded-xl p-3">
                     <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-500 mt-0.5" />
                     <span className="text-xs sm:text-sm text-foreground/85 leading-snug">
                       {point}
@@ -532,8 +539,7 @@ function ProjectPage() {
                 <span
                   className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
                   style={{
-                    background:
-                      "linear-gradient(135deg, oklch(0.7 0.18 190), oklch(0.65 0.2 240))",
+                    background: "linear-gradient(135deg, oklch(0.7 0.18 190), oklch(0.65 0.2 240))",
                   }}
                 >
                   <Layers className="h-3.5 w-3.5" />
@@ -707,7 +713,9 @@ function ProjectPage() {
                   </div>
                   <div className="p-3 flex items-center justify-between gap-2">
                     <div className="min-w-0">
-                      <div className="text-xs sm:text-sm font-bold text-foreground truncate">{o.title}</div>
+                      <div className="text-xs sm:text-sm font-bold text-foreground truncate">
+                        {o.title}
+                      </div>
                       <div className="text-[11px] text-muted-foreground truncate">{o.kicker}</div>
                     </div>
                     <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:text-foreground group-hover:translate-x-0.5" />

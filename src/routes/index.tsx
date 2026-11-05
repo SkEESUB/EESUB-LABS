@@ -67,6 +67,7 @@ import {
 
 import { PROJECTS, RESUME, PORTRAIT_URL } from "@/lib/projects-data";
 import { toast } from "sonner";
+import { triggerGhostCelebration, triggerGhostEmotion } from "@/lib/ghost-events";
 
 /* Certificate images */
 import anthropic1 from "@/assets/certificates/anthropic-1.jpg";
@@ -194,20 +195,20 @@ const NAV = [
   { id: "home", label: "Home", icon: Home },
   { id: "about", label: "About Me", icon: User },
   { id: "skills", label: "Skills", icon: ChartNoAxesColumn },
-  { id: "projects", label: "Projects", icon: Grid2x2 },
   { id: "journey", label: "Journey", icon: Rocket },
-  { id: "contact", label: "Contact", icon: Mail },
+  { id: "projects", label: "Projects", icon: Grid2x2 },
   { id: "resume", label: "Resume", icon: FileText },
+  { id: "contact", label: "Contact", icon: Mail },
 ];
 
 const MOBILE_NAV_ITEMS = [
   { id: "home", label: "Home", icon: Home },
   { id: "about", label: "About Me", icon: User },
   { id: "skills", label: "Skills", icon: ChartNoAxesColumn },
-  { id: "projects", label: "Projects", icon: Grid2x2 },
   { id: "journey", label: "Journey", icon: Rocket },
-  { id: "contact", label: "Contact", icon: Mail },
+  { id: "projects", label: "Projects", icon: Grid2x2 },
   { id: "resume", label: "Resume", icon: FileText },
+  { id: "contact", label: "Contact", icon: Mail },
 ];
 
 function Portfolio() {
@@ -229,7 +230,6 @@ function Portfolio() {
   return (
     <MotionConfig reducedMotion="never">
       <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
-
         <a
           href="#home"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-xs focus:font-semibold focus:text-background focus:shadow-lg focus:outline-none"
@@ -244,11 +244,10 @@ function Portfolio() {
           <div className="mx-auto max-w-6xl">
             <About />
             <Skills />
-            <Projects />
             <Journey />
-            <Contact />
+            <Projects />
             <Resume />
-            <Certifications />
+            <Contact />
           </div>
         </main>
         <Footer />
@@ -548,7 +547,9 @@ function Nav() {
             >
               Eesub Labs
             </span>
-            <span className="text-muted-foreground/35 text-xs font-semibold select-none ml-1">·</span>
+            <span className="text-muted-foreground/35 text-xs font-semibold select-none ml-1">
+              ·
+            </span>
           </a>
 
           {/* Navigation Items */}
@@ -579,7 +580,8 @@ function Nav() {
                       className="absolute inset-0 rounded-full"
                       style={{
                         background: "linear-gradient(135deg, #9333EA 0%, #C084FC 100%)",
-                        boxShadow: "-1.5px -1.5px 4px 0 rgba(255, 255, 255, 0.7), 2px 4px 10px -1px rgba(147, 51, 234, 0.35), inset 0.5px 0.5px 1px 0 rgba(255, 255, 255, 0.5)",
+                        boxShadow:
+                          "-1.5px -1.5px 4px 0 rgba(255, 255, 255, 0.7), 2px 4px 10px -1px rgba(147, 51, 234, 0.35), inset 0.5px 0.5px 1px 0 rgba(255, 255, 255, 0.5)",
                       }}
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
@@ -871,7 +873,7 @@ function Reveal({
   children,
   delay = 0,
   className = "",
-  y = 24,
+  y = 22,
 }: {
   children: React.ReactNode;
   delay?: number;
@@ -882,8 +884,8 @@ function Reveal({
     <motion.div
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px" }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay }}
+      viewport={{ once: true, margin: "-45px" }}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay }}
       className={className}
     >
       {children}
@@ -906,7 +908,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
   );
 
   const statistics = [
-    { value: "4+", label: "PROJECTS" },
+    { value: "5+", label: "PROJECTS" },
     { value: "2", label: "INTERNSHIPS" },
     { value: "10+", label: "TECH STACK" },
     { value: "2027", label: "GRADUATE" },
@@ -1002,6 +1004,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
                     e?.preventDefault?.();
                     smoothScrollTo("projects");
                   }}
+                  onMouseEnter={() => triggerGhostEmotion("listening", 1200)}
                   className="flex-1 sm:flex-initial inline-flex h-[38px] sm:h-[48px] items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-7 rounded-full text-[12px] sm:text-[14.5px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-95 shadow-[0_8px_24px_rgba(112,51,255,0.35)] hover:shadow-[0_12px_28px_rgba(112,51,255,0.45)] shrink-0"
                   style={{
                     background: "linear-gradient(110deg, #7033FF 0%, #B829D6 55%, #0EA5E9 100%)",
@@ -1017,6 +1020,7 @@ function Hero({ mouse }: { mouse: { x: MotionValue<number>; y: MotionValue<numbe
                   target="_blank"
                   rel="noopener noreferrer"
                   download="Shaik_Eesub_Vali_Resume.pdf"
+                  onMouseEnter={() => triggerGhostEmotion("listening", 1200)}
                   className="flex-1 sm:flex-initial inline-flex h-[38px] sm:h-[48px] items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-6 rounded-full text-[12px] sm:text-[14.5px] font-semibold text-[#1F1D2E] transition-all duration-300 hover:-translate-y-0.5 active:scale-95 shadow-[0_4px_16px_rgba(85,65,120,0.1)] hover:shadow-[0_8px_20px_rgba(85,65,120,0.16)] shrink-0"
                   style={{
                     background: "rgba(255, 255, 255, 0.95)",
@@ -1114,6 +1118,7 @@ function MagneticButton({
   target,
   rel,
   style,
+  onMouseEnter,
 }: {
   children: React.ReactNode;
   href?: string;
@@ -1124,6 +1129,7 @@ function MagneticButton({
   rel?: string;
   as?: string;
   style?: React.CSSProperties;
+  onMouseEnter?: (e?: React.MouseEvent) => void;
 }) {
   const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const x = useSpring(0, { stiffness: 220, damping: 18 });
@@ -1149,6 +1155,7 @@ function MagneticButton({
       target={target}
       rel={rel}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={{ x, y, ...style }}
@@ -1194,7 +1201,21 @@ function About() {
     <Section
       id="about"
       eyebrow="The person behind the pixels"
-      title={<>About <span style={{ background: "linear-gradient(135deg, #B829D6, #D946EF)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Me</span></>}
+      title={
+        <>
+          About{" "}
+          <span
+            style={{
+              background: "linear-gradient(135deg, #B829D6, #D946EF)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            Me
+          </span>
+        </>
+      }
     >
       <div
         aria-hidden
@@ -1224,37 +1245,40 @@ function About() {
               whileTap={{ scale: 0.985 }}
               className="neu-card neu-neon-edge flex w-full flex-col justify-between p-4.5 sm:p-5.5 rounded-[26px]"
             >
-            <ProfilePortrait src={portrait} />
+              <ProfilePortrait src={portrait} />
 
-            <div className="mt-3.5 flex flex-1 flex-col justify-between space-y-2.5">
-              <div>
-                <div className="font-display text-[22px] sm:text-[24px] font-bold leading-tight text-foreground">
-                  Shaik Eesub Vali
+              <div className="mt-3.5 flex flex-1 flex-col justify-between space-y-2.5">
+                <div>
+                  <div className="font-display text-[22px] sm:text-[24px] font-bold leading-tight text-foreground">
+                    Shaik Eesub Vali
+                  </div>
+                  <div className="text-xs sm:text-[13px] text-muted-foreground mt-0.5">
+                    Frontend Developer
+                  </div>
                 </div>
-                <div className="text-xs sm:text-[13px] text-muted-foreground mt-0.5">
-                  Frontend Developer
+
+                <div className="space-y-1.5 text-[12.5px] sm:text-[13px] text-muted-foreground pt-1.5">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 shrink-0" style={{ color: "var(--accent-pink)" }} />
+                    <span>Narasaraopet, AP</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <GraduationCap
+                      className="h-4 w-4 shrink-0"
+                      style={{ color: "var(--accent-purple)" }}
+                    />
+                    <span>B.Tech CSE (2027)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Briefcase
+                      className="h-4 w-4 shrink-0"
+                      style={{ color: "var(--accent-teal)" }}
+                    />
+                    <span>Open for Internships</span>
+                  </div>
                 </div>
               </div>
-
-              <div className="space-y-1.5 text-[12.5px] sm:text-[13px] text-muted-foreground pt-1.5">
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 shrink-0" style={{ color: "var(--accent-pink)" }} />
-                  <span>Narasaraopet, AP</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <GraduationCap
-                    className="h-4 w-4 shrink-0"
-                    style={{ color: "var(--accent-purple)" }}
-                  />
-                  <span>B.Tech CSE (2027)</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Briefcase className="h-4 w-4 shrink-0" style={{ color: "var(--accent-teal)" }} />
-                  <span>Open for Internships</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
           </Tilt>
         </Reveal>
 
@@ -1270,8 +1294,15 @@ function About() {
                 className="neu-card neu-card-interactive neu-neon-edge flex w-full flex-col justify-center p-4 sm:p-4.5 rounded-[24px]"
               >
                 <div className="flex items-center gap-3">
-                  <motion.div whileHover={{ rotate: 8, scale: 1.08 }} className="neu-icon-holder-purple h-10 w-10"><User className="h-4.5 w-4.5" /></motion.div>
-                  <div className="font-display text-[16px] sm:text-[17px] font-bold text-foreground">Who I Am</div>
+                  <motion.div
+                    whileHover={{ rotate: 8, scale: 1.08 }}
+                    className="neu-icon-holder-purple h-10 w-10"
+                  >
+                    <User className="h-4.5 w-4.5" />
+                  </motion.div>
+                  <div className="font-display text-[16px] sm:text-[17px] font-bold text-foreground">
+                    Who I Am
+                  </div>
                 </div>
                 <ul className="mt-3 grid grid-cols-1 gap-2.5 text-[12.5px] text-muted-foreground sm:grid-cols-2">
                   {whoBullets.map((b) => (
@@ -1279,7 +1310,10 @@ function About() {
                       key={b.label}
                       className="neu-pill flex min-h-[40px] items-center gap-2.5 px-3 py-1.5 font-semibold text-foreground/90"
                     >
-                      <span className="neu-icon-holder h-6.5 w-6.5 shrink-0" style={{ color: b.color }}>
+                      <span
+                        className="neu-icon-holder h-6.5 w-6.5 shrink-0"
+                        style={{ color: b.color }}
+                      >
                         <b.Icon className="h-3.5 w-3.5 shrink-0" />
                       </span>
                       <span className="truncate text-[12px]">{b.label}</span>
@@ -1298,8 +1332,15 @@ function About() {
                 className="neu-card neu-card-interactive neu-neon-edge flex w-full flex-col justify-center p-4 sm:p-4.5 rounded-[24px]"
               >
                 <div className="flex items-center gap-3">
-                  <motion.div whileHover={{ rotate: -8, scale: 1.08 }} className="neu-icon-holder-cyan h-10 w-10"><Heart className="h-4.5 w-4.5" /></motion.div>
-                  <div className="font-display text-[16px] sm:text-[17px] font-bold text-foreground">My Interests</div>
+                  <motion.div
+                    whileHover={{ rotate: -8, scale: 1.08 }}
+                    className="neu-icon-holder-cyan h-10 w-10"
+                  >
+                    <Heart className="h-4.5 w-4.5" />
+                  </motion.div>
+                  <div className="font-display text-[16px] sm:text-[17px] font-bold text-foreground">
+                    My Interests
+                  </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {interests.map((t) => (
@@ -1326,12 +1367,22 @@ function About() {
                 className="neu-card neu-card-interactive neu-neon-edge flex w-full flex-col justify-center p-4 sm:p-4.5 rounded-[24px]"
               >
                 <div className="flex items-center gap-3">
-                  <motion.div whileHover={{ rotate: 8, scale: 1.08 }} className="neu-icon-holder-pink h-10 w-10"><Wrench className="h-4.5 w-4.5" /></motion.div>
-                  <div className="font-display text-[16px] sm:text-[17px] font-bold text-foreground">What I Do</div>
+                  <motion.div
+                    whileHover={{ rotate: 8, scale: 1.08 }}
+                    className="neu-icon-holder-pink h-10 w-10"
+                  >
+                    <Wrench className="h-4.5 w-4.5" />
+                  </motion.div>
+                  <div className="font-display text-[16px] sm:text-[17px] font-bold text-foreground">
+                    What I Do
+                  </div>
                 </div>
                 <ul className="mt-3 grid grid-cols-1 gap-2.5 text-[12.5px] text-muted-foreground sm:grid-cols-2">
                   {doItems.map((it) => (
-                    <li key={it} className="flex items-center gap-2.5 text-[12.5px] font-medium text-foreground/85">
+                    <li
+                      key={it}
+                      className="flex items-center gap-2.5 text-[12.5px] font-medium text-foreground/85"
+                    >
                       <span className="neu-icon-holder h-5 w-5 bg-cyan-50/90 text-cyan-600 border-cyan-100 shrink-0">
                         <Check className="h-3 w-3 stroke-[2.5]" />
                       </span>
@@ -1605,7 +1656,22 @@ function Skills() {
   const [tab, setTab] = useState<SkillTab>("Frontend");
   const items = SKILLS.filter((s) => TAB_MAP[tab].includes(s.name));
   return (
-    <Section id="skills" eyebrow="Technologies I design and build with" title={<span style={{ background: "linear-gradient(135deg, #7033FF, #B829D6, #D946EF)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Stack</span>}>
+    <Section
+      id="skills"
+      eyebrow="Technologies I design and build with"
+      title={
+        <span
+          style={{
+            background: "linear-gradient(135deg, #7033FF, #B829D6, #D946EF)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+          }}
+        >
+          Stack
+        </span>
+      }
+    >
       {/* Tabs: Responsive 4x2 grid on mobile (< sm), flex-wrap on desktop */}
       <div className="mb-6 grid grid-cols-4 gap-1.5 sm:flex sm:flex-wrap sm:gap-2">
         {SKILL_TABS.map((t) => {
@@ -1672,7 +1738,9 @@ function Skills() {
                 </motion.div>
 
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-[14px] sm:text-[15px] font-bold text-foreground leading-tight">{s.name}</div>
+                  <div className="truncate text-[14px] sm:text-[15px] font-bold text-foreground leading-tight">
+                    {s.name}
+                  </div>
                   <div className="truncate text-[9.5px] uppercase font-semibold tracking-wider text-muted-foreground mt-0.5">
                     {s.category}
                   </div>
@@ -1689,7 +1757,9 @@ function Skills() {
 /* ================================ Projects ================================ */
 const TECH_META: Record<string, { slug: string; color: string; glow: string }> = {
   React: { slug: "react", color: "61DAFB", glow: "oklch(0.85 0.13 220 / 0.45)" },
+  "React 19": { slug: "react", color: "61DAFB", glow: "oklch(0.85 0.13 220 / 0.45)" },
   "Tailwind CSS": { slug: "tailwindcss", color: "06B6D4", glow: "oklch(0.78 0.15 200 / 0.45)" },
+  "Tailwind CSS v4": { slug: "tailwindcss", color: "06B6D4", glow: "oklch(0.78 0.15 200 / 0.45)" },
   "Framer Motion": { slug: "framer", color: "0055FF", glow: "oklch(0.6 0.22 265 / 0.45)" },
   JavaScript: { slug: "javascript", color: "F7DF1E", glow: "oklch(0.9 0.18 95 / 0.5)" },
   TypeScript: { slug: "typescript", color: "3178C6", glow: "oklch(0.6 0.18 250 / 0.45)" },
@@ -1702,6 +1772,12 @@ const TECH_META: Record<string, { slug: string; color: string; glow: string }> =
   Webhooks: { slug: "zapier", color: "FF4A00", glow: "oklch(0.75 0.2 40 / 0.45)" },
   "Travel APIs": { slug: "googlemaps", color: "4285F4", glow: "oklch(0.7 0.18 255 / 0.45)" },
   Vite: { slug: "vite", color: "646CFF", glow: "oklch(0.65 0.2 270 / 0.45)" },
+  "TanStack Start": { slug: "tanstack", color: "FF4154", glow: "oklch(0.7 0.22 25 / 0.45)" },
+  "TanStack Router": { slug: "tanstack", color: "FF4154", glow: "oklch(0.7 0.22 25 / 0.45)" },
+  Supabase: { slug: "supabase", color: "3ECF8E", glow: "oklch(0.8 0.2 155 / 0.45)" },
+  PostgreSQL: { slug: "postgresql", color: "4169E1", glow: "oklch(0.65 0.2 250 / 0.45)" },
+  Recharts: { slug: "chartdotjs", color: "22B5BF", glow: "oklch(0.75 0.18 190 / 0.45)" },
+  Nitro: { slug: "unjs", color: "F43F5E", glow: "oklch(0.7 0.22 20 / 0.45)" },
 };
 
 function TechIcon({ name }: { name: string }) {
@@ -1722,7 +1798,6 @@ function TechIcon({ name }: { name: string }) {
 function techGlow(name: string) {
   return TECH_META[name]?.glow ?? "oklch(0.7 0.1 295 / 0.35)";
 }
-
 
 function ProjectsReelSlider() {
   const projects = PROJECTS;
@@ -2055,10 +2130,7 @@ function ProjectCardBody({ p }: { p: (typeof PROJECTS)[number] }) {
       className="group/card relative flex h-full w-full flex-col"
       aria-label={`Open ${p.title} details`}
     >
-      <div
-        className="relative aspect-[16/10] overflow-hidden"
-        style={{ background: p.gradient }}
-      >
+      <div className="relative aspect-[16/10] overflow-hidden" style={{ background: p.gradient }}>
         <img
           src={p.cover}
           alt={`${p.title} cover`}
@@ -2077,11 +2149,9 @@ function ProjectCardBody({ p }: { p: (typeof PROJECTS)[number] }) {
           <span
             className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-white shadow-xs"
             style={{
-              background:
-                "linear-gradient(135deg, oklch(0.74 0.2 150), oklch(0.66 0.22 158))",
+              background: "linear-gradient(135deg, oklch(0.74 0.2 150), oklch(0.66 0.22 158))",
               border: "1px solid oklch(0.88 0.18 150 / 0.7)",
-              boxShadow:
-                "0 0 18px oklch(0.78 0.22 150 / 0.55), inset 0 1px 0 oklch(1 0 0 / 0.45)",
+              boxShadow: "0 0 18px oklch(0.78 0.22 150 / 0.55), inset 0 1px 0 oklch(1 0 0 / 0.45)",
             }}
           >
             <span
@@ -2094,10 +2164,7 @@ function ProjectCardBody({ p }: { p: (typeof PROJECTS)[number] }) {
           <span
             className="glass-pill absolute right-3 top-3 px-2.5 py-1 text-[10px] font-medium"
             style={{
-              color:
-                p.status === "In Progress"
-                  ? "oklch(0.6 0.18 60)"
-                  : "var(--accent-purple)",
+              color: p.status === "In Progress" ? "oklch(0.6 0.18 60)" : "var(--accent-purple)",
             }}
           >
             {p.status}
@@ -2270,7 +2337,21 @@ function Projects() {
     <Section
       id="projects"
       eyebrow="Creative experiments & real-world builds · Click any card for details"
-      title={<>Featured <span style={{ background: "linear-gradient(135deg, #7033FF, #B829D6, #D946EF)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>Projects</span></>}
+      title={
+        <>
+          Featured{" "}
+          <span
+            style={{
+              background: "linear-gradient(135deg, #7033FF, #B829D6, #D946EF)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            Projects
+          </span>
+        </>
+      }
     >
       {/* Mobile view (< sm): Horizontal swipe deck */}
       <MobileProjectsSwipeDeck />
@@ -2702,7 +2783,13 @@ function CompactDetail({ mi, isPresent }: { mi: MilestoneEx; isPresent: boolean 
           <span
             className={`h-1.5 w-1.5 rounded-full ${isPresent ? "bg-emerald-500 animate-pulse" : "bg-purple-500"}`}
           />
-          <span className={isPresent ? "text-emerald-700 dark:text-emerald-400" : "text-purple-700 dark:text-purple-400"}>
+          <span
+            className={
+              isPresent
+                ? "text-emerald-700 dark:text-emerald-400"
+                : "text-purple-700 dark:text-purple-400"
+            }
+          >
             {isPresent ? "Present" : "Completed"}
           </span>
         </motion.span>
@@ -2711,7 +2798,10 @@ function CompactDetail({ mi, isPresent }: { mi: MilestoneEx; isPresent: boolean 
       {/* Key Achievements: Concise bullet points with 3D floating icons */}
       <ul className="relative mt-3.5 space-y-2">
         {mi.achievements.map((a) => (
-          <li key={a} className="flex items-center gap-2.5 text-[12px] sm:text-[12.5px] leading-snug text-foreground/85 font-medium">
+          <li
+            key={a}
+            className="flex items-center gap-2.5 text-[12px] sm:text-[12.5px] leading-snug text-foreground/85 font-medium"
+          >
             <span
               className="neu-icon-holder h-5 w-5 shrink-0 flex items-center justify-center rounded-full shadow-2xs"
               style={{ color: mi.from }}
@@ -2942,10 +3032,7 @@ function ContactInfoRow({
       {content}
     </a>
   ) : (
-    <div
-      onClick={copyable ? handleCopy : undefined}
-      className={copyable ? "cursor-pointer" : ""}
-    >
+    <div onClick={copyable ? handleCopy : undefined} className={copyable ? "cursor-pointer" : ""}>
       {content}
     </div>
   );
@@ -3013,6 +3100,7 @@ function Contact() {
         window.location.href = href;
       }
       toast.success("Message ready to send — thanks for reaching out!");
+      triggerGhostCelebration();
       setSent(true);
       setTimeout(() => {
         setName("");
@@ -3021,6 +3109,7 @@ function Contact() {
         setSent(false);
       }, 1600);
     } catch {
+      triggerGhostEmotion("error", 2500, "high");
       toast.error("Could not send right now — please email me directly.");
       throw new Error("send failed");
     }
@@ -3105,9 +3194,7 @@ function Contact() {
 
               {/* Find me on */}
               <div className="mt-5 sm:mt-6">
-                <div className="text-xs font-medium text-muted-foreground mb-2.5">
-                  Find me on
-                </div>
+                <div className="text-xs font-medium text-muted-foreground mb-2.5">Find me on</div>
                 <div className="flex items-center gap-2.5">
                   <ContactSocialBtn
                     Icon={Linkedin}
@@ -3301,7 +3388,11 @@ function SwipeToSend({ onSend, sent }: { onSend: () => Promise<void>; sent: bool
         aria-label="Swipe to send message"
         className="absolute left-1 top-1 flex h-[40px] w-[40px] sm:h-[42px] sm:w-[42px] items-center justify-center rounded-full bg-[#111118] text-white shadow-md cursor-grab active:cursor-grabbing"
       >
-        {sent ? <CheckCircle2 className="h-4 w-4 text-emerald-400" /> : <Send className="h-4 w-4" />}
+        {sent ? (
+          <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+        ) : (
+          <Send className="h-4 w-4" />
+        )}
       </motion.button>
     </div>
   );
@@ -3818,7 +3909,9 @@ function MobileResume() {
             {RESUME_META.name}
           </h3>
           <div className="mt-1 text-[13px] text-muted-foreground">{RESUME_META.role}</div>
-          <p className="mt-4 text-[13.5px] leading-relaxed text-foreground/75 font-normal">{RESUME_META.summary}</p>
+          <p className="mt-4 text-[13.5px] leading-relaxed text-foreground/75 font-normal">
+            {RESUME_META.summary}
+          </p>
 
           <div className="mt-6 flex items-center justify-between border-t border-black/[0.07] dark:border-white/10 pt-4 text-[12px]">
             <span className="font-semibold uppercase tracking-[0.12em] text-muted-foreground">
@@ -3927,7 +4020,7 @@ function DesktopResumePreview() {
                 </p>
               </div>
 
-                            <div className="mt-6 flex flex-wrap gap-2.5">
+              <div className="mt-6 flex flex-wrap gap-2.5">
                 <motion.span
                   whileHover={{ y: -1.5, scale: 1.02 }}
                   className="neu-pill inline-flex items-center gap-2 px-3.5 py-1.5 text-[11px] font-semibold text-foreground/85 shadow-2xs cursor-default"
@@ -3968,8 +4061,7 @@ function DesktopResumePreview() {
                   transition={{ type: "spring", stiffness: 300, damping: 22 }}
                   className="inline-flex h-[44px] items-center justify-center gap-2 rounded-2xl px-4 text-[12px] font-semibold text-white cursor-pointer"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #181524, #0d0b16)",
+                    background: "linear-gradient(135deg, #181524, #0d0b16)",
                     boxShadow:
                       "0 10px 22px -6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.22)",
                   }}
@@ -4070,6 +4162,22 @@ const DataValleyLogo = ({ size = 22 }: { size?: number }) => (
     <circle cx="50" cy="18" r="3.5" fill="#fff" />
   </svg>
 );
+
+interface CertItem {
+  title: string;
+  year: string;
+  credentialId: string;
+  pdf: string;
+}
+
+interface CertOrg {
+  key: string;
+  name: string;
+  short: string;
+  accent: string;
+  Logo: React.ComponentType<{ size?: number; className?: string }>;
+  items: CertItem[];
+}
 
 const CERTIFICATIONS: CertOrg[] = [
   {
@@ -4694,108 +4802,104 @@ function ResumeModal({
   );
 }
 
-function Certifications() {
+function Resume() {
   const [activeKey, setActiveKey] = useState<string | null>(null);
-
   const active = CERTIFICATIONS.find((cert) => cert.key === activeKey) ?? null;
 
-  return (
-    <section className="mt-7 sm:mt-8">
-      {/* HEADER */}
-      <div className="mb-4 flex items-center justify-between gap-3 px-1">
-        <div className="flex min-w-0 items-center gap-2.5">
-          <h3 className="font-display text-[15px] font-semibold text-black/80 sm:text-base">
-            Professional Certifications
-          </h3>
-
-          <span
-            className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold text-black/60"
-            style={{
-              background: "rgba(255,255,255,0.58)",
-              border: "1px solid rgba(255,255,255,0.8)",
-              backdropFilter: "blur(18px)",
-              WebkitBackdropFilter: "blur(18px)",
-              boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 8px 20px -12px rgba(0,0,0,0.22)",
-            }}
-          >
-            <CheckCircle2 className="h-3 w-3" style={{ color: "var(--accent-teal)" }} />
-            {CERTIFICATIONS.reduce((total, cert) => total + cert.items.length, 0)} Verified
-          </span>
-        </div>
-
-        <span className="shrink-0 text-[10px] font-medium uppercase tracking-[0.16em] text-black/40 sm:text-[11px]">
-          Certified
-        </span>
-      </div>
-
-      {/* CERTIFICATE CARDS */}
-      <div className="cert-scroll-container">
-        <div className="cert-scroll-track">
-          {CERTIFICATIONS.map((org, index) => {
-            const { Logo } = org;
-
-            return (
-              <motion.button
-                key={org.key}
-                type="button"
-                onClick={() => setActiveKey(org.key)}
-                className="cert-pill-card neu-neon-edge"
-                style={
-                  {
-                    "--cert-accent": org.accent,
-                  } as React.CSSProperties
-                }
-                whileHover={{
-                  y: -4,
-                  scale: 1.02,
-                }}
-                whileTap={{
-                  scale: 0.97,
-                }}
-                aria-label={`Open ${org.name} certificates`}
-              >
-                {/* LOGO */}
-                <span className="cert-pill-logo">
-                  <Logo size={19} />
-                </span>
-
-                {/* NAME */}
-                <span className="cert-pill-name">{org.short}</span>
-
-                {/* COUNT */}
-                <span className="cert-pill-count">×{org.items.length}</span>
-              </motion.button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* MOBILE HINT */}
-      <div className="mt-2 flex justify-center sm:hidden">
-        <span className="text-[9px] font-medium uppercase tracking-[0.18em] text-black/30">
-          Swipe to explore
-        </span>
-      </div>
-
-      {/* CERTIFICATE POPUP */}
-      <CertGallery open={!!active} org={active} onClose={() => setActiveKey(null)} />
-    </section>
-  );
-}
-
-function Resume() {
   return (
     <Section
       id="resume"
       eyebrow="One-page resume focused on frontend development and UI design"
       title="Resume"
     >
-      {/* Mobile: no inline preview — clean summary + fullscreen modal */}
+      {/* 1. Resume Cards (Mobile & Desktop) */}
       <div className="lg:hidden">
         <MobileResume />
       </div>
 
       <DesktopResumePreview />
+
+      {/* 2. Professional Certifications — Directly below Resume Card within the same section container */}
+      <div id="certifications" className="scroll-mt-28 mt-8 sm:mt-10 md:mt-12">
+        {/* CERTIFICATIONS SUB-HEADING */}
+        <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 px-1">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <h3 className="font-display text-[1.15rem] sm:text-[1.3rem] font-semibold tracking-tight text-foreground">
+              Professional Certifications
+            </h3>
+
+            <span
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-[10.5px] font-semibold text-black/75 dark:text-white/75"
+              style={{
+                background: "rgba(255,255,255,0.65)",
+                border: "1px solid rgba(255,255,255,0.85)",
+                backdropFilter: "blur(18px)",
+                WebkitBackdropFilter: "blur(18px)",
+                boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 8px 20px -12px rgba(0,0,0,0.18)",
+              }}
+            >
+              <CheckCircle2 className="h-3.5 w-3.5" style={{ color: "var(--accent-teal)" }} />
+              {CERTIFICATIONS.reduce((total, cert) => total + cert.items.length, 0)} Verified
+            </span>
+          </div>
+
+          <span className="shrink-0 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground/80 sm:text-[11px]">
+            Click card to inspect
+          </span>
+        </div>
+
+        {/* CERTIFICATE CARDS */}
+        <div className="cert-scroll-container">
+          <div className="cert-scroll-track">
+            {CERTIFICATIONS.map((org) => {
+              const { Logo } = org;
+
+              return (
+                <motion.button
+                  key={org.key}
+                  type="button"
+                  onClick={() => setActiveKey(org.key)}
+                  className="cert-pill-card neu-neon-edge cursor-pointer"
+                  style={
+                    {
+                      "--cert-accent": org.accent,
+                    } as React.CSSProperties
+                  }
+                  whileHover={{
+                    y: -4,
+                    scale: 1.025,
+                  }}
+                  whileTap={{
+                    scale: 0.97,
+                  }}
+                  aria-label={`Open ${org.name} certificates`}
+                >
+                  {/* LOGO */}
+                  <span className="cert-pill-logo">
+                    <Logo size={19} />
+                  </span>
+
+                  {/* NAME */}
+                  <span className="cert-pill-name">{org.short}</span>
+
+                  {/* COUNT */}
+                  <span className="cert-pill-count">×{org.items.length}</span>
+                </motion.button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* MOBILE SWIPE HINT */}
+        <div className="mt-2.5 flex justify-center sm:hidden">
+          <span className="text-[9px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
+            Swipe to explore
+          </span>
+        </div>
+
+        {/* CERTIFICATE POPUP MODAL */}
+        <CertGallery open={!!active} org={active} onClose={() => setActiveKey(null)} />
+      </div>
     </Section>
   );
 }

@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
+import { GhostCompanion } from "@/components/ghost-companion";
 
 function NotFoundComponent() {
   return (
@@ -79,10 +80,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Shaik Eesub Vali — Frontend Developer & UI Designer" },
-      { name: "description", content: "Portfolio of Shaik Eesub Vali — frontend developer and UI designer crafting liquid-glass web experiences at the intersection of design and technology." },
+      {
+        name: "description",
+        content:
+          "Portfolio of Shaik Eesub Vali — frontend developer and UI designer crafting liquid-glass web experiences at the intersection of design and technology.",
+      },
       { name: "author", content: "Shaik Eesub Vali" },
       { property: "og:title", content: "Shaik Eesub Vali — Eesub Labs" },
-      { property: "og:description", content: "Frontend Developer · UI Designer · Creative Builder. Building the web, one pixel at a time." },
+      {
+        property: "og:description",
+        content:
+          "Frontend Developer · UI Designer · Creative Builder. Building the web, one pixel at a time.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -127,6 +136,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <GhostCompanion />
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
