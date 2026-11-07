@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0c20" />
+      <stop offset="100%" stop-color="#181330" />
+    </linearGradient>
+    <linearGradient id="purple-btn" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#6d28d9" />
+    </linearGradient>
+    <linearGradient id="card-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.07)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0.02)" />
+    </linearGradient>
+    <linearGradient id="bar-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="750" rx="16" fill="url(#bg)" />
+
+  <!-- Ambient light -->
+  <circle cx="200" cy="150" r="180" fill="#6366f1" opacity="0.12" filter="url(#soft-glow)" />
+  <circle cx="1000" cy="600" r="220" fill="#a855f7" opacity="0.12" filter="url(#soft-glow)" />
+
+  <!-- Left Sidebar (180px wide) -->
+  <g transform="translate(0, 0)">
+    <rect width="210" height="750" fill="#130f28" />
+    <line x1="210" y1="0" x2="210" y2="750" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+    
+    <!-- Logo -->
+    <g transform="translate(24, 30)">
+      <rect width="36" height="36" rx="10" fill="url(#purple-btn)" />
+      <text x="18" y="25" fill="#ffffff" font-family="system-ui, sans-serif" font-size="20" font-weight="900" text-anchor="middle">B</text>
+      <text x="48" y="24" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="700">BillBuddy</text>
+    </g>
+
+    <!-- Nav Items -->
+    <g transform="translate(18, 100)" font-family="system-ui, sans-serif" font-size="13.5" font-weight="500">
+      <!-- Active Item: Dashboard -->
+      <rect x="0" y="0" width="174" height="40" rx="10" fill="rgba(139, 92, 246, 0.22)" stroke="rgba(168, 85, 247, 0.4)" stroke-width="1" />
+      <circle cx="22" cy="20" r="6" fill="#a855f7" />
+      <text x="38" y="25" fill="#ffffff" font-weight="600">Dashboard</text>
+
+      <g transform="translate(0, 52)">
+        <text x="38" y="25" fill="#9ca3af">Bills</text>
+        <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      </g>
+      <g transform="translate(0, 104)">
+        <text x="38" y="25" fill="#9ca3af">Transactions</text>
+        <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      </g>
+      <g transform="translate(0, 156)">
+        <text x="38" y="25" fill="#9ca3af">Budgets</text>
+        <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      </g>
+      <g transform="translate(0, 208)">
+        <text x="38" y="25" fill="#9ca3af">Insights</text>
+        <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      </g>
+      <g transform="translate(0, 260)">
+        <text x="38" y="25" fill="#9ca3af">Notifications</text>
+        <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      </g>
+      <g transform="translate(0, 520)">
+        <text x="38" y="25" fill="#9ca3af">Settings</text>
+        <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      </g>
+    </g>
+  </g>
+
+  <!-- Main Content Area -->
+  <g transform="translate(240, 28)">
+    <!-- Header Greeting -->
+    <g>
+      <text x="0" y="24" fill="#ffffff" font-family="system-ui, sans-serif" font-size="24" font-weight="700">Good Evening, Eesub 👋</text>
+      <text x="0" y="46" fill="#9ca3af" font-family="system-ui, sans-serif" font-size="13">Here's your financial overview</text>
+      
+      <!-- User profile pill -->
+      <g transform="translate(860, -4)">
+        <circle cx="20" cy="20" r="18" fill="rgba(168, 85, 247, 0.25)" stroke="rgba(168, 85, 247, 0.5)" stroke-width="1.5" />
+        <circle cx="20" cy="15" r="6" fill="#c084fc" />
+        <path d="M10 29 C10 23, 30 23, 30 29" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" />
+      </g>
+    </g>
+
+    <!-- 4 Stats Cards Row -->
+    <g transform="translate(0, 75)" font-family="system-ui, sans-serif">
+      <!-- Total Balance -->
+      <g>
+        <rect width="210" height="96" rx="14" fill="url(#card-bg)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="18" y="26" fill="#9ca3af" font-size="12" font-weight="500">Total Balance</text>
+        <text x="18" y="58" fill="#ffffff" font-size="22" font-weight="700">₹42,750</text>
+        <text x="18" y="80" fill="#34d399" font-size="11" font-weight="600">▲ 12.4% vs last month</text>
+      </g>
+
+      <!-- This Month -->
+      <g transform="translate(230, 0)">
+        <rect width="210" height="96" rx="14" fill="url(#card-bg)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="18" y="26" fill="#9ca3af" font-size="12" font-weight="500">This Month Spending</text>
+        <text x="18" y="58" fill="#ffffff" font-size="22" font-weight="700">₹18,320</text>
+        <text x="18" y="80" fill="#34d399" font-size="11" font-weight="600">▼ 5.8% under budget</text>
+      </g>
+
+      <!-- Bills Due -->
+      <g transform="translate(460, 0)">
+        <rect width="210" height="96" rx="14" fill="url(#card-bg)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="18" y="26" fill="#9ca3af" font-size="12" font-weight="500">Bills Due (Next 7d)</text>
+        <text x="18" y="58" fill="#ffffff" font-size="22" font-weight="700">3</text>
+        <text x="18" y="80" fill="#f87171" font-size="11" font-weight="600">₹4,200 pending</text>
+      </g>
+
+      <!-- Budgets -->
+      <g transform="translate(690, 0)">
+        <rect width="210" height="96" rx="14" fill="url(#card-bg)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="18" y="26" fill="#9ca3af" font-size="12" font-weight="500">Active Budgets</text>
+        <text x="18" y="58" fill="#ffffff" font-size="22" font-weight="700">2 / 4</text>
+        <text x="18" y="80" fill="#38bdf8" font-size="11" font-weight="600">● On Track</text>
+      </g>
+    </g>
+
+    <!-- Visual Charts Row -->
+    <g transform="translate(0, 195)" font-family="system-ui, sans-serif">
+      <!-- Spending Overview Bar Chart Card -->
+      <g>
+        <rect width="520" height="470" rx="16" fill="url(#card-bg)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="24" y="36" fill="#ffffff" font-size="16" font-weight="700">Spending Overview</text>
+        <text x="430" y="36" fill="#a855f7" font-size="12" font-weight="600" text-anchor="end">View Insights ➔</text>
+
+        <!-- Horizontal Guide lines -->
+        <g stroke="rgba(255,255,255,0.06)" stroke-width="1" font-size="11" fill="#6b7280">
+          <line x1="60" y1="100" x2="480" y2="100" />
+          <text x="48" y="104" text-anchor="end">30k</text>
+
+          <line x1="60" y1="170" x2="480" y2="170" />
+          <text x="48" y="174" text-anchor="end">20k</text>
+
+          <line x1="60" y1="240" x2="480" y2="240" />
+          <text x="48" y="244" text-anchor="end">10k</text>
+
+          <line x1="60" y1="310" x2="480" y2="310" />
+          <text x="48" y="314" text-anchor="end">0</text>
+        </g>
+
+        <!-- Monthly Bars -->
+        <g transform="translate(60, 0)">
+          <!-- Jan -->
+          <rect x="20" y="180" width="34" height="130" rx="6" fill="url(#bar-grad)" opacity="0.8" />
+          <text x="37" y="334" fill="#9ca3af" font-size="11.5" text-anchor="middle">Jan</text>
+
+          <!-- Feb -->
+          <rect x="85" y="220" width="34" height="90" rx="6" fill="url(#bar-grad)" opacity="0.75" />
+          <text x="102" y="334" fill="#9ca3af" font-size="11.5" text-anchor="middle">Feb</text>
+
+          <!-- Mar -->
+          <rect x="150" y="140" width="34" height="170" rx="6" fill="url(#bar-grad)" opacity="0.85" />
+          <text x="167" y="334" fill="#9ca3af" font-size="11.5" text-anchor="middle">Mar</text>
+
+          <!-- Apr -->
+          <rect x="215" y="200" width="34" height="110" rx="6" fill="url(#bar-grad)" opacity="0.75" />
+          <text x="232" y="334" fill="#9ca3af" font-size="11.5" text-anchor="middle">Apr</text>
+
+          <!-- May -->
+          <rect x="280" y="120" width="34" height="190" rx="6" fill="url(#bar-grad)" />
+          <text x="297" y="334" fill="#9ca3af" font-size="11.5" text-anchor="middle">May</text>
+
+          <!-- Jun -->
+          <rect x="345" y="160" width="34" height="150" rx="6" fill="url(#bar-grad)" opacity="0.9" />
+          <text x="362" y="334" fill="#ffffff" font-weight="600" font-size="11.5" text-anchor="middle">Jun</text>
+        </g>
+
+        <!-- Quick Summary footer inside card -->
+        <g transform="translate(24, 380)">
+          <rect width="472" height="64" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.05)" />
+          <text x="16" y="26" fill="#e5e7eb" font-size="12" font-weight="600">Average Monthly Spend</text>
+          <text x="16" y="48" fill="#9ca3af" font-size="11">₹17,450 across recent billing cycles</text>
+          <text x="450" y="38" fill="#34d399" font-size="14" font-weight="700" text-anchor="end">Safe Zone</text>
+        </g>
+      </g>
+
+      <!-- Expenses by Category Donut Card -->
+      <g transform="translate(540, 0)">
+        <rect width="360" height="470" rx="16" fill="url(#card-bg)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="24" y="36" fill="#ffffff" font-size="16" font-weight="700">Expenses by Category</text>
+        
+        <!-- Donut Chart representation -->
+        <g transform="translate(180, 160)">
+          <circle cx="0" cy="0" r="76" stroke="#f43f5e" stroke-width="26" fill="none" stroke-dasharray="150 350" stroke-dashoffset="0" />
+          <circle cx="0" cy="0" r="76" stroke="#8b5cf6" stroke-width="26" fill="none" stroke-dasharray="115 385" stroke-dashoffset="-150" />
+          <circle cx="0" cy="0" r="76" stroke="#06b6d4" stroke-width="26" fill="none" stroke-dasharray="85 415" stroke-dashoffset="-265" />
+          <circle cx="0" cy="0" r="76" stroke="#f59e0b" stroke-width="26" fill="none" stroke-dasharray="125 375" stroke-dashoffset="-350" />
+          
+          <text x="0" y="4" fill="#ffffff" font-size="20" font-weight="700" text-anchor="middle">₹18,320</text>
+          <text x="0" y="22" fill="#9ca3af" font-size="11" text-anchor="middle">Total</text>
+        </g>
+
+        <!-- Category Legends -->
+        <g transform="translate(36, 280)" font-size="13">
+          <!-- Food -->
+          <g>
+            <circle cx="8" cy="8" r="6" fill="#f43f5e" />
+            <text x="24" y="12" fill="#e5e7eb">Food &amp; Dining</text>
+            <text x="280" y="12" fill="#ffffff" font-weight="700" text-anchor="end">32%</text>
+          </g>
+          <!-- Bills -->
+          <g transform="translate(0, 32)">
+            <circle cx="8" cy="8" r="6" fill="#8b5cf6" />
+            <text x="24" y="12" fill="#e5e7eb">Bills &amp; Utilities</text>
+            <text x="280" y="12" fill="#ffffff" font-weight="700" text-anchor="end">24%</text>
+          </g>
+          <!-- Travel -->
+          <g transform="translate(0, 64)">
+            <circle cx="8" cy="8" r="6" fill="#06b6d4" />
+            <text x="24" y="12" fill="#e5e7eb">Travel &amp; Fuel</text>
+            <text x="280" y="12" fill="#ffffff" font-weight="700" text-anchor="end">18%</text>
+          </g>
+          <!-- Others -->
+          <g transform="translate(0, 96)">
+            <circle cx="8" cy="8" r="6" fill="#f59e0b" />
+            <text x="24" y="12" fill="#e5e7eb">Others &amp; Shopping</text>
+            <text x="280" y="12" fill="#ffffff" font-weight="700" text-anchor="end">26%</text>
+          </g>
+        </g>
+
+        <!-- Supabase RLS Badge indicator at bottom -->
+        <g transform="translate(24, 420)">
+          <rect width="312" height="30" rx="8" fill="rgba(16, 185, 129, 0.1)" stroke="rgba(16, 185, 129, 0.25)" />
+          <circle cx="16" cy="15" r="4" fill="#10b981" />
+          <text x="28" y="19" fill="#10b981" font-size="10.5" font-weight="600">Live RLS Multi-User Isolated Session</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

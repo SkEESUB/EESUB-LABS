@@ -1872,9 +1872,9 @@ function ProjectsReelSlider() {
   return (
     <div className="relative w-full overflow-x-clip py-4 sm:py-6">
       {/* ================= 1. 3D REEL SLIDER STAGE ================= */}
-      <div className="relative mx-auto w-full max-w-5xl px-2 sm:px-6">
+      <div className="relative mx-auto w-full max-w-5xl lg:max-w-[940px] xl:max-w-5xl px-2 sm:px-6">
         <div
-          className="reel-3d-stage relative flex h-[260px] sm:h-[350px] md:h-[420px] lg:h-[460px] w-full items-center justify-center select-none"
+          className="reel-3d-stage relative flex h-[260px] sm:h-[350px] md:h-[420px] lg:h-[430px] xl:h-[460px] w-full items-center justify-center select-none"
           style={{ perspective: 1400, touchAction: "pan-y" }}
         >
           {projects.map((p, idx) => {
@@ -1909,7 +1909,7 @@ function ProjectsReelSlider() {
             return (
               <motion.div
                 key={p.slug}
-                className="reel-3d-card absolute aspect-[16/10] w-[86vw] max-w-[340px] sm:max-w-[500px] md:max-w-[620px] lg:max-w-[680px] rounded-[22px] sm:rounded-[28px] cursor-pointer"
+                className="reel-3d-card absolute aspect-[16/10] w-[86vw] max-w-[340px] sm:max-w-[500px] md:max-w-[620px] lg:max-w-[635px] xl:max-w-[680px] rounded-[22px] sm:rounded-[28px] cursor-pointer"
                 style={{
                   zIndex: zIndexVal,
                 }}
@@ -1952,28 +1952,45 @@ function ProjectsReelSlider() {
                 }}
               >
                 {/* Outer Glass Card Container with subtle neon edge lighting */}
-                <div className="neu-card neu-neon-edge relative h-full w-full overflow-hidden rounded-[22px] sm:rounded-[28px] group shadow-xl">
-                  {/* Screenshot Cover */}
-                  <img
-                    src={p.cover}
-                    alt={`${p.title} preview`}
-                    loading={isCenter ? "eager" : "lazy"}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
+                <div
+                  className="neu-card neu-neon-edge relative h-full w-full overflow-hidden rounded-[22px] sm:rounded-[28px] group shadow-xl"
+                  style={{ background: p.gradient }}
+                >
+                  {/* Dedicated Image Wrapper filling card area naturally without empty gaps */}
+                  <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
+                    <img
+                      src={p.cover}
+                      alt={`${p.title} preview`}
+                      loading={isCenter ? "eager" : "lazy"}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (target.src !== "/billbuddy-placeholder.svg") {
+                          target.src = "/billbuddy-placeholder.svg";
+                        }
+                      }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: p.coverPosition || "center",
+                      }}
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </div>
 
                   {/* Gradient lighting overlay */}
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-80"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/35 opacity-70 transition-opacity duration-300 group-hover:opacity-60"
                   />
 
                   {/* Specular glass reflection */}
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 opacity-40"
+                    className="pointer-events-none absolute inset-0 opacity-25"
                     style={{
                       background:
-                        "linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, transparent 45%, transparent 70%, rgba(255, 255, 255, 0.1) 100%)",
+                        "linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, transparent 45%, transparent 70%, rgba(255, 255, 255, 0.08) 100%)",
                     }}
                   />
 
@@ -1998,12 +2015,12 @@ function ProjectsReelSlider() {
                   </div>
 
                   {/* Bottom Info Banner Inside Card matching Reference */}
-                  <div className="absolute bottom-0 inset-x-0 p-4 sm:p-6 flex items-end justify-between gap-3">
+                  <div className="absolute bottom-0 inset-x-0 p-4 sm:p-6 lg:p-5 xl:p-6 flex items-end justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <div className="text-[10px] sm:text-[11px] font-mono font-semibold tracking-widest text-white/80 uppercase">
                         {String(idx + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
                       </div>
-                      <h5 className="font-display text-xl sm:text-3xl lg:text-4xl font-normal text-white drop-shadow-md truncate leading-tight mt-0.5">
+                      <h5 className="font-display text-xl sm:text-3xl lg:text-[28px] xl:text-4xl font-normal text-white drop-shadow-md truncate leading-tight mt-0.5">
                         {p.title}
                       </h5>
                     </div>
@@ -2130,19 +2147,34 @@ function ProjectCardBody({ p }: { p: (typeof PROJECTS)[number] }) {
       className="group/card relative flex h-full w-full flex-col"
       aria-label={`Open ${p.title} details`}
     >
-      <div className="relative aspect-[16/10] overflow-hidden" style={{ background: p.gradient }}>
+      <div
+        className="relative aspect-[16/10] w-full overflow-hidden flex items-center justify-center"
+        style={{ background: p.gradient }}
+      >
         <img
           src={p.cover}
           alt={`${p.title} cover`}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.04]"
+          onError={(e) => {
+            const target = e.currentTarget;
+            if (target.src !== "/billbuddy-placeholder.svg") {
+              target.src = "/billbuddy-placeholder.svg";
+            }
+          }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: p.coverPosition || "center",
+          }}
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.04]"
         />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "linear-gradient(160deg, oklch(1 0 0 / 0.25) 0%, transparent 35%, transparent 70%, oklch(1 0 0 / 0.12) 100%)",
+              "linear-gradient(160deg, oklch(1 0 0 / 0.15) 0%, transparent 40%, transparent 70%, oklch(1 0 0 / 0.08) 100%)",
           }}
         />
         {p.status === "Live" ? (

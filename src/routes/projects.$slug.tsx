@@ -18,8 +18,28 @@ import {
   ShieldCheck,
   Calendar,
   Layers2,
+  Target,
+  Zap,
+  Shield,
+  Star,
+  Clock,
+  Database,
+  Network,
+  Lock,
+  Folder,
+  Users,
+  Smartphone,
+  Laptop,
+  MessageSquare,
+  Bot,
+  Plane,
+  Sliders,
+  Code2,
+  Radio,
+  FileSpreadsheet,
+  Check,
 } from "lucide-react";
-import { getProject, PROJECTS } from "@/lib/projects-data";
+import { getProject, PROJECTS, type ProjectData, type ArchitectureLayer } from "@/lib/projects-data";
 
 const TECH_META: Record<string, { slug: string; color: string }> = {
   React: { slug: "react", color: "61DAFB" },
@@ -33,11 +53,14 @@ const TECH_META: Record<string, { slug: string; color: string }> = {
   "Express.js": { slug: "express", color: "000000" },
   "Socket.IO": { slug: "socketdotio", color: "010101" },
   OpenAI: { slug: "openai", color: "412991" },
+  LLM: { slug: "openai", color: "412991" },
   n8n: { slug: "n8n", color: "EA4B71" },
   "WhatsApp Web.js": { slug: "whatsapp", color: "25D366" },
+  "WhatsApp Cloud API": { slug: "whatsapp", color: "25D366" },
   Webhooks: { slug: "zapier", color: "FF4A00" },
   "Travel APIs": { slug: "googlemaps", color: "4285F4" },
   Vite: { slug: "vite", color: "646CFF" },
+  Vercel: { slug: "vercel", color: "000000" },
   MongoDB: { slug: "mongodb", color: "47A248" },
   "TanStack Start": { slug: "tanstack", color: "FF4154" },
   "TanStack Router": { slug: "tanstack", color: "FF4154" },
@@ -69,7 +92,7 @@ export const Route = createFileRoute("/projects/$slug")({
   component: ProjectPage,
   notFoundComponent: () => (
     <div className="relative min-h-screen flex items-center justify-center bg-background px-4 py-20 text-center">
-      <div className="glass-card max-w-md p-6 sm:p-8 shadow-2xl">
+      <div className="neu-card max-w-md p-6 sm:p-8 shadow-2xl">
         <div className="font-mono text-5xl font-bold text-accent-purple">404</div>
         <h1 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-foreground">
           Project Not Found
@@ -90,14 +113,25 @@ export const Route = createFileRoute("/projects/$slug")({
 });
 
 function ProjectPage() {
-  const p = Route.useLoaderData() as any;
+  const p = Route.useLoaderData() as ProjectData;
   const hasDemo = Boolean(p.demo && p.demo.trim().length > 0);
   const hasRepo = Boolean(p.repo && p.repo.trim().length > 0);
 
-  // Consolidated gallery list starting with cover, followed by unique screenshots
-  const allScreenshots = [p.cover, ...(p.screenshots || []).filter((s: string) => s !== p.cover)];
+  // Consolidated gallery list
+  const allScreenshots = p.screenshots && p.screenshots.length > 0
+    ? p.screenshots
+    : [p.cover];
+
   const [activeImage, setActiveImage] = useState<string>(allScreenshots[0]);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [activeSectionTab, setActiveSectionTab] = useState<"architecture" | "screenshots">("architecture");
+
+  // Keep activeImage in sync when navigating between project slugs
+  useEffect(() => {
+    if (allScreenshots.length > 0) {
+      setActiveImage(allScreenshots[0]);
+    }
+  }, [p.slug]);
 
   // Close lightbox on Escape key
   useEffect(() => {
@@ -116,19 +150,46 @@ function ProjectPage() {
     }
   };
 
-  const impactItems = p.impact && p.impact.length > 0 ? p.impact : p.results || [];
-  const problemBullets =
+  const problemPoints =
     p.problemBullets && p.problemBullets.length > 0
       ? p.problemBullets
-      : p.problem
-        ? [p.problem]
-        : [];
-  const solutionBullets =
+      : [
+          p.problem,
+          "Manual and fragmented workflows lead to errors and oversights.",
+          "Users lack centralized visibility and timely notifications.",
+          "Inefficient tooling slows down decision-making.",
+        ];
+
+  const solutionPoints =
     p.solutionBullets && p.solutionBullets.length > 0
       ? p.solutionBullets
-      : p.solution
-        ? [p.solution]
-        : [];
+      : [
+          p.solution,
+          "Centralized intelligent dashboard streamlining the entire workflow.",
+          "Automated pipelines ensuring data accuracy and timeliness.",
+          "Intuitive responsive interface built for speed and ease of use.",
+        ];
+
+  const impactItems =
+    p.impactHighlights && p.impactHighlights.length > 0
+      ? p.impactHighlights
+      : [
+          {
+            title: "Better Control & Efficiency",
+            desc: "Stay on top of critical operations with streamlined workflows.",
+            icon: "zap" as const,
+          },
+          {
+            title: "Time & Effort Saved",
+            desc: "Automated processes eliminate repetitive manual tasks.",
+            icon: "shield" as const,
+          },
+          {
+            title: "Clearer Insights",
+            desc: "Actionable visibility helps users make informed decisions.",
+            icon: "star" as const,
+          },
+        ];
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-background text-foreground selection:bg-accent-purple/20">
@@ -137,109 +198,144 @@ function ProjectPage() {
         <div
           className="orb"
           style={{
-            width: 580,
-            height: 580,
-            left: "-10%",
-            top: "4%",
-            background: "radial-gradient(circle, oklch(0.82 0.18 320 / 0.4), transparent 70%)",
-            filter: "blur(130px)",
+            width: 650,
+            height: 650,
+            left: "-12%",
+            top: "2%",
+            background: "radial-gradient(circle, oklch(0.82 0.18 320 / 0.35), transparent 70%)",
+            filter: "blur(140px)",
           }}
         />
         <div
           className="orb"
           style={{
-            width: 650,
-            height: 650,
-            right: "-12%",
-            top: "28%",
-            background: "radial-gradient(circle, oklch(0.85 0.15 195 / 0.35), transparent 70%)",
-            filter: "blur(140px)",
+            width: 720,
+            height: 720,
+            right: "-15%",
+            top: "22%",
+            background: "radial-gradient(circle, oklch(0.85 0.15 195 / 0.3), transparent 70%)",
+            filter: "blur(150px)",
+          }}
+        />
+        <div
+          className="orb"
+          style={{
+            width: 580,
+            height: 580,
+            left: "25%",
+            top: "60%",
+            background: "radial-gradient(circle, oklch(0.8 0.18 290 / 0.22), transparent 70%)",
+            filter: "blur(150px)",
           }}
         />
       </div>
 
-      <main className="relative z-10 mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8 sm:py-10 space-y-8 sm:space-y-10">
-        {/* Top Navigation Row: Back to Projects & Eyebrow */}
+      <main className="relative z-10 mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8 sm:py-10 space-y-8 sm:space-y-12">
+        {/* Top Navigation Row */}
         <header className="flex flex-wrap items-center justify-between gap-3">
           <Link
             to="/"
             hash="projects"
             search={{ project: p.slug }}
             onClick={rememberProject}
-            className="group inline-flex items-center gap-2 rounded-full border border-[var(--glass-border)] bg-white/70 dark:bg-black/30 px-3.5 py-1.5 text-xs font-semibold text-foreground backdrop-blur-md shadow-xs transition-all duration-200 hover:bg-white/95 dark:hover:bg-black/50 hover:scale-[1.02] active:scale-[0.98]"
+            className="neu-pill group inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold text-foreground backdrop-blur-md shadow-xs transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
           >
-            <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
+            <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1 text-accent-purple" />
             <span>Back to Projects</span>
           </Link>
 
           <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-muted-foreground uppercase">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-purple)]" />
-            <span>Eesub Labs · Case Study</span>
+            <span className="h-2 w-2 rounded-full bg-[var(--accent-purple)] animate-pulse" />
+            <span className="font-semibold text-foreground/80">Eesub Labs</span>
+            <span>· Case Study</span>
             {p.date && (
               <span className="text-muted-foreground/60 hidden sm:inline">· {p.date}</span>
             )}
           </div>
         </header>
 
-        {/* ================= A. PROJECT HERO SECTION ================= */}
-        <section aria-label="Project Hero" className="space-y-5 sm:space-y-6">
-          {/* Hero Header Area: Badges, Title, Summary, Actions */}
-          <div className="space-y-3 sm:space-y-3.5">
+        {/* ================= SECTION 1 — PROJECT INTRODUCTION (PREMIUM SPLIT HERO) ================= */}
+        <section
+          aria-label="Project Introduction"
+          className="grid gap-8 lg:grid-cols-12 lg:items-center pt-2 pb-4"
+        >
+          {/* Left Hero Column: Details & Actions */}
+          <div className="lg:col-span-6 space-y-4 sm:space-y-5">
             {/* Badges Row */}
-            <div className="flex flex-wrap items-center gap-2">
-              {p.status === "Live" ? (
+            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+              {p.featured && (
                 <span
-                  className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-xs"
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] sm:text-xs font-bold text-white shadow-xs"
                   style={{
-                    background:
-                      "linear-gradient(135deg, oklch(0.72 0.2 150), oklch(0.65 0.22 160))",
+                    background: "linear-gradient(135deg, #9333ea 0%, #7e22ce 100%)",
+                    boxShadow: "0 2px 8px rgba(147, 51, 234, 0.35)",
                   }}
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                  <Star className="h-3 w-3 fill-white text-white" />
+                  Featured Project
+                </span>
+              )}
+
+              <span className="neu-pill px-3 py-1 text-[11px] sm:text-xs font-semibold text-foreground/85">
+                {p.category || p.kicker}
+              </span>
+
+              {p.status === "Live" ? (
+                <span className="neu-pill px-3 py-1 text-[11px] sm:text-xs font-bold text-emerald-600 dark:text-emerald-400 gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                   Live Project
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--glass-border)] bg-white/70 dark:bg-black/30 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-semibold tracking-wide text-foreground backdrop-blur-md shadow-xs">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                <span className="neu-pill px-3 py-1 text-[11px] sm:text-xs font-semibold text-amber-600 dark:text-amber-400 gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-amber-500" />
                   {p.status}
                 </span>
               )}
+            </div>
 
-              <span className="inline-flex items-center gap-1 rounded-full border border-[var(--glass-border)] bg-white/60 dark:bg-black/20 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-muted-foreground backdrop-blur-md">
-                {p.kicker}
-              </span>
-
-              {p.date && (
-                <span className="inline-flex sm:hidden items-center gap-1 text-[10px] font-mono text-muted-foreground/75">
-                  <Calendar className="h-3 w-3" /> {p.date}
+            {/* Project Header with 3D Icon & Title */}
+            <div className="flex items-center gap-3.5 sm:gap-4 pt-1">
+              {/* 3D Squircle Logo Icon */}
+              <div
+                className="flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl text-white shadow-lg relative overflow-hidden"
+                style={{
+                  background: p.logoGradient || "linear-gradient(135deg, #8b5cf6, #6d28d9)",
+                  boxShadow:
+                    "0 10px 24px -4px rgba(139, 92, 246, 0.4), inset 1px 1px 2px rgba(255,255,255,0.6), inset -1px -1px 2px rgba(0,0,0,0.2)",
+                }}
+              >
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -top-4 -right-4 h-10 w-10 rounded-full bg-white/30 blur-md"
+                />
+                <span className="font-display text-2xl sm:text-3xl font-black tracking-tight drop-shadow-sm">
+                  {p.logoGlyph || p.title.charAt(0)}
                 </span>
-              )}
+              </div>
+
+              <div>
+                <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground drop-shadow-xs">
+                  {p.title}
+                </h1>
+                <p className="text-xs sm:text-sm font-medium text-foreground/80 mt-0.5">
+                  {p.tagline || p.body}
+                </p>
+              </div>
             </div>
 
-            {/* Project Title */}
-            <div className="flex flex-wrap items-baseline gap-2.5">
-              <h1 className="font-display text-2.5xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground drop-shadow-xs">
-                {p.title}
-              </h1>
-              <CheckCircle2
-                aria-label="Verified Project"
-                className="h-5 w-5 sm:h-6 sm:w-6 text-sky-500 drop-shadow-xs shrink-0 self-center"
-              />
-            </div>
-
-            {/* Case Study Lead Description */}
-            <p className="max-w-3xl text-sm sm:text-base text-muted-foreground leading-relaxed">
+            {/* Concise Description */}
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed pt-1">
               {p.longBody || p.body}
             </p>
 
-            {/* Hero Actions Row: Live Demo & Glass Source Code button */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
+            {/* Live Actions Row */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               {hasDemo && (
                 <a
                   href={p.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-gradient inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs sm:text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:scale-105 active:scale-95"
+                  className="btn-gradient inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <span>Live Demo</span>
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -251,223 +347,412 @@ function ProjectPage() {
                   href={p.repo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-full border border-[var(--glass-border)] bg-white/70 dark:bg-white/10 px-4.5 py-2 text-xs sm:text-sm font-semibold text-foreground backdrop-blur-md shadow-xs transition-all duration-200 hover:bg-white/95 dark:hover:bg-white/20 hover:border-black/20 dark:hover:border-white/30 hover:shadow-sm hover:scale-[1.02] active:scale-[0.98]"
-                  style={{
-                    boxShadow:
-                      "inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 8px rgba(0, 0, 0, 0.04)",
-                  }}
+                  className="neu-pill inline-flex items-center gap-2 px-5 py-2.5 text-xs sm:text-sm font-semibold text-foreground transition-all duration-200 hover:scale-105 active:scale-95"
                 >
-                  <Github className="h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-6" />
-                  <span>Source Code</span>
+                  <Github className="h-4 w-4" />
+                  <span>GitHub</span>
                 </a>
               )}
             </div>
           </div>
 
-          {/* Sharp, Balanced Cover Image Showcase */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="neu-card relative overflow-hidden rounded-2xl sm:rounded-3xl"
-          >
-            <div
-              className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden flex items-center justify-center"
-              style={{ background: p.gradient }}
-            >
-              <img
-                src={p.cover}
-                alt={`${p.title} cover showcase`}
-                loading="eager"
-                decoding="async"
-                className="h-full w-full object-cover sm:object-contain transition-transform duration-500 ease-out hover:scale-[1.01]"
-              />
-
+          {/* Right Hero Column: 3D Pedestal & Realistic Laptop Device Showcase */}
+          <div className="lg:col-span-6 flex justify-center lg:justify-end relative">
+            <div className="relative w-full max-w-[500px]">
+              {/* Circular Pedestal Base with Glowing Rings */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-25"
+                className="absolute -bottom-8 sm:-bottom-12 left-1/2 -translate-x-1/2 w-[92%] h-28 sm:h-36 rounded-[100%] -z-10"
                 style={{
                   background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 45%, transparent 70%, rgba(255,255,255,0.1) 100%)",
+                    "radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.45) 0%, rgba(99, 102, 241, 0.25) 45%, transparent 75%)",
+                  filter: "blur(22px)",
                 }}
               />
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ================= B & C. THE PROBLEM & THE SOLUTION ================= */}
-        {(p.problem || p.solution) && (
-          <section
-            aria-label="Problem and Solution"
-            className="grid gap-4 sm:gap-5 md:grid-cols-2 items-start"
-          >
-            {/* B. The Problem Card */}
-            {p.problem && (
-              <div className="neu-card relative overflow-hidden rounded-2xl p-4.5 sm:p-5.5 transition-all duration-300">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-rose-500/10 blur-2xl"
-                />
-
-                <div>
-                  <div className="flex items-center gap-2.5 mb-2.5">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-rose-500/20 bg-rose-500/10 text-rose-500 dark:bg-rose-500/20 dark:text-rose-400 shadow-xs">
-                      <AlertCircle className="h-3.5 w-3.5" />
-                    </span>
-                    <div>
-                      <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-rose-500 dark:text-rose-400 block">
-                        The Challenge
-                      </span>
-                      <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
-                        The Problem
-                      </h2>
-                    </div>
-                  </div>
-
-                  <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
-                    {problemBullets.map((pt: string, idx: number) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-rose-500 shrink-0" />
-                        <span className="leading-snug">{pt}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            )}
-
-            {/* C. The Solution Card */}
-            {p.solution && (
-              <div className="neu-card relative overflow-hidden rounded-2xl p-4.5 sm:p-5.5 transition-all duration-300">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-teal-500/10 blur-2xl"
-                />
-
-                <div>
-                  <div className="flex items-center gap-2.5 mb-2.5">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-teal-500/20 bg-teal-500/10 text-teal-600 dark:bg-teal-500/20 dark:text-teal-400 shadow-xs">
-                      <Lightbulb className="h-3.5 w-3.5" />
-                    </span>
-                    <div>
-                      <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400 block">
-                        The Approach
-                      </span>
-                      <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
-                        The Solution
-                      </h2>
-                    </div>
-                  </div>
-
-                  <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
-                    {solutionBullets.map((pt: string, idx: number) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-teal-500 shrink-0" />
-                        <span className="leading-snug">{pt}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* ================= D. PROJECT IMPACT — COMPACT ================= */}
-        {impactItems.length > 0 && (
-          <section aria-label="Project Impact">
-            <div className="neu-card relative overflow-hidden rounded-2xl p-5 sm:p-6">
               <div
                 aria-hidden
-                className="pointer-events-none absolute right-0 top-0 h-40 w-40 rounded-full bg-accent-purple/10 blur-3xl"
+                className="absolute -bottom-4 sm:-bottom-6 left-1/2 -translate-x-1/2 w-[84%] h-16 sm:h-20 rounded-[100%] border border-white/60 dark:border-white/20 -z-10 shadow-lg"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(243, 232, 255, 0.5) 100%)",
+                }}
               />
 
-              <div className="flex items-center gap-2.5 mb-3.5">
-                <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, oklch(0.72 0.22 295), oklch(0.68 0.2 260))",
-                  }}
-                >
-                  <TrendingUp className="h-3.5 w-3.5" />
-                </span>
-                <div>
-                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[var(--accent-purple)] block">
-                    Outcomes & Value
-                  </span>
-                  <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
-                    Project Impact
-                  </h2>
+              {/* Floating Ambient Crystal Gems */}
+              <motion.div
+                animate={{ y: [-4, 4, -4], rotate: [0, 4, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                aria-hidden
+                className="hidden sm:block absolute -top-4 -right-2 w-9 h-9 rounded-xl border border-white/80 dark:border-white/30 backdrop-blur-md shadow-md -z-5"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(192, 132, 252, 0.3) 100%)",
+                  transform: "rotate(25deg)",
+                }}
+              />
+              <motion.div
+                animate={{ y: [4, -4, 4], rotate: [0, -6, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                aria-hidden
+                className="hidden sm:block absolute top-12 -left-3 w-8 h-8 rounded-lg border border-white/80 dark:border-white/30 backdrop-blur-md shadow-md -z-5"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(129, 140, 248, 0.35) 100%)",
+                  transform: "rotate(-15deg)",
+                }}
+              />
+
+              {/* Realistic 3D Laptop Frame */}
+              <div
+                className="relative mx-auto rounded-2xl sm:rounded-3xl p-2.5 sm:p-3.5 bg-gradient-to-b from-slate-800 to-slate-950 border border-slate-700/80 shadow-2xl transition-transform duration-500 hover:scale-[1.01]"
+                style={{
+                  boxShadow:
+                    "0 25px 50px -12px rgba(30, 20, 60, 0.45), 0 0 0 1px rgba(255,255,255,0.1) inset",
+                }}
+              >
+                {/* Laptop Camera Notch */}
+                <div className="absolute top-1.5 left-1/2 -translate-x-1/2 flex items-center justify-center">
+                  <div className="h-1.5 w-1.5 rounded-full bg-slate-900 border border-slate-700" />
+                </div>
+
+                {/* Laptop Inner Screen Display */}
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-950 shadow-inner flex items-center justify-center">
+                  <img
+                    src={activeImage}
+                    alt={`${p.title} hero showcase`}
+                    loading="eager"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.src !== "/billbuddy-placeholder.svg") {
+                        target.src = "/billbuddy-placeholder.svg";
+                      }
+                    }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                      objectPosition: "center",
+                    }}
+                    className="h-full w-full object-contain object-center transition-transform duration-700 hover:scale-105"
+                  />
+                  {/* Glass Sheen overlay */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 opacity-20"
+                    style={{
+                      background:
+                        "linear-gradient(120deg, rgba(255,255,255,0.6) 0%, transparent 45%, transparent 70%, rgba(255,255,255,0.15) 100%)",
+                    }}
+                  />
+                </div>
+
+                {/* Laptop Keyboard Lip Base */}
+                <div className="relative mt-2 h-2 sm:h-2.5 w-[104%] -left-[2%] rounded-b-xl bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 shadow-sm flex justify-center">
+                  <div className="h-1 w-14 rounded-full bg-slate-500/60" />
                 </div>
               </div>
-
-              <div className="grid gap-2.5 sm:grid-cols-2">
-                {impactItems.map((point: string, idx: number) => (
-                  <div key={idx} className="neu-card-subtle flex items-start gap-2 rounded-xl p-3">
-                    <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-500 mt-0.5" />
-                    <span className="text-xs sm:text-sm text-foreground/85 leading-snug">
-                      {point}
-                    </span>
-                  </div>
-                ))}
-              </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
 
-        {/* ================= E. SCREENSHOT GALLERY ================= */}
-        {allScreenshots.length > 0 && (
-          <section aria-label="Screenshot Gallery" className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-muted-foreground block">
-                  Interface Showcase
-                </span>
-                <h2
-                  className="font-display text-xl sm:text-2xl font-bold tracking-tight"
-                  style={{ color: "var(--accent-purple)" }}
-                >
-                  Screenshot Gallery
-                </h2>
-              </div>
-              <span className="text-xs font-mono text-muted-foreground hidden sm:inline">
-                {allScreenshots.length} {allScreenshots.length === 1 ? "Image" : "Screenshots"}
-              </span>
-            </div>
-
-            <div className="neu-card rounded-2xl p-3 sm:p-4.5">
-              {/* Active Screenshot Display */}
+        {/* ================= SECTION 2 — THREE MAIN PILLARS ================= */}
+        <section aria-label="Three Main Pillars" className="space-y-4">
+          <div className="grid gap-5 md:grid-cols-3 items-stretch">
+            {/* Pillar 1: The Problem */}
+            <div className="neu-card relative overflow-hidden rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300">
               <div
-                className="neu-card-inset relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-xl cursor-pointer group flex items-center justify-center"
+                aria-hidden
+                className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-pink-500/10 blur-2xl"
+              />
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="neu-icon-holder-pink h-10 w-10 shrink-0">
+                    <Target className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h2 className="font-display text-lg sm:text-xl font-bold text-foreground">
+                      The Problem
+                    </h2>
+                  </div>
+                </div>
+
+                <ul className="space-y-2.5 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  {problemPoints.map((pt, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="mt-1.5 h-2 w-2 rounded-full bg-pink-500 shrink-0 shadow-xs" />
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Pillar 2: The Solution */}
+            <div className="neu-card relative overflow-hidden rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-cyan-500/10 blur-2xl"
+              />
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="neu-icon-holder-cyan h-10 w-10 shrink-0">
+                    <Lightbulb className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h2 className="font-display text-lg sm:text-xl font-bold text-foreground">
+                      The Solution
+                    </h2>
+                  </div>
+                </div>
+
+                <ul className="space-y-2.5 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  {solutionPoints.map((pt, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="mt-1.5 h-2 w-2 rounded-full bg-cyan-500 shrink-0 shadow-xs" />
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Pillar 3: The Impact */}
+            <div className="neu-card relative overflow-hidden rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-purple-500/10 blur-2xl"
+              />
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="neu-icon-holder-purple h-10 w-10 shrink-0">
+                    <TrendingUp className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h2 className="font-display text-lg sm:text-xl font-bold text-foreground">
+                      The Impact
+                    </h2>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  {impactItems.map((item, idx) => {
+                    const iconMap = {
+                      zap: <Zap className="h-4 w-4 text-purple-600 dark:text-purple-400" />,
+                      shield: <ShieldCheck className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />,
+                      star: <Star className="h-4 w-4 text-amber-500" />,
+                      clock: <Clock className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />,
+                      chart: <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />,
+                      users: <Users className="h-4 w-4 text-pink-600 dark:text-pink-400" />,
+                    };
+                    const icon = iconMap[item.icon] || <Check className="h-4 w-4 text-purple-600" />;
+
+                    return (
+                      <div key={idx} className="flex items-start gap-3">
+                        <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20 shadow-xs">
+                          {icon}
+                        </span>
+                        <div>
+                          <h3 className="text-xs sm:text-sm font-bold text-foreground leading-snug">
+                            {item.title}
+                          </h3>
+                          <p className="text-xs text-muted-foreground leading-snug mt-0.5">
+                            {item.desc}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= SECTION 3 & 4 — INTERACTIVE SYSTEM ARCHITECTURE & PRODUCT SHOWCASE ================= */}
+        <section aria-label="System Architecture and Screenshots" className="space-y-4">
+          {/* Section Header with View Toggle on Mobile & Desktop */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <span className="neu-icon-holder-purple h-8 w-8">
+                <Layers className="h-4 w-4" />
+              </span>
+              <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+                System Architecture
+              </h2>
+            </div>
+
+            {/* Toggle Switch for mobile viewports */}
+            <div className="inline-flex lg:hidden items-center p-1 rounded-full bg-slate-200/70 dark:bg-slate-800/80 border border-white/50 dark:border-white/10 shadow-inner">
+              <button
+                type="button"
+                onClick={() => setActiveSectionTab("architecture")}
+                className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${
+                  activeSectionTab === "architecture"
+                    ? "bg-purple-600 text-white shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Architecture
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveSectionTab("screenshots")}
+                className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${
+                  activeSectionTab === "screenshots"
+                    ? "bg-purple-600 text-white shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Screenshots
+              </button>
+            </div>
+          </div>
+
+          {/* 2-Column Split Presentation: Left Architecture, Right Screenshots */}
+          <div className="grid gap-6 lg:grid-cols-12 items-start">
+            {/* LEFT: Project-Specific System Architecture Diagram */}
+            <div
+              className={`lg:col-span-7 neu-card rounded-2xl p-4 sm:p-6 space-y-4 ${
+                activeSectionTab === "screenshots" ? "hidden lg:block" : "block"
+              }`}
+            >
+              <div className="flex items-center justify-between border-b border-[var(--neu-border)] pb-3">
+                <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-muted-foreground">
+                  <span className="h-2 w-2 rounded-full bg-purple-500" />
+                  <span>
+                    {p.architectureDiagram?.type || "Project System Architecture"}
+                  </span>
+                </div>
+                <span className="text-[11px] font-mono text-muted-foreground/80 hidden sm:inline">
+                  Directional Data Flow
+                </span>
+              </div>
+
+              {/* Architecture Layered Diagram */}
+              {p.architectureDiagram ? (
+                <div className="space-y-3.5 py-1">
+                  {p.architectureDiagram.layers.map((layer, lIdx) => (
+                    <div key={lIdx} className="space-y-2">
+                      <div className="grid grid-cols-12 items-center gap-2.5 sm:gap-3">
+                        {/* Layer Category Label Pill */}
+                        <div className="col-span-12 sm:col-span-4">
+                          <span className="inline-block w-full rounded-xl bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20 px-2.5 py-1.5 text-center sm:text-left text-[11px] sm:text-xs font-bold text-purple-700 dark:text-purple-300 shadow-xs">
+                            {layer.label}
+                          </span>
+                        </div>
+
+                        {/* Layer Components Box */}
+                        <div className="col-span-12 sm:col-span-8 flex flex-wrap gap-2">
+                          {layer.nodes.map((node, nIdx) => {
+                            const meta = node.iconSlug ? TECH_META[node.iconSlug] : null;
+                            return (
+                              <div
+                                key={nIdx}
+                                className="neu-card-subtle flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-foreground shadow-xs transition-transform hover:scale-[1.02]"
+                              >
+                                {meta ? (
+                                  <img
+                                    src={`https://cdn.simpleicons.org/${meta.slug}/${meta.color}`}
+                                    alt=""
+                                    width={14}
+                                    height={14}
+                                    loading="lazy"
+                                    className="h-3.5 w-3.5 shrink-0"
+                                  />
+                                ) : (
+                                  <span className="h-2 w-2 rounded-full bg-cyan-500 shrink-0" />
+                                )}
+                                <div>
+                                  <span className="font-bold text-foreground text-[11px] sm:text-xs">
+                                    {node.name}
+                                  </span>
+                                  {node.detail && (
+                                    <span className="block text-[10px] text-muted-foreground font-normal">
+                                      {node.detail}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Directional Connector Arrow between layers */}
+                      {lIdx < p.architectureDiagram!.layers.length - 1 && (
+                        <div className="flex justify-center sm:justify-start sm:ml-40 my-0.5">
+                          <span className="text-muted-foreground/60 text-xs font-mono">↓</span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                /* Fallback bullet list if diagram undefined */
+                <ul className="space-y-2 text-xs sm:text-sm">
+                  {p.architecture.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent-teal shrink-0" />
+                      <span className="leading-snug text-foreground/85">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* RIGHT: Interactive Product Screenshot Gallery */}
+            <div
+              className={`lg:col-span-5 neu-card rounded-2xl p-4 sm:p-5 space-y-3 ${
+                activeSectionTab === "architecture" ? "hidden lg:block" : "block"
+              }`}
+            >
+              <div className="flex items-center justify-between border-b border-[var(--neu-border)] pb-2.5">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-muted-foreground">
+                  Product Screenshots
+                </span>
+                <span className="text-[11px] font-mono text-muted-foreground/80">
+                  {allScreenshots.length} {allScreenshots.length === 1 ? "View" : "Views"}
+                </span>
+              </div>
+
+              {/* Large Active Screenshot Preview Card */}
+              <div
+                className="neu-card-inset relative aspect-[16/10] w-full overflow-hidden rounded-xl cursor-pointer group flex items-center justify-center bg-slate-950/20"
                 onClick={() => setIsLightboxOpen(true)}
               >
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={activeImage}
                     src={activeImage}
-                    alt={`${p.title} interface preview`}
+                    alt={`${p.title} preview`}
                     loading="lazy"
-                    initial={{ opacity: 0.35, scale: 0.995 }}
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.src !== "/billbuddy-placeholder.svg") {
+                        target.src = "/billbuddy-placeholder.svg";
+                      }
+                    }}
+                    initial={{ opacity: 0.35, scale: 0.99 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0.35, scale: 0.995 }}
-                    transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className="h-full w-full object-contain sm:object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                    exit={{ opacity: 0.35, scale: 0.99 }}
+                    transition={{ duration: 0.22, ease: "easeInOut" }}
+                    className="h-full w-full object-contain sm:object-cover sm:object-top transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                 </AnimatePresence>
 
-                <div className="pointer-events-none absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 glass-pill px-3 py-1.5 text-xs font-semibold text-white inline-flex items-center gap-1.5 shadow-lg backdrop-blur-md">
-                    <Maximize2 className="h-3.5 w-3.5" />
+                {/* Hover Fullscreen Pill */}
+                <div className="pointer-events-none absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center">
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 neu-pill px-3 py-1.5 text-xs font-semibold text-foreground inline-flex items-center gap-1.5 shadow-lg backdrop-blur-md">
+                    <Maximize2 className="h-3.5 w-3.5 text-accent-purple" />
                     <span>View Fullscreen</span>
                   </span>
                 </div>
               </div>
 
-              {/* Thumbnail rail */}
+              {/* Smaller Thumbnail Strip Navigation with Active Purple Indicator */}
               {allScreenshots.length > 1 && (
-                <div className="mt-3 flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar snap-x">
-                  {allScreenshots.map((shot: string, idx: number) => {
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 custom-scrollbar snap-x">
+                  {allScreenshots.map((shot, idx) => {
                     const isSelected = activeImage === shot;
                     return (
                       <button
@@ -478,8 +763,8 @@ function ProjectPage() {
                         aria-pressed={isSelected}
                         className={`relative aspect-[16/10] h-12 sm:h-14 shrink-0 overflow-hidden rounded-lg border transition-all duration-200 snap-start focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-purple)] ${
                           isSelected
-                            ? "border-[var(--accent-purple)] ring-2 ring-[var(--accent-purple)]/50 shadow-sm scale-[1.02] opacity-100"
-                            : "border-[var(--glass-border)] opacity-60 hover:opacity-100"
+                            ? "border-[var(--accent-purple)] ring-2 ring-[var(--accent-purple)]/60 shadow-md scale-[1.03] opacity-100"
+                            : "border-[var(--neu-border)] opacity-60 hover:opacity-100 hover:scale-[1.01]"
                         }`}
                       >
                         <img
@@ -493,85 +778,51 @@ function ProjectPage() {
                 </div>
               )}
             </div>
-          </section>
-        )}
+          </div>
+        </section>
 
-        {/* ================= F. KEY FEATURES & TECH STACK ================= */}
+        {/* ================= SECTION 5 & 6 — TECHNOLOGY STACK & ENGINEERING HIGHLIGHTS ================= */}
         <section
-          aria-label="Features and Technology"
-          className="grid gap-4 sm:gap-5 md:grid-cols-2 items-start"
+          aria-label="Technology Stack and Engineering Highlights"
+          className="grid gap-6 md:grid-cols-2 items-stretch"
         >
-          {/* Key Features */}
-          {p.features && p.features.length > 0 && (
-            <div className="neu-card rounded-2xl p-4.5 sm:p-5.5">
-              <div className="flex items-center gap-2.5 mb-3">
-                <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
-                  style={{ background: "var(--gradient-button)" }}
-                >
-                  <Sparkles className="h-3.5 w-3.5" />
+          {/* Section 5: Technology Stack */}
+          <div className="neu-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="neu-icon-holder-cyan h-9 w-9 shrink-0">
+                  <Layers className="h-4.5 w-4.5" />
                 </span>
                 <div>
-                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-accent-purple block">
-                    Core Highlights
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 block">
+                    Verified Tools
                   </span>
-                  <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
-                    Key Features
-                  </h2>
-                </div>
-              </div>
-
-              <ul className="space-y-1.5 text-xs sm:text-sm">
-                {p.features.map((feat: string) => (
-                  <li key={feat} className="flex items-start gap-2">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent-purple shrink-0" />
-                    <span className="leading-snug text-foreground/85">{feat}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Technology Stack */}
-          {p.tags && p.tags.length > 0 && (
-            <div className="neu-card rounded-2xl p-4.5 sm:p-5.5">
-              <div className="flex items-center gap-2.5 mb-3">
-                <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
-                  style={{
-                    background: "linear-gradient(135deg, oklch(0.7 0.18 190), oklch(0.65 0.2 240))",
-                  }}
-                >
-                  <Layers className="h-3.5 w-3.5" />
-                </span>
-                <div>
-                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-accent-cyan block">
-                    Tools & Technologies
-                  </span>
-                  <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
+                  <h2 className="font-display text-lg sm:text-xl font-bold text-foreground">
                     Technology Stack
                   </h2>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                {p.tags.map((t: string) => {
+              <div className="flex flex-wrap gap-2 pt-1">
+                {p.tags.map((t) => {
                   const meta = TECH_META[t];
                   return (
                     <span
                       key={t}
-                      className="neu-card-subtle inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium text-foreground transition-colors hover:border-[var(--accent-purple)]/40"
+                      className="neu-card-subtle inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-semibold text-foreground transition-all duration-200 hover:border-purple-500/40 hover:scale-[1.02]"
                     >
-                      {meta && (
+                      {meta ? (
                         <img
                           src={`https://cdn.simpleicons.org/${meta.slug}/${meta.color}`}
                           alt=""
-                          width={13}
-                          height={13}
+                          width={14}
+                          height={14}
                           loading="lazy"
                           decoding="async"
-                          className="h-3 w-3 shrink-0"
+                          className="h-3.5 w-3.5 shrink-0"
                         />
+                      ) : (
+                        <span className="h-1.5 w-1.5 rounded-full bg-purple-500" />
                       )}
                       <span>{t}</span>
                     </span>
@@ -579,92 +830,77 @@ function ProjectPage() {
                 })}
               </div>
             </div>
-          )}
+          </div>
+
+          {/* Section 6: Engineering Highlights */}
+          <div className="neu-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="neu-icon-holder-purple h-9 w-9 shrink-0">
+                  <Code2 className="h-4.5 w-4.5" />
+                </span>
+                <div>
+                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 block">
+                    Technical Decisions
+                  </span>
+                  <h2 className="font-display text-lg sm:text-xl font-bold text-foreground">
+                    Engineering Highlights
+                  </h2>
+                </div>
+              </div>
+
+              <div className="space-y-3 pt-1">
+                {p.engineeringHighlights ? (
+                  p.engineeringHighlights.map((hl, idx) => {
+                    const iconMap = {
+                      calendar: <Calendar className="h-4 w-4 text-purple-600 dark:text-purple-400" />,
+                      engine: <Cpu className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />,
+                      shield: <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />,
+                      bolt: <Zap className="h-4 w-4 text-amber-500" />,
+                      cpu: <Cpu className="h-4 w-4 text-pink-600 dark:text-pink-400" />,
+                      database: <Database className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />,
+                      network: <Network className="h-4 w-4 text-blue-600 dark:text-blue-400" />,
+                      sparkles: <Sparkles className="h-4 w-4 text-purple-500" />,
+                    };
+                    const icon = iconMap[hl.icon] || <CheckCircle2 className="h-4 w-4 text-purple-600" />;
+
+                    return (
+                      <div key={idx} className="flex items-start gap-3">
+                        <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-purple-500/10 dark:bg-purple-500/20 border border-purple-500/20 shadow-xs">
+                          {icon}
+                        </span>
+                        <div>
+                          <h3 className="text-xs sm:text-sm font-bold text-foreground leading-snug">
+                            {hl.title}
+                          </h3>
+                          <p className="text-xs text-muted-foreground leading-snug mt-0.5">
+                            {hl.desc}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <ul className="space-y-2 text-xs sm:text-sm">
+                    {p.challenges.map((c, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-purple-500 shrink-0" />
+                        <span className="text-muted-foreground leading-snug">{c}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
         </section>
 
-        {/* ================= G. ARCHITECTURE & CHALLENGES ================= */}
-        {((p.architecture && p.architecture.length > 0) ||
-          (p.challenges && p.challenges.length > 0)) && (
-          <section
-            aria-label="Architecture and Challenges"
-            className="grid gap-4 sm:gap-5 md:grid-cols-2 items-start"
-          >
-            {/* Architecture */}
-            {p.architecture && p.architecture.length > 0 && (
-              <div className="neu-card rounded-2xl p-4.5 sm:p-5.5">
-                <div className="flex items-center gap-2.5 mb-3">
-                  <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, oklch(0.82 0.13 195), oklch(0.72 0.18 290))",
-                    }}
-                  >
-                    <Cpu className="h-3.5 w-3.5" />
-                  </span>
-                  <div>
-                    <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-sky-500 block">
-                      System Design
-                    </span>
-                    <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
-                      Architecture
-                    </h2>
-                  </div>
-                </div>
-
-                <ul className="space-y-1.5 text-xs sm:text-sm">
-                  {p.architecture.map((item: string) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent-teal shrink-0" />
-                      <span className="leading-snug text-foreground/85">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Engineering Challenges */}
-            {p.challenges && p.challenges.length > 0 && (
-              <div className="neu-card rounded-2xl p-4.5 sm:p-5.5">
-                <div className="flex items-center gap-2.5 mb-3">
-                  <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white shadow-xs"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, oklch(0.78 0.15 350), oklch(0.7 0.18 295))",
-                    }}
-                  >
-                    <Layers2 className="h-3.5 w-3.5" />
-                  </span>
-                  <div>
-                    <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-pink-500 block">
-                      Problem Solving
-                    </span>
-                    <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
-                      Engineering Challenges
-                    </h2>
-                  </div>
-                </div>
-
-                <ul className="space-y-1.5 text-xs sm:text-sm">
-                  {p.challenges.map((item: string) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent-pink shrink-0" />
-                      <span className="leading-snug text-foreground/85">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* ================= H. EXPLORE OTHER PROJECTS ================= */}
-        <section aria-label="Other Projects" className="space-y-4">
+        {/* ================= SECTION 7 — EXPLORE OTHER PROJECTS ================= */}
+        <section aria-label="Explore Other Projects" className="space-y-4 pt-4">
           <div className="flex items-center justify-between">
             <div>
               <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-muted-foreground block">
-                More Work
+                More Case Studies
               </span>
               <h2
                 className="font-display text-xl sm:text-2xl font-bold tracking-tight"
@@ -675,9 +911,9 @@ function ProjectPage() {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {PROJECTS.filter((x) => x.slug !== p.slug)
-              .slice(0, 3)
+              .slice(0, 4)
               .map((o) => (
                 <Link
                   key={o.slug}
@@ -692,7 +928,7 @@ function ProjectPage() {
                   className="neu-card neu-card-interactive group relative block overflow-hidden rounded-xl transition-all duration-300"
                 >
                   <div
-                    className="relative aspect-[16/10] overflow-hidden"
+                    className="relative aspect-[16/10] w-full overflow-hidden flex items-center justify-center"
                     style={{ background: o.gradient }}
                   >
                     <img
@@ -700,7 +936,19 @@ function ProjectPage() {
                       alt={`${o.title} preview`}
                       loading="lazy"
                       decoding="async"
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (target.src !== "/billbuddy-placeholder.svg") {
+                          target.src = "/billbuddy-placeholder.svg";
+                        }
+                      }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: o.coverPosition || "center",
+                      }}
+                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                     <div
                       aria-hidden
@@ -716,9 +964,9 @@ function ProjectPage() {
                       <div className="text-xs sm:text-sm font-bold text-foreground truncate">
                         {o.title}
                       </div>
-                      <div className="text-[11px] text-muted-foreground truncate">{o.kicker}</div>
+                      <div className="text-[11px] text-muted-foreground truncate">{o.category || o.kicker}</div>
                     </div>
-                    <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:text-foreground group-hover:translate-x-0.5" />
+                    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:text-foreground group-hover:translate-x-0.5" />
                   </div>
                 </Link>
               ))}
@@ -726,7 +974,7 @@ function ProjectPage() {
         </section>
 
         {/* ================= BOTTOM RETURN ACTION ================= */}
-        <footer className="text-center pt-6 border-t border-[var(--glass-border)]">
+        <footer className="text-center pt-6 pb-8 border-t border-[var(--neu-border)]">
           <Link
             to="/"
             hash="projects"
@@ -734,7 +982,7 @@ function ProjectPage() {
             onClick={rememberProject}
             className="btn-gradient inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            <ArrowLeft className="h-3.5 w-3.5" />
+            <ArrowLeft className="h-4 w-4" />
             <span>Back to Projects Section</span>
           </Link>
         </footer>
@@ -755,9 +1003,9 @@ function ProjectPage() {
               type="button"
               onClick={() => setIsLightboxOpen(false)}
               aria-label="Close fullscreen view"
-              className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/20 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/20 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
-              <X className="h-4 w-4" />
+              <X className="h-5 w-5" />
             </button>
 
             <motion.img

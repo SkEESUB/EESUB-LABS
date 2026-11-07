@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" fill="none">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0c20" />
+      <stop offset="100%" stop-color="#181330" />
+    </linearGradient>
+    <linearGradient id="purple-btn4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#6d28d9" />
+    </linearGradient>
+    <linearGradient id="card-bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.07)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0.02)" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" rx="16" fill="url(#bg4)" />
+
+  <!-- Sidebar -->
+  <g transform="translate(0, 0)">
+    <rect width="210" height="750" fill="#130f28" />
+    <line x1="210" y1="0" x2="210" y2="750" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+    <g transform="translate(24, 30)">
+      <rect width="36" height="36" rx="10" fill="url(#purple-btn4)" />
+      <text x="18" y="25" fill="#ffffff" font-family="system-ui, sans-serif" font-size="20" font-weight="900" text-anchor="middle">B</text>
+      <text x="48" y="24" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="700">BillBuddy</text>
+    </g>
+    <g transform="translate(18, 100)" font-family="system-ui, sans-serif" font-size="13.5" font-weight="500">
+      <text x="38" y="25" fill="#9ca3af">Dashboard</text>
+      <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      <g transform="translate(0, 52)">
+        <text x="38" y="25" fill="#9ca3af">Bills</text>
+        <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      </g>
+      <g transform="translate(0, 104)">
+        <text x="38" y="25" fill="#9ca3af">Transactions</text>
+        <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      </g>
+      <!-- Active Item: Budgets -->
+      <g transform="translate(0, 156)">
+        <rect x="0" y="0" width="174" height="40" rx="10" fill="rgba(139, 92, 246, 0.22)" stroke="rgba(168, 85, 247, 0.4)" stroke-width="1" />
+        <circle cx="22" cy="20" r="6" fill="#a855f7" />
+        <text x="38" y="25" fill="#ffffff" font-weight="600">Budgets</text>
+      </g>
+      <g transform="translate(0, 208)">
+        <text x="38" y="25" fill="#9ca3af">Insights</text>
+        <circle cx="22" cy="20" r="4" fill="#6b7280" />
+      </g>
+    </g>
+  </g>
+
+  <!-- Main Content -->
+  <g transform="translate(240, 28)" font-family="system-ui, sans-serif">
+    <!-- Header -->
+    <g>
+      <text x="0" y="24" fill="#ffffff" font-size="24" font-weight="700">Budget Health &amp; Safe-to-Spend</text>
+      <text x="0" y="46" fill="#9ca3af" font-size="13">Real-time burn rate calculations and discretionary spending limits</text>
+    </g>
+
+    <!-- Safe-to-Spend Hero Banner -->
+    <g transform="translate(0, 75)">
+      <rect width="900" height="110" rx="16" fill="url(#card-bg4)" stroke="rgba(139, 92, 246, 0.3)" stroke-width="1" />
+      <g transform="translate(32, 28)">
+        <text x="0" y="16" fill="#c084fc" font-size="12" font-weight="600" letter-spacing="1">TODAY'S SAFE-TO-SPEND THRESHOLD</text>
+        <text x="0" y="52" fill="#ffffff" font-size="32" font-weight="800">₹1,240 <tspan fill="#9ca3af" font-size="16" font-weight="500">/ day</tspan></text>
+      </g>
+      <g transform="translate(560, 26)">
+        <text x="0" y="16" fill="#9ca3af" font-size="12">Remaining Monthly Budget</text>
+        <text x="0" y="44" fill="#34d399" font-size="22" font-weight="700">₹21,680 of ₹40,000</text>
+        <text x="0" y="66" fill="#9ca3af" font-size="11">17 days remaining in billing cycle</text>
+      </g>
+    </g>
+
+    <!-- Category Budget Cards -->
+    <g transform="translate(0, 210)">
+      <!-- Budget 1: Food & Groceries -->
+      <g>
+        <rect width="435" height="180" rx="14" fill="url(#card-bg4)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="24" y="36" fill="#ffffff" font-size="16" font-weight="700">Food &amp; Dining</text>
+        <text x="410" y="36" fill="#fbbf24" font-size="12" font-weight="600" text-anchor="end">72% Used</text>
+        
+        <!-- Progress Bar -->
+        <g transform="translate(24, 60)">
+          <rect width="387" height="10" rx="5" fill="rgba(255,255,255,0.1)" />
+          <rect width="278" height="10" rx="5" fill="#f59e0b" />
+        </g>
+        
+        <text x="24" y="100" fill="#9ca3af" font-size="12">Spent ₹7,200 of ₹10,000 limit</text>
+        <text x="24" y="135" fill="#34d399" font-size="13" font-weight="600">₹2,800 safe balance remaining</text>
+      </g>
+
+      <!-- Budget 2: Entertainment & Subscriptions -->
+      <g transform="translate(465, 0)">
+        <rect width="435" height="180" rx="14" fill="url(#card-bg4)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="24" y="36" fill="#ffffff" font-size="16" font-weight="700">Entertainment &amp; Media</text>
+        <text x="410" y="36" fill="#34d399" font-size="12" font-weight="600" text-anchor="end">45% Used</text>
+        
+        <!-- Progress Bar -->
+        <g transform="translate(24, 60)">
+          <rect width="387" height="10" rx="5" fill="rgba(255,255,255,0.1)" />
+          <rect width="174" height="10" rx="5" fill="#10b981" />
+        </g>
+        
+        <text x="24" y="100" fill="#9ca3af" font-size="12">Spent ₹2,250 of ₹5,000 limit</text>
+        <text x="24" y="135" fill="#34d399" font-size="13" font-weight="600">₹2,750 on target</text>
+      </g>
+
+      <!-- Budget 3: Travel & Commute -->
+      <g transform="translate(0, 200)">
+        <rect width="435" height="180" rx="14" fill="url(#card-bg4)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="24" y="36" fill="#ffffff" font-size="16" font-weight="700">Travel &amp; Fuel</text>
+        <text x="410" y="36" fill="#38bdf8" font-size="12" font-weight="600" text-anchor="end">58% Used</text>
+        
+        <!-- Progress Bar -->
+        <g transform="translate(24, 60)">
+          <rect width="387" height="10" rx="5" fill="rgba(255,255,255,0.1)" />
+          <rect width="224" height="10" rx="5" fill="#06b6d4" />
+        </g>
+        
+        <text x="24" y="100" fill="#9ca3af" font-size="12">Spent ₹3,480 of ₹6,000 limit</text>
+        <text x="24" y="135" fill="#38bdf8" font-size="13" font-weight="600">₹2,520 within safe allowance</text>
+      </g>
+
+      <!-- Budget 4: Shopping & Discretionary -->
+      <g transform="translate(465, 200)">
+        <rect width="435" height="180" rx="14" fill="url(#card-bg4)" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <text x="24" y="36" fill="#ffffff" font-size="16" font-weight="700">Shopping &amp; Lifestyle</text>
+        <text x="410" y="36" fill="#f87171" font-size="12" font-weight="600" text-anchor="end">88% Used</text>
+        
+        <!-- Progress Bar -->
+        <g transform="translate(24, 60)">
+          <rect width="387" height="10" rx="5" fill="rgba(255,255,255,0.1)" />
+          <rect width="340" height="10" rx="5" fill="#f43f5e" />
+        </g>
+        
+        <text x="24" y="100" fill="#9ca3af" font-size="12">Spent ₹7,040 of ₹8,000 limit</text>
+        <text x="24" y="135" fill="#f87171" font-size="13" font-weight="600">⚠️ ₹960 remaining — caution advised</text>
+      </g>
+    </g>
+  </g>
+</svg>

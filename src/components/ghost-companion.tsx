@@ -118,6 +118,13 @@ export function GhostCompanion() {
     isScrolling: false,
     hasMovedCursor: false,
     isPointerMoving: false,
+    isTouchActive: false,
+    isDirectDragging: false,
+    pointerDownTime: 0,
+    pointerStartX: 0,
+    pointerStartY: 0,
+    dragPointerId: null as number | null,
+    lastPokeTime: 0,
     pointerX: 0,
     pointerY: 0,
     lastPointerMoveTime: 0,
@@ -182,6 +189,8 @@ export function GhostCompanion() {
   // Safe poke handler (hop + 360 spin + hearts + sound/speech)
   const handlePoke = useCallback(() => {
     const now = Date.now();
+    if (now - motionRef.current.lastPokeTime < 280) return;
+    motionRef.current.lastPokeTime = now;
     const tap = tapStatsRef.current;
 
     // Detect rapid multi-taps
@@ -230,9 +239,11 @@ export function GhostCompanion() {
     };
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
+    window.addEventListener("orientationchange", checkMobile, { passive: true });
 
     return () => {
       window.removeEventListener("resize", checkMobile);
+      window.removeEventListener("orientationchange", checkMobile);
     };
   }, []);
 
@@ -341,14 +352,14 @@ export function GhostCompanion() {
     };
   }, [mounted, applyEmotion, handlePoke]);
 
-  // Global Pointer (Mouse & Touch) tracking
+  // Global Pointer (Mouse) & Passive Mobile Touch Tracking
   useEffect(() => {
     if (!mounted) return;
 
     const m = motionRef.current;
 
+    // Desktop mouse move
     const onPointerMove = (e: PointerEvent) => {
-      // On mobile touch devices, avoid hijacking scroll gestures
       if (e.pointerType === "touch") return;
 
       m.hasMovedCursor = true;
@@ -357,7 +368,6 @@ export function GhostCompanion() {
       m.pointerY = e.clientY;
       m.lastPointerMoveTime = performance.now();
 
-      // Debounce pointer moving status to settle back to gentle floating
       if (pointerIdleTimeoutRef.current) clearTimeout(pointerIdleTimeoutRef.current);
       pointerIdleTimeoutRef.current = setTimeout(() => {
         m.isPointerMoving = false;
@@ -369,7 +379,6 @@ export function GhostCompanion() {
       if (!emotionLockRef.current.isLocked && currentEmotion === "listening") {
         applyEmotion("idle", 0);
       }
-      // Reset head gaze when cursor exits viewport
       if (
         mascotRef.current &&
         (mascotRef.current as unknown as { brain?: { pointer?: unknown } }).brain
@@ -378,12 +387,58 @@ export function GhostCompanion() {
       }
     };
 
+    // Mobile passive touch tracking (PASSIVE: NEVER delays or blocks vertical scrolling!)
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 0) return;
+      const touch = e.touches[0];
+      m.pointerX = touch.clientX;
+      m.pointerY = touch.clientY;
+      m.isTouchActive = true;
+      m.isPointerMoving = true;
+      m.lastPointerMoveTime = performance.now();
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 0) return;
+      const touch = e.touches[0];
+      m.pointerX = touch.clientX;
+      m.pointerY = touch.clientY;
+      m.isTouchActive = true;
+      m.isPointerMoving = true;
+      m.lastPointerMoveTime = performance.now();
+
+      if (pointerIdleTimeoutRef.current) clearTimeout(pointerIdleTimeoutRef.current);
+      pointerIdleTimeoutRef.current = setTimeout(() => {
+        m.isPointerMoving = false;
+      }, 160);
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length === 0) {
+        m.isTouchActive = false;
+        m.isPointerMoving = false;
+        if (!emotionLockRef.current.isLocked && currentEmotion === "listening") {
+          applyEmotion("idle", 0);
+        }
+      }
+    };
+
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     document.addEventListener("pointerleave", onPointerLeave, { passive: true });
+
+    // Passive listeners on window guarantee 100% normal page scrolling
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("pointerleave", onPointerLeave);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
       if (pointerIdleTimeoutRef.current) clearTimeout(pointerIdleTimeoutRef.current);
     };
   }, [mounted, applyEmotion, currentEmotion]);
@@ -482,8 +537,63 @@ export function GhostCompanion() {
       if (m.currentY < minY) m.currentY = minY;
 
       // Determine Target Position
-      if (isMobileDevice || m.isTouchDevice || !m.hasMovedCursor) {
-        // MOBILE / DOCKED DESKTOP MODE:
+      if (m.isDirectDragging) {
+        // DIRECT TOUCH DRAGGING: Follow finger directly with slight lift so finger does not cover Ghost
+        const desiredX = m.pointerX - gWidth * 0.5;
+        const desiredY = m.pointerY - gHeight * 0.72;
+        m.targetX = Math.max(minX, Math.min(maxX, desiredX));
+        m.targetY = Math.max(minY, Math.min(maxY, desiredY));
+
+        if (mascotRef.current) {
+          const brain = (
+            mascotRef.current as unknown as {
+              brain?: { pointer?: { x: number; y: number } | null };
+            }
+          ).brain;
+          if (brain) {
+            brain.pointer = { x: 0, y: 0.6 }; // Looks downward toward user's touch
+          }
+        }
+      } else if (isMobileDevice && m.isTouchActive) {
+        // MOBILE FINGER-FOLLOWING MODE (Active finger touch anywhere on screen):
+        // Maintain comfortable distance from finger:
+        // If finger is on right half, float to the left of the finger;
+        // If finger is on left half, float to the right of the finger.
+        // Hover slightly elevated so finger and palm don't obscure Ghost.
+        const isRightHalf = m.pointerX > winWidth * 0.5;
+        const desiredX = isRightHalf ? m.pointerX - gWidth - 18 : m.pointerX + 22;
+        const desiredY = m.pointerY - gHeight * 0.65;
+
+        m.targetX = Math.max(minX, Math.min(maxX, desiredX));
+        m.targetY = Math.max(minY, Math.min(maxY, desiredY));
+
+        // Update Wobnimo 3D Head & Eye Gaze toward finger
+        if (mascotRef.current) {
+          const brain = (
+            mascotRef.current as unknown as {
+              brain?: { pointer?: { x: number; y: number } | null };
+            }
+          ).brain;
+          if (brain) {
+            const ghostCenterX = m.currentX + gWidth / 2;
+            const ghostCenterY = m.currentY + gHeight * 0.45;
+            const relX = (m.pointerX - ghostCenterX) / (gWidth * 1.25);
+            const relY = (m.pointerY - ghostCenterY) / (gHeight * 1.25);
+            const dist = Math.hypot(relX, relY);
+
+            brain.pointer = {
+              x: Math.max(-1, Math.min(1, relX)),
+              y: Math.max(-1, Math.min(1, relY)),
+            };
+
+            // Curious gaze when finger approaches close
+            if (dist < 1.3 && currentEmotion === "idle" && !emotionLockRef.current.isLocked) {
+              applyEmotion("listening", 1200);
+            }
+          }
+        }
+      } else if (isMobileDevice || !m.hasMovedCursor) {
+        // MOBILE RESTING / DOCKED MODE (When finger is released or idle):
         // Position gracefully along viewport height based on scroll progress
         const docHeight = document.documentElement.scrollHeight || document.body.scrollHeight || 1;
         const scrollY = window.scrollY || window.pageYOffset || 0;
@@ -495,8 +605,20 @@ export function GhostCompanion() {
 
         m.targetX = dockedX;
         m.targetY = dockedY;
+
+        // Reset gaze when idle
+        if (mascotRef.current) {
+          const brain = (
+            mascotRef.current as unknown as {
+              brain?: { pointer?: unknown };
+            }
+          ).brain;
+          if (brain && brain.pointer) {
+            brain.pointer = null;
+          }
+        }
       } else {
-        // DESKTOP CURSOR-FOLLOWING MODE:
+        // DESKTOP CURSOR-FOLLOWING MODE (Completely preserved):
         // Maintain comfortable distance from cursor:
         // If cursor is on right half of screen, ghost floats on left side of cursor;
         // if cursor is on left half of screen, ghost floats on right side of cursor.
@@ -538,7 +660,13 @@ export function GhostCompanion() {
       // Smooth Physics Interpolation (Spring / Lerp)
       const dx = m.targetX - m.currentX;
       const dy = m.targetY - m.currentY;
-      const posLerp = reducedMotion ? 0.28 : isMobileDevice ? 0.09 : 0.075;
+      const posLerp = reducedMotion
+        ? 0.28
+        : m.isDirectDragging
+          ? 0.16
+          : isMobileDevice
+            ? 0.088
+            : 0.075;
 
       m.currentX += dx * posLerp;
       m.currentY += dy * posLerp;
@@ -618,7 +746,85 @@ export function GhostCompanion() {
           role="button"
           tabIndex={0}
           aria-label={`Ghost companion Boo, currently ${currentEmotion}. Click or tap to play.`}
-          onClick={handlePoke}
+          onPointerDown={(e) => {
+            const m = motionRef.current;
+            m.pointerDownTime = Date.now();
+            m.pointerStartX = e.clientX;
+            m.pointerStartY = e.clientY;
+            m.dragPointerId = e.pointerId;
+
+            try {
+              (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+            } catch {
+              // Ignore if capture unsupported
+            }
+
+            if (e.pointerType === "touch" || isMobile) {
+              m.isDirectDragging = true;
+              m.isTouchActive = true;
+              m.isPointerMoving = true;
+              m.pointerX = e.clientX;
+              m.pointerY = e.clientY;
+              applyEmotion("listening", 0);
+            }
+          }}
+          onPointerMove={(e) => {
+            const m = motionRef.current;
+            if (m.isDirectDragging && m.dragPointerId === e.pointerId) {
+              m.pointerX = e.clientX;
+              m.pointerY = e.clientY;
+              m.isPointerMoving = true;
+              m.lastPointerMoveTime = performance.now();
+            }
+          }}
+          onPointerUp={(e) => {
+            const m = motionRef.current;
+            if (m.dragPointerId === e.pointerId) {
+              try {
+                (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+              } catch {
+                // Ignore
+              }
+              const dist = Math.hypot(e.clientX - m.pointerStartX, e.clientY - m.pointerStartY);
+              const duration = Date.now() - m.pointerDownTime;
+              const wasDragging = m.isDirectDragging;
+
+              m.isDirectDragging = false;
+              m.dragPointerId = null;
+              m.isTouchActive = false;
+
+              // Clean tap detection (< 12px move & < 380ms)
+              if (dist < 12 && duration < 380) {
+                handlePoke();
+              } else if (wasDragging) {
+                if (!emotionLockRef.current.isLocked) {
+                  applyEmotion("idle", 0);
+                }
+              }
+            }
+          }}
+          onPointerCancel={(e) => {
+            const m = motionRef.current;
+            if (m.dragPointerId === e.pointerId) {
+              try {
+                (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+              } catch {
+                // Ignore
+              }
+              m.isDirectDragging = false;
+              m.dragPointerId = null;
+              m.isTouchActive = false;
+              if (!emotionLockRef.current.isLocked) {
+                applyEmotion("idle", 0);
+              }
+            }
+          }}
+          onClick={() => {
+            // Mouse clicks on desktop fallback
+            if (typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches) {
+              handlePoke();
+            }
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
@@ -640,7 +846,7 @@ export function GhostCompanion() {
           }}
           className={`group relative flex items-center justify-center cursor-pointer rounded-full transition-transform duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 ${sizeClass}`}
           style={{
-            touchAction: "manipulation",
+            touchAction: "none", // Allows fluid direct dragging of Ghost without page scrolling
           }}
         >
           {/* Subtle purple & cyan ambient lighting glow */}
